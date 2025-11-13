@@ -5,7 +5,7 @@
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28+-326ce5)](https://kubernetes.io)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
 
-## 🚀 Quick Start
+## Quick Start
 
 This project provides a production-ready O-RAN Near-RT RIC Platform (J Release) optimized for local development with Claude Code CLI.
 
@@ -39,7 +39,7 @@ kubectl get pods -n ricxapp
 open http://localhost:3000  # Grafana
 ```
 
-## 📚 Documentation
+## Documentation
 
 - [Architecture Overview](docs/ARCHITECTURE.md)
 - [Installation Guide](docs/INSTALLATION.md)
@@ -48,7 +48,7 @@ open http://localhost:3000  # Grafana
 - [Security Guide](docs/SECURITY.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 .
@@ -61,7 +61,7 @@ open http://localhost:3000  # Grafana
 └── tests/          # Test suites
 ```
 
-## 🤖 Claude Code Features
+## Claude Code Features
 
 This project is optimized for Claude Code CLI with:
 
@@ -70,7 +70,7 @@ This project is optimized for Claude Code CLI with:
 - **Custom Commands**: Slash commands for common operations
 - **Skills**: Pre-configured deployment and troubleshooting skills
 
-## 🛠️ Supported xApps
+## Supported xApps
 
 - **Traffic Steering**: Dynamic load balancing
 - **KPIMON**: KPI monitoring and collection
@@ -78,7 +78,7 @@ This project is optimized for Claude Code CLI with:
 - **RAN Control**: E2SM-RC abstraction layer
 - **Federated Learning**: Distributed AI/ML training
 
-## 📊 Monitoring
+## Monitoring
 
 Access dashboards after deployment:
 
@@ -86,31 +86,17 @@ Access dashboards after deployment:
 - **Prometheus**: http://localhost:9090
 - **Jaeger**: http://localhost:16686
 
-## 🔒 Security
+## Security
 
 - mTLS via Linkerd service mesh
 - RBAC with least privilege
 - Network segmentation with Cilium
 - Automated certificate management
 
-## 🤝 Contributing
+## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
 
-## 📝 License
+## License
 
 Apache License 2.0 - See [LICENSE](LICENSE)
-
-## 🆘 Support
-
-- [Documentation](https://docs.o-ran-sc.org)
-- [Community Slack](https://o-ran-sc.slack.com)
-- [Issue Tracker](https://github.com/your-org/oran-ric-platform/issues)
-
-## Maintainers
-
-- Your Team (@yourteam)
-- Contact: oran-support@yourcompany.com
-
----
-*Built with ❤️ for the O-RAN community*
