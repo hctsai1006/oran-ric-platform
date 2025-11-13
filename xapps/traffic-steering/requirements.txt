@@ -1,0 +1,40 @@
+# O-RAN xApp Framework
+ricxappframe==3.2.1
+mdclogpy==1.1.4
+
+# Redis for SDL
+redis==5.0.1
+hiredis==2.3.2
+
+# REST API Framework
+flask==3.0.0
+flask-restful==0.3.10
+werkzeug==3.0.1
+
+# Data processing
+numpy==1.26.2
+pandas==2.1.4
+
+# JSON handling
+jsonschema==4.20.0
+
+# HTTP client
+requests==2.31.0
+urllib3==2.1.0
+
+# Monitoring
+prometheus-client==0.19.0
+
+# Configuration
+pyyaml==6.0.1
+python-dotenv==1.0.0
+
+# Testing (optional, for development)
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+
+# Code quality (optional)
+black==23.12.0
+flake8==6.1.0
+mypy==1.7.1

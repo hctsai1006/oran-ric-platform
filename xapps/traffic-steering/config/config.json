@@ -1,0 +1,141 @@
+{
+  "xapp_name": "traffic-steering",
+  "version": "1.2.0",
+  "description": "Traffic Steering xApp for policy-based handover decisions",
+  "containers": [
+    {
+      "name": "traffic-steering",
+      "image": {
+        "registry": "localhost:5000",
+        "name": "xapp-traffic-steering",
+        "tag": "1.2.0"
+      },
+      "command": ["python3", "/app/src/traffic_steering.py"],
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "limits": {
+          "cpu": "500m",
+          "memory": "512Mi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "traffic-steering",
+        "port": 4560,
+        "protocol": "TCP",
+        "txMessages": [
+          "RIC_SUB_REQ",
+          "RIC_SUB_DEL_REQ",
+          "RIC_CONTROL_REQ",
+          "A1_POLICY_RESP"
+        ],
+        "rxMessages": [
+          "RIC_SUB_RESP",
+          "RIC_SUB_DEL_RESP",
+          "RIC_INDICATION",
+          "RIC_CONTROL_RESP",
+          "A1_POLICY_REQ"
+        ],
+        "policies": [20008, 20009],
+        "description": "RMR data port"
+      },
+      {
+        "name": "rmr-route",
+        "container": "traffic-steering",
+        "port": 4561,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4560",
+    "maxSize": 8192,
+    "numWorkers": 1,
+    "rxMessages": [
+      "RIC_SUB_RESP:12011",
+      "RIC_SUB_DEL_RESP:12013",
+      "RIC_INDICATION:12050",
+      "RIC_CONTROL_RESP:12041",
+      "A1_POLICY_REQ:20010"
+    ],
+    "txMessages": [
+      "RIC_SUB_REQ:12010",
+      "RIC_SUB_DEL_REQ:12012",
+      "RIC_CONTROL_REQ:12040",
+      "A1_POLICY_RESP:20011"
+    ]
+  },
+  "controls": {
+    "requestorId": 100,
+    "ranFunctionId": 0,
+    "ricActionId": 1,
+    "controlStyles": [1, 2, 3]
+  },
+  "metrics": [
+    {
+      "name": "Messages Processed",
+      "objectName": "traffic_steering_xapp",
+      "objectInstance": "1",
+      "description": "Total number of messages processed"
+    },
+    {
+      "name": "Handovers Triggered",
+      "objectName": "traffic_steering_xapp",
+      "objectInstance": "1",
+      "description": "Total number of handovers triggered"
+    },
+    {
+      "name": "Active UEs",
+      "objectName": "traffic_steering_xapp",
+      "objectInstance": "1",
+      "description": "Number of actively monitored UEs"
+    }
+  ],
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/ric/v1/health/alive",
+      "port": 8080
+    },
+    "initialDelaySeconds": 10,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "exec": {
+      "command": ["/usr/local/bin/rmr_probe", "-h", "e2term-rmr.ricplt:4560"]
+    },
+    "initialDelaySeconds": 5,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "config": {
+    "handover": {
+      "rsrp_threshold": -100.0,
+      "rsrq_threshold": -15.0,
+      "throughput_threshold": 10.0,
+      "load_threshold": 0.8
+    },
+    "qoe_predictor": {
+      "endpoint": "http://qoe-predictor-xapp.ricxapp:8080",
+      "timeout": 5
+    },
+    "rc_xapp": {
+      "endpoint": "http://rc-xapp.ricxapp:8080",
+      "timeout": 10
+    },
+    "logging": {
+      "level": "INFO"
+    }
+  }
+}

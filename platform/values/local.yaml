@@ -1,0 +1,221 @@
+# O-RAN RIC Platform - Local Deployment Values
+# Optimized for k3s with minimal resource requirements
+
+global:
+  namespace:
+    platform: ricplt
+    xapp: ricxapp
+  
+  # Local registry configuration
+  repository: nexus3.o-ran-sc.org:10002
+  imagePullPolicy: IfNotPresent
+  
+  # Persistence configuration
+  persistence:
+    enabled: true
+    storageClassName: local-path  # k3s default storage class
+    
+  # Service mesh configuration  
+  serviceMesh:
+    enabled: false  # Linkerd will be added separately
+    
+# RIC Platform Components
+
+appmgr:
+  enabled: true
+  image:
+    repository: o-ran-sc/ric-plt-appmgr
+    tag: 0.5.4
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  service:
+    type: ClusterIP
+    port: 8080
+
+e2mgr:
+  enabled: true
+  image:
+    repository: o-ran-sc/ric-plt-e2mgr
+    tag: 5.4.23
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    RMR_SEED_RT: /opt/route/rmr-config.yaml
+    RMR_SRC_ID: service-ricplt-e2mgr-rmr.ricplt
+
+e2term:
+  enabled: true
+  image:
+    repository: o-ran-sc/ric-plt-e2
+    tag: 5.5.0
+  replicas: 1  # Single instance for local dev
+  resources:
+    requests:
+      cpu: 400m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  service:
+    type: LoadBalancer  # Expose for E2 nodes
+    ports:
+      sctp: 36422
+      rmr: 4560
+
+a1mediator:
+  enabled: true
+  image:
+    repository: o-ran-sc/ric-plt-a1
+    tag: 2.6.1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+submgr:
+  enabled: true
+  image:
+    repository: o-ran-sc/ric-plt-submgr
+    tag: 0.9.3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+
+rtmgr:
+  enabled: false  # Static routing for local dev
+
+dbaas:
+  enabled: true
+  backend: redis
+  image:
+    repository: redis
+    tag: 7-alpine
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClassName: local-path
+
+# xApp Manager Configuration
+xappmgr:
+  enabled: true
+  registryURL: "http://localhost:5000"
+  helm:
+    host: "0.0.0.0"
+    port: 8080
+
+# RMR Configuration
+rmr:
+  protPort: 4560
+  routePort: 4561
+  maxSize: 8192
+  numWorkers: 1
+  rxMessages:
+    - RIC_SUB_REQ
+    - RIC_SUB_RESP
+    - RIC_SUB_DEL_REQ
+    - RIC_INDICATION
+    - RIC_CONTROL_REQ
+    - RIC_CONTROL_RESP
+    - RIC_CONTROL_ACK
+    - RIC_CONTROL_FAILURE
+
+# Ingress Configuration
+ingress:
+  enabled: false  # Using port-forward for local dev
+  className: nginx
+  hosts:
+    - host: ric.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+# ServiceMonitor for Prometheus
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  scrapeTimeout: 10s
+
+# NetworkPolicy
+networkPolicy:
+  enabled: true
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: ricxapp
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: monitoring
+
+# Pod Security Context
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+# Container Security Context
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+    - ALL
+
+# Health Probes
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# Pod Disruption Budget
+podDisruptionBudget:
+  enabled: false  # Disabled for local dev with single replicas
+
+# Autoscaling
+autoscaling:
+  enabled: false  # Disabled for local dev
+
+# Logging
+logging:
+  level: INFO
+  format: json

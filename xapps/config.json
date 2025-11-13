@@ -1,0 +1,142 @@
+{
+  "xapp_name": "kpimon",
+  "version": "2.0.0",
+  "description": "KPI Monitoring xApp for collecting cell and slice metrics",
+  "containers": [
+    {
+      "name": "kpimon",
+      "image": {
+        "registry": "localhost:5000",
+        "name": "xapp-kpimon",
+        "tag": "2.0.0"
+      },
+      "command": ["python3", "/app/src/kpimon.py"],
+      "resources": {
+        "requests": {
+          "cpu": "300m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "1000m",
+          "memory": "1Gi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "kpimon",
+        "port": 4560,
+        "protocol": "TCP",
+        "txMessages": [
+          "RIC_SUB_REQ",
+          "RIC_SUB_DEL_REQ"
+        ],
+        "rxMessages": [
+          "RIC_SUB_RESP",
+          "RIC_SUB_FAILURE",
+          "RIC_SUB_DEL_RESP",
+          "RIC_SUB_DEL_FAILURE",
+          "RIC_INDICATION"
+        ],
+        "description": "RMR data port for E2SM-KPM"
+      },
+      {
+        "name": "rmr-route",
+        "container": "kpimon",
+        "port": 4561,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4560",
+    "maxSize": 8192,
+    "numWorkers": 2,
+    "rxMessages": [
+      "RIC_SUB_RESP:12011",
+      "RIC_SUB_FAILURE:12014",
+      "RIC_SUB_DEL_RESP:12013",
+      "RIC_SUB_DEL_FAILURE:12015",
+      "RIC_INDICATION:12050"
+    ],
+    "txMessages": [
+      "RIC_SUB_REQ:12010",
+      "RIC_SUB_DEL_REQ:12012"
+    ]
+  },
+  "metrics": [
+    {
+      "name": "Indications Received",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Total number of E2 indications received"
+    },
+    {
+      "name": "Cell Metrics Stored",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Total number of cell metrics stored"
+    },
+    {
+      "name": "Slice Metrics Stored",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Total number of slice metrics stored"
+    }
+  ],
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/ric/v1/health/alive",
+      "port": 8080
+    },
+    "initialDelaySeconds": 30,
+    "periodSeconds": 30,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "exec": {
+      "command": ["/usr/local/bin/rmr_probe", "-h", "e2term-rmr.ricplt:4560"]
+    },
+    "initialDelaySeconds": 10,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "config": {
+    "influxdb": {
+      "url": "http://ricplt-influxdb2:8086",
+      "bucket": "kpm",
+      "org": "primary",
+      "token": "${INFLUXDB_TOKEN}"
+    },
+    "subscriptions": {
+      "cell_metrics": {
+        "enabled": true,
+        "granularity": 1000,
+        "measurements": [
+          "DRB.UEThpDl",
+          "RRU.PrbUsedDl",
+          "RRU.PrbAvailDl",
+          "RRU.PrbTotDl"
+        ]
+      },
+      "slice_metrics": {
+        "enabled": true,
+        "granularity": 1000,
+        "measurements": [
+          "DRB.UEThpDl.SNSSAI",
+          "RRU.PrbUsedDl.SNSSAI"
+        ]
+      }
+    },
+    "logging": {
+      "level": "INFO"
+    }
+  }
+}

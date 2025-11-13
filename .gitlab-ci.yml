@@ -1,0 +1,256 @@
+stages:
+  - build
+  - test
+  - security
+  - deploy
+  - monitoring
+
+variables:
+  DOCKER_REGISTRY: "${CI_REGISTRY}"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+  KUBECONFIG_PATH: "${CI_PROJECT_DIR}/.kube/config"
+  NAMESPACE_PLATFORM: "ricplt"
+  NAMESPACE_XAPP: "ricxapp"
+
+# Template for Docker builds
+.docker_build:
+  image: docker:24-dind
+  services:
+    - docker:24-dind
+  before_script:
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+
+# Build stage
+build:platform:
+  extends: .docker_build
+  stage: build
+  script:
+    - cd platform
+    - docker build -t ${CI_REGISTRY_IMAGE}/ric-platform:${CI_COMMIT_SHA} .
+    - docker push ${CI_REGISTRY_IMAGE}/ric-platform:${CI_COMMIT_SHA}
+    - docker tag ${CI_REGISTRY_IMAGE}/ric-platform:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}/ric-platform:latest
+    - docker push ${CI_REGISTRY_IMAGE}/ric-platform:latest
+  only:
+    - main
+    - develop
+    - /^release\/.*$/
+
+build:xapps:
+  extends: .docker_build
+  stage: build
+  parallel:
+    matrix:
+      - XAPP: [traffic-steering, kpimon, qoe-predictor, ran-control]
+  script:
+    - cd xapps/${XAPP}
+    - docker build -t ${CI_REGISTRY_IMAGE}/xapp-${XAPP}:${CI_COMMIT_SHA} .
+    - docker push ${CI_REGISTRY_IMAGE}/xapp-${XAPP}:${CI_COMMIT_SHA}
+  artifacts:
+    reports:
+      dotenv: build.env
+  only:
+    changes:
+      - xapps/${XAPP}/**/*
+
+# Test stage
+test:unit:
+  stage: test
+  image: python:3.11
+  parallel:
+    matrix:
+      - XAPP: [traffic-steering, kpimon, qoe-predictor, ran-control]
+  script:
+    - cd xapps/${XAPP}
+    - pip install -r requirements.txt
+    - pip install pytest pytest-cov pytest-mock
+    - pytest tests/unit/ --cov=src --cov-report=xml --cov-report=term --junitxml=junit.xml
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    when: always
+    reports:
+      junit: xapps/${XAPP}/junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: xapps/${XAPP}/coverage.xml
+  only:
+    changes:
+      - xapps/${XAPP}/**/*
+
+test:integration:
+  stage: test
+  image: docker/compose:alpine-1.29.2
+  services:
+    - docker:24-dind
+  script:
+    - docker-compose -f tests/integration/docker-compose.yaml up -d
+    - sleep 30
+    - docker-compose -f tests/integration/docker-compose.yaml exec -T test-runner pytest /tests
+    - docker-compose -f tests/integration/docker-compose.yaml down -v
+  artifacts:
+    when: always
+    paths:
+      - tests/integration/results/
+  only:
+    - main
+    - develop
+
+test:e2e:
+  stage: test
+  image: bitnami/kubectl:latest
+  before_script:
+    - echo "${KUBECONFIG_CONTENT}" | base64 -d > ${KUBECONFIG_PATH}
+    - export KUBECONFIG=${KUBECONFIG_PATH}
+  script:
+    - kubectl apply -f tests/e2e/test-deployment.yaml
+    - kubectl wait --for=condition=ready pod -l app=e2e-test --timeout=300s
+    - kubectl exec -it deployment/e2e-test -- pytest /tests/e2e
+  after_script:
+    - kubectl delete -f tests/e2e/test-deployment.yaml
+  only:
+    - main
+
+# Security stage
+security:trivy:
+  stage: security
+  image: aquasec/trivy:latest
+  parallel:
+    matrix:
+      - IMAGE: [ric-platform, xapp-traffic-steering, xapp-kpimon, xapp-qoe-predictor, xapp-ran-control]
+  script:
+    - trivy image --severity HIGH,CRITICAL --exit-code 1 
+        --no-progress --format json --output trivy-report.json
+        ${CI_REGISTRY_IMAGE}/${IMAGE}:${CI_COMMIT_SHA}
+  artifacts:
+    reports:
+      container_scanning: trivy-report.json
+  allow_failure: false
+  only:
+    - main
+    - develop
+
+security:kubesec:
+  stage: security
+  image: kubesec/kubesec:latest
+  script:
+    - find . -name "*.yaml" -o -name "*.yml" | xargs -I {} kubesec scan {}
+  artifacts:
+    paths:
+      - kubesec-report.json
+  only:
+    - main
+    - develop
+
+# Deploy stage
+deploy:staging:
+  stage: deploy
+  image: alpine/helm:latest
+  environment:
+    name: staging
+    url: https://staging.ric.example.com
+  before_script:
+    - echo "${KUBECONFIG_STAGING}" | base64 -d > ${KUBECONFIG_PATH}
+    - export KUBECONFIG=${KUBECONFIG_PATH}
+  script:
+    - helm repo add ric https://gerrit.o-ran-sc.org/r/ric-plt/ric-dep
+    - helm repo update
+    - |
+      helm upgrade --install ric-platform ric/ric-platform \
+        --namespace ${NAMESPACE_PLATFORM} \
+        --create-namespace \
+        --values platform/values/staging.yaml \
+        --set global.image.tag=${CI_COMMIT_SHA} \
+        --wait \
+        --timeout 10m
+    - |
+      for XAPP in traffic-steering kpimon qoe-predictor ran-control; do
+        helm upgrade --install xapp-${XAPP} ./xapps/${XAPP}/helm \
+          --namespace ${NAMESPACE_XAPP} \
+          --create-namespace \
+          --set image.tag=${CI_COMMIT_SHA} \
+          --wait
+      done
+  only:
+    - develop
+
+deploy:production:
+  stage: deploy
+  image: alpine/helm:latest
+  environment:
+    name: production
+    url: https://ric.example.com
+  before_script:
+    - echo "${KUBECONFIG_PRODUCTION}" | base64 -d > ${KUBECONFIG_PATH}
+    - export KUBECONFIG=${KUBECONFIG_PATH}
+  script:
+    - helm repo add ric https://gerrit.o-ran-sc.org/r/ric-plt/ric-dep
+    - helm repo update
+    - |
+      helm upgrade --install ric-platform ric/ric-platform \
+        --namespace ${NAMESPACE_PLATFORM} \
+        --create-namespace \
+        --values platform/values/production.yaml \
+        --set global.image.tag=${CI_COMMIT_SHA} \
+        --wait \
+        --timeout 15m
+    - |
+      for XAPP in traffic-steering kpimon qoe-predictor ran-control; do
+        helm upgrade --install xapp-${XAPP} ./xapps/${XAPP}/helm \
+          --namespace ${NAMESPACE_XAPP} \
+          --create-namespace \
+          --set image.tag=${CI_COMMIT_SHA} \
+          --wait
+      done
+  when: manual
+  only:
+    - main
+    - tags
+
+# Monitoring stage
+monitoring:health-check:
+  stage: monitoring
+  image: curlimages/curl:latest
+  script:
+    - |
+      for SERVICE in appmgr e2mgr e2term a1mediator; do
+        curl -f http://${SERVICE}.${NAMESPACE_PLATFORM}:8080/health || exit 1
+      done
+    - |
+      for XAPP in traffic-steering kpimon qoe-predictor ran-control; do
+        curl -f http://xapp-${XAPP}.${NAMESPACE_XAPP}:8080/ric/v1/health/alive || exit 1
+      done
+  only:
+    - schedules
+  allow_failure: true
+
+monitoring:metrics:
+  stage: monitoring
+  image: prom/prometheus:latest
+  script:
+    - |
+      # Check if metrics are being scraped
+      curl -s http://prometheus.monitoring:9090/api/v1/targets | jq '.data.activeTargets[] | select(.labels.job=="ric-platform")'
+    - |
+      # Verify key metrics
+      curl -s http://prometheus.monitoring:9090/api/v1/query?query=up{job="ric-platform"} | jq '.data.result'
+  only:
+    - schedules
+
+# Rollback job (manual trigger)
+rollback:
+  stage: deploy
+  image: alpine/helm:latest
+  environment:
+    name: production
+  before_script:
+    - echo "${KUBECONFIG_PRODUCTION}" | base64 -d > ${KUBECONFIG_PATH}
+    - export KUBECONFIG=${KUBECONFIG_PATH}
+  script:
+    - helm rollback ric-platform -n ${NAMESPACE_PLATFORM}
+    - |
+      for XAPP in traffic-steering kpimon qoe-predictor ran-control; do
+        helm rollback xapp-${XAPP} -n ${NAMESPACE_XAPP}
+      done
+  when: manual
+  only:
+    - main
