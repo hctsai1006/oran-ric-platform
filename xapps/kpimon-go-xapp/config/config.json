@@ -1,0 +1,184 @@
+{
+  "xapp_name": "kpimon",
+  "version": "1.0.0",
+  "description": "KPI Monitoring xApp for O-RAN Release J",
+  "containers": [
+    {
+      "name": "kpimon",
+      "image": {
+        "registry": "localhost:5000",
+        "name": "xapp-kpimon",
+        "tag": "1.0.0"
+      },
+      "command": ["python3", "/app/src/kpimon.py"],
+      "resources": {
+        "requests": {
+          "cpu": "200m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "1000m",
+          "memory": "1Gi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "kpimon",
+        "port": 4560,
+        "protocol": "TCP",
+        "txMessages": [
+          "RIC_SUB_REQ",
+          "RIC_SUB_DEL_REQ"
+        ],
+        "rxMessages": [
+          "RIC_SUB_RESP",
+          "RIC_SUB_DEL_RESP",
+          "RIC_INDICATION"
+        ],
+        "description": "RMR data port for KPI collection"
+      },
+      {
+        "name": "rmr-route",
+        "container": "kpimon",
+        "port": 4561,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      },
+      {
+        "name": "http-api",
+        "container": "kpimon",
+        "port": 8080,
+        "protocol": "TCP",
+        "description": "REST API and metrics endpoint"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4560",
+    "maxSize": 16384,
+    "numWorkers": 2,
+    "rxMessages": [
+      "RIC_SUB_RESP:12011",
+      "RIC_SUB_DEL_RESP:12013",
+      "RIC_INDICATION:12050"
+    ],
+    "txMessages": [
+      "RIC_SUB_REQ:12010",
+      "RIC_SUB_DEL_REQ:12012"
+    ]
+  },
+  "e2sm": {
+    "ranFunctionId": 2,
+    "serviceModel": "E2SM-KPM",
+    "version": "3.0.0",
+    "reportStyles": [1, 2, 3, 4, 5],
+    "indicationHeaderFormats": [1, 2],
+    "indicationMessageFormats": [1, 2, 3]
+  },
+  "subscription": {
+    "report_period": 1000,
+    "granularity_period": 1000,
+    "max_measurements": 20,
+    "kpi_list": [
+      "DRB.UEThpDl",
+      "DRB.UEThpUl",
+      "DRB.RlcSduDelayDl",
+      "DRB.PacketLossDl",
+      "RRU.PrbUsedDl",
+      "RRU.PrbUsedUl",
+      "DRB.MeanActiveUeDl",
+      "DRB.MeanActiveUeUl",
+      "RRC.ConnMax",
+      "RRC.ConnMean",
+      "RRC.ConnEstabSucc",
+      "HO.AttOutInterEnbN1",
+      "HO.SuccOutInterEnbN1",
+      "PDCP.BytesTransmittedDl",
+      "PDCP.BytesTransmittedUl",
+      "UE.RSRP",
+      "UE.RSRQ",
+      "UE.SINR",
+      "QoS.DlPktDelayPerQCI",
+      "QoS.UlPktDelayPerQCI"
+    ]
+  },
+  "redis": {
+    "host": "redis-service.ricplt",
+    "port": 6379,
+    "db": 0,
+    "ttl": 300
+  },
+  "influxdb": {
+    "url": "http://influxdb-service.ricplt:8086",
+    "token": "${INFLUXDB_TOKEN}",
+    "org": "oran",
+    "bucket": "kpimon",
+    "retention": "7d"
+  },
+  "anomaly_detection": {
+    "enabled": true,
+    "thresholds": {
+      "packet_loss": 5.0,
+      "prb_usage": 90.0,
+      "rsrp_min": -110.0,
+      "rsrq_min": -20.0,
+      "conn_success_rate": 95.0
+    }
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/health/alive",
+      "port": 8080
+    },
+    "initialDelaySeconds": 10,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/health/ready",
+      "port": 8080
+    },
+    "initialDelaySeconds": 15,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "metrics": [
+    {
+      "name": "Messages Received",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Total number of E2 messages received"
+    },
+    {
+      "name": "KPIs Collected",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Total number of KPIs collected"
+    },
+    {
+      "name": "Anomalies Detected",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Total number of anomalies detected"
+    },
+    {
+      "name": "Active Subscriptions",
+      "objectName": "kpimon_xapp",
+      "objectInstance": "1",
+      "description": "Number of active E2 subscriptions"
+    }
+  ],
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout"
+  }
+}

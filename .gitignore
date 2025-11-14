@@ -1,0 +1,17 @@
+# Local caches
+.cache/
+.idea/
+.vscode/
+.DS_Store
+
+# Python / env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logs
+*.log
+
+# Kubernetes artefacts
+kubeconfigs/

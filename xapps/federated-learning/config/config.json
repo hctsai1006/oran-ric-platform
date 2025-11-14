@@ -1,0 +1,235 @@
+{
+  "xapp_name": "federated-learning",
+  "version": "1.0.0",
+  "description": "Federated Learning xApp for O-RAN Release J",
+  "containers": [
+    {
+      "name": "federated-learning",
+      "image": {
+        "registry": "localhost:5000",
+        "name": "xapp-federated-learning",
+        "tag": "1.0.0"
+      },
+      "command": ["python3", "/app/src/federated_learning.py"],
+      "resources": {
+        "requests": {
+          "cpu": "1000m",
+          "memory": "2Gi"
+        },
+        "limits": {
+          "cpu": "4000m",
+          "memory": "4Gi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "federated-learning",
+        "port": 4590,
+        "protocol": "TCP",
+        "txMessages": [
+          "FL_INIT_REQ",
+          "FL_MODEL_REQ",
+          "FL_GRADIENT_ACK",
+          "FL_AGG_MODEL_SEND"
+        ],
+        "rxMessages": [
+          "FL_INIT_RESP",
+          "FL_MODEL_RESP",
+          "FL_GRADIENT_SEND",
+          "FL_AGG_MODEL_ACK",
+          "FL_TRAINING_STATUS",
+          "RIC_INDICATION"
+        ],
+        "description": "RMR data port for federated learning"
+      },
+      {
+        "name": "rmr-route",
+        "container": "federated-learning",
+        "port": 4591,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      },
+      {
+        "name": "http-api",
+        "container": "federated-learning",
+        "port": 8110,
+        "protocol": "TCP",
+        "description": "REST API endpoint"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4590",
+    "maxSize": 32768,
+    "numWorkers": 4,
+    "rxMessages": [
+      "FL_INIT_RESP:30002",
+      "FL_MODEL_RESP:30004",
+      "FL_GRADIENT_SEND:30005",
+      "FL_AGG_MODEL_ACK:30008",
+      "FL_TRAINING_STATUS:30009",
+      "RIC_INDICATION:12050"
+    ],
+    "txMessages": [
+      "FL_INIT_REQ:30001",
+      "FL_MODEL_REQ:30003",
+      "FL_GRADIENT_ACK:30006",
+      "FL_AGG_MODEL_SEND:30007"
+    ]
+  },
+  "fl_config": {
+    "min_clients": 3,
+    "max_clients": 100,
+    "rounds": 100,
+    "local_epochs": 5,
+    "batch_size": 32,
+    "learning_rate": 0.01,
+    "aggregation_method": "fedavg",
+    "aggregation_methods": ["fedavg", "fedprox", "scaffold", "fedopt"],
+    "client_selection": "random",
+    "participation_rate": 0.5,
+    "stragglers_tolerance": 0.3,
+    "differential_privacy": {
+      "enabled": true,
+      "epsilon": 1.0,
+      "delta": 1e-5,
+      "clip_norm": 1.0,
+      "noise_multiplier": 0.1
+    },
+    "secure_aggregation": true,
+    "homomorphic_encryption": false,
+    "model_compression": {
+      "enabled": true,
+      "method": "quantization",
+      "bits": 8,
+      "sparsity": 0.5
+    },
+    "adaptive_aggregation": {
+      "enabled": true,
+      "momentum": 0.9,
+      "server_learning_rate": 1.0
+    }
+  },
+  "models": {
+    "network_optimization": {
+      "type": "tensorflow",
+      "architecture": "cnn",
+      "input_shape": [100, 20],
+      "output_classes": 5,
+      "optimizer": "adam",
+      "loss": "categorical_crossentropy",
+      "metrics": ["accuracy", "f1_score"]
+    },
+    "anomaly_detection": {
+      "type": "pytorch",
+      "architecture": "autoencoder",
+      "input_dim": 100,
+      "latent_dim": 32,
+      "activation": "relu",
+      "output_activation": "sigmoid"
+    },
+    "traffic_prediction": {
+      "type": "tensorflow",
+      "architecture": "lstm",
+      "sequence_length": 24,
+      "features": 10,
+      "lstm_units": [128, 64, 32],
+      "dropout_rate": 0.2
+    },
+    "resource_allocation": {
+      "type": "pytorch",
+      "architecture": "dqn",
+      "state_dim": 50,
+      "action_dim": 20,
+      "hidden_layers": [256, 128, 64],
+      "gamma": 0.99,
+      "epsilon": 0.1
+    }
+  },
+  "data_requirements": {
+    "min_samples_per_client": 100,
+    "validation_split": 0.2,
+    "test_split": 0.1,
+    "data_heterogeneity": "non_iid",
+    "imbalance_factor": 0.5
+  },
+  "security": {
+    "encryption": true,
+    "authentication": true,
+    "key_size": 2048,
+    "certificate_validation": true,
+    "secure_multiparty_computation": false,
+    "trusted_execution": false
+  },
+  "redis": {
+    "host": "redis-service.ricplt",
+    "port": 6379,
+    "db": 3,
+    "ttl": 86400,
+    "model_storage": true,
+    "gradient_cache": true
+  },
+  "monitoring": {
+    "metrics_collection": true,
+    "performance_tracking": true,
+    "convergence_monitoring": true,
+    "client_monitoring": true,
+    "anomaly_detection": true
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/health/alive",
+      "port": 8110
+    },
+    "initialDelaySeconds": 20,
+    "periodSeconds": 30,
+    "timeoutSeconds": 10,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/health/ready",
+      "port": 8110
+    },
+    "initialDelaySeconds": 30,
+    "periodSeconds": 20,
+    "timeoutSeconds": 10,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "metrics": [
+    {
+      "name": "FL Rounds Completed",
+      "objectName": "federated_learning_xapp",
+      "objectInstance": "1",
+      "description": "Total number of federated learning rounds completed"
+    },
+    {
+      "name": "Active FL Clients",
+      "objectName": "federated_learning_xapp",
+      "objectInstance": "1",
+      "description": "Number of active federated learning clients"
+    },
+    {
+      "name": "Global Model Accuracy",
+      "objectName": "federated_learning_xapp",
+      "objectInstance": "1",
+      "description": "Current global model accuracy"
+    },
+    {
+      "name": "Convergence Rate",
+      "objectName": "federated_learning_xapp",
+      "objectInstance": "1",
+      "description": "Model convergence rate"
+    }
+  ],
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout"
+  }
+}

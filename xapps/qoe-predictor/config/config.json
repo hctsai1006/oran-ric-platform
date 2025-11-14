@@ -1,0 +1,172 @@
+{
+  "xapp_name": "qoe-predictor",
+  "version": "1.0.0",
+  "description": "QoE Prediction xApp for O-RAN Release J",
+  "containers": [
+    {
+      "name": "qoe-predictor",
+      "image": {
+        "registry": "localhost:5000",
+        "name": "xapp-qoe-predictor",
+        "tag": "1.0.0"
+      },
+      "command": ["python3", "/app/src/qoe_predictor.py"],
+      "resources": {
+        "requests": {
+          "cpu": "500m",
+          "memory": "1Gi"
+        },
+        "limits": {
+          "cpu": "2000m",
+          "memory": "2Gi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "qoe-predictor",
+        "port": 4570,
+        "protocol": "TCP",
+        "txMessages": [
+          "A1_POLICY_RESP"
+        ],
+        "rxMessages": [
+          "RIC_INDICATION",
+          "A1_POLICY_REQ"
+        ],
+        "policies": [20100, 20101],
+        "description": "RMR data port for QoE prediction"
+      },
+      {
+        "name": "rmr-route",
+        "container": "qoe-predictor",
+        "port": 4571,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      },
+      {
+        "name": "http-api",
+        "container": "qoe-predictor",
+        "port": 8090,
+        "protocol": "TCP",
+        "description": "REST API endpoint"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4570",
+    "maxSize": 16384,
+    "numWorkers": 2,
+    "rxMessages": [
+      "RIC_INDICATION:12050",
+      "A1_POLICY_REQ:20010"
+    ],
+    "txMessages": [
+      "A1_POLICY_RESP:20011"
+    ]
+  },
+  "models": {
+    "update_interval": 3600,
+    "batch_size": 32,
+    "prediction_window": 10,
+    "confidence_threshold": 0.8,
+    "model_path": "/app/models",
+    "supported_services": [
+      "video_quality",
+      "voice_quality",
+      "web_browsing",
+      "gaming"
+    ]
+  },
+  "features": {
+    "window_size": 100,
+    "aggregation": ["mean", "std", "min", "max", "percentile_95"],
+    "extraction": {
+      "throughput": ["DRB.UEThpDl", "DRB.UEThpUl"],
+      "latency": ["DRB.RlcSduDelayDl", "DRB.RlcSduDelayUl"],
+      "signal": ["UE.RSRP", "UE.RSRQ", "UE.SINR"],
+      "loss": ["DRB.PacketLossDl", "DRB.PacketLossUl"]
+    }
+  },
+  "redis": {
+    "host": "redis-service.ricplt",
+    "port": 6379,
+    "db": 1,
+    "ttl": 60
+  },
+  "qoe_thresholds": {
+    "video_quality": {
+      "excellent": 4.5,
+      "good": 3.5,
+      "fair": 2.5,
+      "poor": 1.5
+    },
+    "voice_quality": {
+      "excellent": 4.5,
+      "good": 4.0,
+      "fair": 3.0,
+      "poor": 2.0
+    },
+    "web_browsing": {
+      "excellent": 90,
+      "good": 70,
+      "fair": 50,
+      "poor": 30
+    },
+    "gaming": {
+      "excellent": 85,
+      "good": 70,
+      "fair": 55,
+      "poor": 40
+    }
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/health/alive",
+      "port": 8090
+    },
+    "initialDelaySeconds": 15,
+    "periodSeconds": 20,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/health/ready",
+      "port": 8090
+    },
+    "initialDelaySeconds": 20,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "metrics": [
+    {
+      "name": "Predictions Made",
+      "objectName": "qoe_predictor_xapp",
+      "objectInstance": "1",
+      "description": "Total number of QoE predictions made"
+    },
+    {
+      "name": "Model Accuracy",
+      "objectName": "qoe_predictor_xapp",
+      "objectInstance": "1",
+      "description": "Current model accuracy percentage"
+    },
+    {
+      "name": "QoE Degradations Detected",
+      "objectName": "qoe_predictor_xapp",
+      "objectInstance": "1",
+      "description": "Number of QoE degradations detected"
+    }
+  ],
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout"
+  }
+}

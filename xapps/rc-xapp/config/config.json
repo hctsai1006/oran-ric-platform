@@ -1,0 +1,219 @@
+{
+  "xapp_name": "ran-control",
+  "version": "1.0.0",
+  "description": "RAN Control xApp for O-RAN Release J",
+  "containers": [
+    {
+      "name": "ran-control",
+      "image": {
+        "registry": "localhost:5000",
+        "name": "xapp-ran-control",
+        "tag": "1.0.0"
+      },
+      "command": ["python3", "/app/src/ran_control.py"],
+      "resources": {
+        "requests": {
+          "cpu": "300m",
+          "memory": "512Mi"
+        },
+        "limits": {
+          "cpu": "1000m",
+          "memory": "1Gi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "ran-control",
+        "port": 4580,
+        "protocol": "TCP",
+        "txMessages": [
+          "RIC_CONTROL_REQ",
+          "RIC_SUB_REQ",
+          "RIC_SUB_DEL_REQ",
+          "A1_POLICY_RESP"
+        ],
+        "rxMessages": [
+          "RIC_CONTROL_ACK",
+          "RIC_CONTROL_FAILURE",
+          "RIC_INDICATION",
+          "RIC_SUB_RESP",
+          "RIC_SUB_DEL_RESP",
+          "A1_POLICY_REQ"
+        ],
+        "policies": [20200, 20201, 20202],
+        "description": "RMR data port for RAN control"
+      },
+      {
+        "name": "rmr-route",
+        "container": "ran-control",
+        "port": 4581,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      },
+      {
+        "name": "http-api",
+        "container": "ran-control",
+        "port": 8100,
+        "protocol": "TCP",
+        "description": "REST API endpoint"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4580",
+    "maxSize": 16384,
+    "numWorkers": 3,
+    "rxMessages": [
+      "RIC_CONTROL_ACK:12041",
+      "RIC_CONTROL_FAILURE:12042",
+      "RIC_INDICATION:12050",
+      "RIC_SUB_RESP:12011",
+      "RIC_SUB_DEL_RESP:12013",
+      "A1_POLICY_REQ:20010"
+    ],
+    "txMessages": [
+      "RIC_CONTROL_REQ:12040",
+      "RIC_SUB_REQ:12010",
+      "RIC_SUB_DEL_REQ:12012",
+      "A1_POLICY_RESP:20011"
+    ]
+  },
+  "e2sm": {
+    "ranFunctionId": 3,
+    "serviceModel": "E2SM-RC",
+    "version": "2.0.0",
+    "controlStyles": [1, 2, 3, 4, 5, 6],
+    "controlActions": {
+      "handover": 1,
+      "resource_allocation": 2,
+      "bearer_control": 3,
+      "load_balancing": 4,
+      "slice_control": 5,
+      "power_control": 6,
+      "mobility_control": 7,
+      "qos_control": 8,
+      "pdcp_duplication": 9,
+      "drx_control": 10
+    }
+  },
+  "control": {
+    "max_queue_size": 1000,
+    "processing_interval": 100,
+    "timeout_default": 5000,
+    "retry_attempts": 3,
+    "priorities": ["critical", "high", "normal", "low"]
+  },
+  "optimization": {
+    "handover": {
+      "rsrp_threshold": -100,
+      "rsrq_threshold": -15,
+      "sinr_threshold": 5,
+      "hysteresis": 3,
+      "time_to_trigger": 640,
+      "a3_offset": 2,
+      "max_ho_per_ue": 10
+    },
+    "resource": {
+      "prb_threshold_high": 80,
+      "prb_threshold_low": 20,
+      "reallocation_period": 1000,
+      "scheduling_algorithms": ["round_robin", "proportional_fair", "max_cqi"],
+      "admission_control": true
+    },
+    "load_balancing": {
+      "load_threshold": 0.7,
+      "min_ue_count": 5,
+      "balancing_period": 5000,
+      "mlb_enabled": true,
+      "target_load_diff": 0.2
+    },
+    "slice": {
+      "sla_violation_threshold": 0.95,
+      "resource_efficiency_target": 0.8,
+      "max_slices": 8,
+      "min_resource_share": 0.05,
+      "dynamic_allocation": true
+    },
+    "power": {
+      "target_sinr": 15,
+      "max_tx_power": 43,
+      "min_tx_power": -20,
+      "step_size": 1,
+      "p0_nominal": -96,
+      "alpha": 0.8
+    }
+  },
+  "redis": {
+    "host": "redis-service.ricplt",
+    "port": 6379,
+    "db": 2,
+    "ttl": 3600
+  },
+  "policies": {
+    "enabled": true,
+    "enforcement_interval": 5000,
+    "policy_types": [
+      "handover_policy",
+      "resource_policy",
+      "slice_policy",
+      "mobility_policy",
+      "qos_policy"
+    ]
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/health/alive",
+      "port": 8100
+    },
+    "initialDelaySeconds": 10,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/health/ready",
+      "port": 8100
+    },
+    "initialDelaySeconds": 15,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "metrics": [
+    {
+      "name": "Control Actions Sent",
+      "objectName": "ran_control_xapp",
+      "objectInstance": "1",
+      "description": "Total number of control actions sent"
+    },
+    {
+      "name": "Control Success Rate",
+      "objectName": "ran_control_xapp",
+      "objectInstance": "1",
+      "description": "Percentage of successful control actions"
+    },
+    {
+      "name": "Handovers Triggered",
+      "objectName": "ran_control_xapp",
+      "objectInstance": "1",
+      "description": "Total number of handovers triggered"
+    },
+    {
+      "name": "Resource Optimizations",
+      "objectName": "ran_control_xapp",
+      "objectInstance": "1",
+      "description": "Number of resource optimization actions"
+    }
+  ],
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout"
+  }
+}
