@@ -17,7 +17,7 @@
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
 - [Overview](#-overview)
 - [What's New in v2.0.0](#-whats-new-in-v200)
@@ -34,19 +34,19 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 This repository provides a **production-grade deployment** of the O-RAN Software Community's Near-RT RIC Platform (J Release) with five fully-functional xApps, complete Prometheus metrics integration, Grafana dashboards, and comprehensive testing infrastructure.
 
 ### Key Features
 
-✅ **5 Production-Ready xApps** - KPIMON, Traffic Steering, QoE Predictor, RAN Control, Federated Learning
-✅ **Prometheus Metrics** - Complete observability with 8 alert rule categories
-✅ **Grafana Dashboards** - Real-time visualization of xApp performance
-✅ **E2 Simulator** - HTTP-based E2 interface traffic generator ([oran-e2-node](https://github.com/thc1006/oran-e2-node))
-✅ **Automated Testing** - Playwright E2E test suite
-✅ **Comprehensive Documentation** - Quick start, troubleshooting, and deployment guides
-✅ **Kubernetes-Native** - Optimized for k3s with Helm charts
+**5 Production-Ready xApps** - KPIMON, Traffic Steering, QoE Predictor, RAN Control, Federated Learning
+**Prometheus Metrics** - Complete observability with 8 alert rule categories
+**Grafana Dashboards** - Real-time visualization of xApp performance
+**E2 Simulator** - HTTP-based E2 interface traffic generator ([oran-e2-node](https://github.com/thc1006/oran-e2-node))
+**Automated Testing** - Playwright E2E test suite
+**Comprehensive Documentation** - Quick start, troubleshooting, and deployment guides
+**Kubernetes-Native** - Optimized for k3s with Helm charts
 
 ### Use Cases
 
@@ -58,9 +58,9 @@ This repository provides a **production-grade deployment** of the O-RAN Software
 
 ---
 
-## ✨ What's New in v2.0.0
+## What's New in v2.0.0
 
-### 🏗️ Architecture Refactoring
+### Architecture Refactoring
 
 **E2 Node Extraction** - Major Breaking Change
 
@@ -76,7 +76,7 @@ git submodule update --init --recursive
 - Cleaner repository structure
 - Enables community contributions to E2 simulator
 
-### 📊 Prometheus Metrics Integration (Complete)
+### Prometheus Metrics Integration (Complete)
 
 **All xApps now expose metrics:**
 
@@ -94,7 +94,7 @@ git submodule update --init --recursive
 - Custom recording rules for complex queries
 - Integration with Grafana dashboards
 
-### 📈 Grafana Dashboards
+### Grafana Dashboards
 
 **Verified Dashboards:**
 - xApp Performance Overview
@@ -106,7 +106,7 @@ git submodule update --init --recursive
 - Playwright E2E tests verify dashboard data
 - All 6 dashboard tests passing
 
-### 🧪 E2 Interface Testing
+### E2 Interface Testing
 
 **E2 Simulator Features:**
 - Supports 5 xApps simultaneously
@@ -116,14 +116,14 @@ git submodule update --init --recursive
 
 **Repository:** [github.com/thc1006/oran-e2-node](https://github.com/thc1006/oran-e2-node)
 
-### 📚 Complete Documentation
+### Complete Documentation
 
 **New Documentation:**
 - [QUICKSTART.md](docs/deployment/QUICKSTART.md) - 10-minute deployment guide
 - [TROUBLESHOOTING.md](docs/deployment/TROUBLESHOOTING.md) - Common issues & solutions
 - [xapp-prometheus-metrics-integration.md](docs/deployment/xapp-prometheus-metrics-integration.md) - Complete deployment walkthrough (15,000+ words)
 
-### 🐛 Bug Fixes
+### Bug Fixes
 
 1. **Traffic Steering SDL Error** - Added error handling to prevent Pod restarts
 2. **Port Configuration** - Unified Service, Deployment, Prometheus annotations
@@ -131,7 +131,7 @@ git submodule update --init --recursive
 4. **KPIMON Metrics** - Added counter increment logic in /e2/indication endpoint
 5. **Playwright Tests** - Updated to new headless mode (`--headless=new`)
 
-### 🧹 Repository Cleanup
+### Repository Cleanup
 
 - Removed 10,000+ lines of archived HackMD documentation
 - Updated `.gitignore` to exclude development artifacts
@@ -140,7 +140,7 @@ git submodule update --init --recursive
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### System Overview
 
@@ -181,18 +181,18 @@ git submodule update --init --recursive
 |-----------|---------|--------|
 | O-RAN SC | J Release | Stable |
 | Kubernetes | 1.28+ | Stable |
-| KPIMON | v1.0.1 | ✅ Production |
-| Traffic Steering | v1.0.2 | ✅ Production |
-| QoE Predictor | v1.0.1 | ✅ Production |
-| RAN Control | v1.0.1 | ✅ Production |
-| Federated Learning | v1.0.0 | ✅ Production |
-| E2 Simulator | v1.0.0 | ✅ Independent Repo |
-| Prometheus | Latest | ✅ Integrated |
-| Grafana | Latest | ✅ Integrated |
+| KPIMON | v1.0.1 |  Production |
+| Traffic Steering | v1.0.2 |  Production |
+| QoE Predictor | v1.0.1 |  Production |
+| RAN Control | v1.0.1 |  Production |
+| Federated Learning | v1.0.0 |  Production |
+| E2 Simulator | v1.0.0 |  Independent Repo |
+| Prometheus | Latest |  Integrated |
+| Grafana | Latest |  Integrated |
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -279,7 +279,7 @@ kubectl exec -n ricxapp $(kubectl get pod -n ricxapp -l app=kpimon -o jsonpath='
 
 ---
 
-## 📦 xApps
+## xApps
 
 ### KPIMON xApp
 
@@ -375,7 +375,7 @@ kpimon_kpi_value{type="prb_usage_dl"}
 
 ---
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 
 ### Prometheus Integration
 
@@ -447,7 +447,7 @@ kpimon_kpi_value{type="active_ue_count"}
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### E2E Testing with Playwright
 
@@ -462,12 +462,12 @@ npm run test:grafana
 ```
 
 **Test Coverage:**
-- ✅ Dashboard accessibility
-- ✅ Metrics data presence
-- ✅ Panel rendering
-- ✅ Query execution
-- ✅ Alert rule verification
-- ✅ Time range functionality
+-  Dashboard accessibility
+-  Metrics data presence
+-  Panel rendering
+-  Query execution
+-  Alert rule verification
+-  Time range functionality
 
 **Configuration:** [playwright.config.js](playwright.config.js)
 
@@ -513,7 +513,7 @@ kubectl logs -n ricxapp -l app=kpimon | grep "Processing time:"
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### Deployment Guides
 
@@ -561,7 +561,7 @@ Content-Type: application/json
 
 ---
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 ### Core Technologies
 
@@ -593,7 +593,7 @@ Content-Type: application/json
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 oran-ric-platform/
@@ -649,7 +649,7 @@ oran-ric-platform/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please:
 
@@ -667,7 +667,7 @@ Contributions are welcome! Please:
 
 ---
 
-## 🙏 Credits
+## Credits
 
 ### Author
 
@@ -687,7 +687,7 @@ Contributions are welcome! Please:
 
 ---
 
-## 📝 Changelog
+## Changelog
 
 ### v2.0.0 (2025-11-15)
 
@@ -724,13 +724,13 @@ Contributions are welcome! Please:
 
 ---
 
-## 📄 License
+## License
 
 Apache License 2.0 - See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🔗 Links
+## Links
 
 - **GitHub Repository**: https://github.com/thc1006/oran-ric-platform
 - **E2 Node Simulator**: https://github.com/thc1006/oran-e2-node
@@ -742,10 +742,10 @@ Apache License 2.0 - See [LICENSE](LICENSE) for details.
 
 <div align="center">
 
-**Made with ❤️ by 蔡秀吉 (thc1006)**
+**Made by 蔡秀吉 (thc1006)**
 
 *Advancing O-RAN deployment with production-ready xApps and comprehensive observability*
 
-[⬆ Back to Top](#o-ran-near-rt-ric-platform-with-production-ready-xapps)
+[Back to Top](#o-ran-near-rt-ric-platform-with-production-ready-xapps)
 
 </div>
