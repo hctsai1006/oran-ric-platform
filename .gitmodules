@@ -1,0 +1,3 @@
+[submodule "simulator/e2-simulator"]
+	path = simulator/e2-simulator
+	url = https://github.com/thc1006/oran-e2-node.git
