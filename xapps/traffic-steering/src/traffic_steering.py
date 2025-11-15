@@ -10,11 +10,12 @@ import logging
 from typing import Dict, List, Optional
 from dataclasses import dataclass
 from threading import Thread
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Response, request
 
 from ricxappframe.xapp_frame import RMRXapp, rmr
 from ricxappframe.xapp_sdl import SDLWrapper
 from mdclogpy import Logger
+from prometheus_client import Counter, Gauge, generate_latest, CONTENT_TYPE_LATEST
 
 # Configure logging
 logger = Logger(name="traffic_steering_xapp")
@@ -33,6 +34,28 @@ A1_POLICY_RESP = 20011
 # E2SM Service Model IDs
 E2SM_KPM_ID = 0
 E2SM_RC_ID = 1
+
+# Prometheus Metrics
+ts_handover_decisions_total = Counter(
+    'ts_handover_decisions_total',
+    'Total number of handover decisions evaluated'
+)
+ts_handover_triggered_total = Counter(
+    'ts_handover_triggered_total',
+    'Total number of handovers triggered'
+)
+ts_active_ues = Gauge(
+    'ts_active_ues',
+    'Current number of active UEs being monitored'
+)
+ts_policy_updates_total = Counter(
+    'ts_policy_updates_total',
+    'Total number of A1 policy updates received'
+)
+ts_e2_indications_received_total = Counter(
+    'ts_e2_indications_received_total',
+    'Total number of E2 indications received'
+)
 
 @dataclass
 class UEMetrics:
@@ -108,7 +131,7 @@ class TrafficSteeringXapp:
             }
 
     def _setup_routes(self):
-        """Setup Flask routes for health checks"""
+        """Setup Flask routes for health checks and metrics"""
         @self.app.route('/ric/v1/health/alive', methods=['GET'])
         def health_alive():
             return jsonify({"status": "alive"}), 200
@@ -116,6 +139,30 @@ class TrafficSteeringXapp:
         @self.app.route('/ric/v1/health/ready', methods=['GET'])
         def health_ready():
             return jsonify({"status": "ready"}), 200
+
+        @self.app.route('/ric/v1/metrics', methods=['GET'])
+        def metrics():
+            return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
+        @self.app.route('/e2/indication', methods=['POST'])
+        def e2_indication():
+            """Receive E2 indications from simulator (for testing)"""
+            try:
+                data = request.get_json()
+                if not data:
+                    return jsonify({"error": "No data provided"}), 400
+
+                # Process the indication using the same handler
+                self._handle_indication_http(data)
+
+                return jsonify({
+                    "status": "success",
+                    "message": "Indication processed"
+                }), 200
+
+            except Exception as e:
+                logger.error(f"Error processing E2 indication: {e}")
+                return jsonify({"error": str(e)}), 500
 
     def _handle_message(self, summary: dict, sbuf):
         """Handle incoming RMR messages"""
@@ -139,6 +186,9 @@ class TrafficSteeringXapp:
     def _handle_indication(self, summary: dict, sbuf):
         """Process E2 Indication messages"""
 
+        # Increment E2 indication counter
+        ts_e2_indications_received_total.inc()
+
         # Parse E2SM-KPM indication
         try:
             payload = json.loads(summary['payload'])
@@ -161,6 +211,9 @@ class TrafficSteeringXapp:
             # Store metrics
             self.ue_metrics[ue_metrics.ue_id] = ue_metrics
 
+            # Update active UEs gauge
+            ts_active_ues.set(len(self.ue_metrics))
+
             # Store in SDL for persistence
             self.sdl.set(
                 self.namespace,
@@ -170,8 +223,78 @@ class TrafficSteeringXapp:
             # Evaluate handover decision
             self._evaluate_handover(ue_metrics)
 
+    def _handle_indication_http(self, data: dict):
+        """Process E2 Indication from HTTP endpoint (for testing)"""
+
+        # Increment E2 indication counter
+        ts_e2_indications_received_total.inc()
+
+        # Extract UE metrics from the data
+        # Expected format: {'cell_id': 'cell_001', 'ue_id': 'ue_001', 'measurements': [...]}
+        try:
+            cell_id = data.get('cell_id', 'unknown')
+            ue_id = data.get('ue_id', 'unknown')
+            measurements = data.get('measurements', [])
+
+            # Parse measurements into UE metrics
+            rsrp = -100.0
+            rsrq = -15.0
+            dl_throughput = 0.0
+            ul_throughput = 0.0
+
+            for measurement in measurements:
+                name = measurement.get('name', '')
+                value = measurement.get('value', 0.0)
+
+                if 'RSRP' in name:
+                    rsrp = value
+                elif 'RSRQ' in name:
+                    rsrq = value
+                elif 'ThpDl' in name or 'UEThpDl' in name:
+                    dl_throughput = value
+                elif 'ThpUl' in name or 'UEThpUl' in name:
+                    ul_throughput = value
+
+            # Create UE metrics object
+            ue_metrics = UEMetrics(
+                ue_id=ue_id,
+                serving_cell=cell_id,
+                rsrp=rsrp,
+                rsrq=rsrq,
+                dl_throughput=dl_throughput,
+                ul_throughput=ul_throughput,
+                timestamp=time.time()
+            )
+
+            # Store metrics
+            self.ue_metrics[ue_metrics.ue_id] = ue_metrics
+
+            # Update active UEs gauge
+            ts_active_ues.set(len(self.ue_metrics))
+
+            # Store in SDL for persistence (best effort)
+            try:
+                self.sdl.set(
+                    self.namespace,
+                    {f"ue_metrics:{ue_metrics.ue_id}": json.dumps(data)}
+                )
+            except Exception as sdl_err:
+                logger.debug(f"SDL storage failed (non-critical): {sdl_err}")
+
+            # Evaluate handover decision
+            self._evaluate_handover(ue_metrics)
+
+            logger.debug(f"Processed HTTP indication for UE {ue_id} in cell {cell_id}")
+
+        except Exception as e:
+            logger.error(f"Error processing HTTP indication: {e}")
+            raise
+
     def _evaluate_handover(self, metrics: UEMetrics):
         """Evaluate if handover is needed based on policy"""
+
+        # Increment decision counter
+        ts_handover_decisions_total.inc()
 
         # Get active policy
         policy = self.policies.get('active', self.default_policy)
@@ -193,6 +316,9 @@ class TrafficSteeringXapp:
 
         if needs_handover:
             logger.info(f"Triggering handover for UE {metrics.ue_id}: {reason}")
+
+            # Increment handover triggered counter
+            ts_handover_triggered_total.inc()
 
             # Get target cell from QoE Predictor
             target_cell = self._get_target_cell(metrics)
@@ -280,6 +406,9 @@ class TrafficSteeringXapp:
             {f"policy:{policy.policy_id}": json.dumps(policy_data)}
         )
 
+        # Increment policy update counter
+        ts_policy_updates_total.inc()
+
         logger.info(f"Policy {policy.policy_id} updated")
 
         # Send acknowledgment
@@ -343,6 +472,9 @@ class TrafficSteeringXapp:
                 del self.ue_metrics[ue_id]
                 logger.debug(f"Removed stale metrics for UE {ue_id}")
 
+            # Update active UEs gauge after cleanup
+            ts_active_ues.set(len(self.ue_metrics))
+
             # Log status
             logger.info(f"Active UEs: {len(self.ue_metrics)}, Policies: {len(self.policies)}")
 
@@ -353,7 +485,7 @@ class TrafficSteeringXapp:
         self.running = True
 
         # Start Flask health check server in background thread
-        flask_thread = Thread(target=lambda: self.app.run(host='0.0.0.0', port=8080))
+        flask_thread = Thread(target=lambda: self.app.run(host='0.0.0.0', port=8081))
         flask_thread.daemon = True
         flask_thread.start()
 

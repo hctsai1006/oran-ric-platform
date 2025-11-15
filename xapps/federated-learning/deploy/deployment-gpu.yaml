@@ -21,6 +21,8 @@ spec:
         version: v1.0.0-gpu
     spec:
       serviceAccountName: federated-learning-sa
+      securityContext:
+        fsGroup: 1000
       # Node selector for GPU nodes
       nodeSelector:
         nvidia.com/gpu: "true"
@@ -106,7 +108,6 @@ spec:
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
-          fsGroup: 1000
           allowPrivilegeEscalation: false
           capabilities:
             drop:

@@ -16,6 +16,10 @@ spec:
       labels:
         app: kpimon
         xapp: kpimon
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/ric/v1/metrics"
     spec:
       containers:
       - name: kpimon

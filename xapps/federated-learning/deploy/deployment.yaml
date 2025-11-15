@@ -18,12 +18,18 @@ spec:
         app: federated-learning
         xapp: federated-learning
         version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8110"
+        prometheus.io/path: "/ric/v1/metrics"
     spec:
       serviceAccountName: federated-learning-sa
+      securityContext:
+        fsGroup: 1000
       containers:
       - name: federated-learning
         image: localhost:5000/xapp-federated-learning:1.0.0
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - name: rmr-data
           containerPort: 4590
@@ -86,7 +92,6 @@ spec:
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
-          fsGroup: 1000
           allowPrivilegeEscalation: false
           capabilities:
             drop:

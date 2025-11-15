@@ -18,12 +18,18 @@ spec:
         app: qoe-predictor
         xapp: qoe-predictor
         version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8090"
+        prometheus.io/path: "/ric/v1/metrics"
     spec:
       serviceAccountName: qoe-predictor-sa
+      securityContext:
+        fsGroup: 1000
       containers:
       - name: qoe-predictor
         image: localhost:5000/xapp-qoe-predictor:1.0.0
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - name: rmr-data
           containerPort: 4570
@@ -80,7 +86,6 @@ spec:
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
-          fsGroup: 1000
           allowPrivilegeEscalation: false
           capabilities:
             drop:

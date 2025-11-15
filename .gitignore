@@ -23,6 +23,18 @@ CLAUDE.md
 SESSION-HANDOFF.md
 architecture/
 
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Playwright
+.playwright-mcp/
+test-results/
+
+# Temporary files
+*.tmp
+/tmp/
+
 # ric-dep vendoring exclusions (only keep necessary files)
 ric-dep/docs/
 ric-dep/ci/

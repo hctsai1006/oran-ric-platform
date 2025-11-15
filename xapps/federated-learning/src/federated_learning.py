@@ -24,19 +24,85 @@ from tensorflow import keras
 import torch
 import torch.nn as nn
 from ricxappframe.xapp_frame import RMRXapp, rmr
-from ricxappframe.mdclogger import Logger
-from flask import Flask, request, jsonify
+from mdclogpy import Logger
+from flask import Flask, request, jsonify, Response
 import redis
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization
+from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 # Configure logging
 logger = Logger(name="FEDERATED_LEARNING")
 logger.set_level(logging.INFO)
 
-# Flask app for REST API  
+# Flask app for REST API
 app = Flask(__name__)
+
+# Prometheus Metrics
+# Counters
+fl_rounds_total = Counter(
+    'fl_rounds_total',
+    'Total number of federated learning rounds completed'
+)
+fl_clients_registered_total = Counter(
+    'fl_clients_registered_total',
+    'Total number of clients registered'
+)
+fl_model_updates_received_total = Counter(
+    'fl_model_updates_received_total',
+    'Total number of model updates received from clients'
+)
+fl_gradient_updates_received_total = Counter(
+    'fl_gradient_updates_received_total',
+    'Total number of gradient updates received'
+)
+fl_aggregations_completed_total = Counter(
+    'fl_aggregations_completed_total',
+    'Total number of model aggregations completed'
+)
+fl_communication_rounds_total = Counter(
+    'fl_communication_rounds_total',
+    'Total number of communication rounds with clients'
+)
+fl_data_processed_bytes_total = Counter(
+    'fl_data_processed_bytes_total',
+    'Total amount of data processed in bytes'
+)
+
+# Gauges
+fl_current_round = Gauge(
+    'fl_current_round',
+    'Current federated learning round number'
+)
+fl_active_clients = Gauge(
+    'fl_active_clients',
+    'Number of currently active clients'
+)
+fl_total_clients = Gauge(
+    'fl_total_clients',
+    'Total number of registered clients'
+)
+fl_global_accuracy = Gauge(
+    'fl_global_accuracy',
+    'Current global model accuracy'
+)
+fl_convergence_rate = Gauge(
+    'fl_convergence_rate',
+    'Model convergence rate'
+)
+
+# Histograms
+fl_aggregation_duration_seconds = Histogram(
+    'fl_aggregation_duration_seconds',
+    'Time taken to complete model aggregation',
+    buckets=[0.1, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0, 60.0]
+)
+fl_client_update_duration_seconds = Histogram(
+    'fl_client_update_duration_seconds',
+    'Time taken for client to send model update',
+    buckets=[0.1, 0.5, 1.0, 2.5, 5.0, 10.0, 30.0, 60.0]
+)
 
 # Message Types for Federated Learning
 FL_INIT_REQ = 30001
@@ -390,7 +456,12 @@ class FederatedLearning:
             
             self.metrics['total_clients'] += 1
             self.metrics['active_clients'] += 1
-            
+
+            # Update Prometheus metrics
+            fl_clients_registered_total.inc()
+            fl_total_clients.set(self.metrics['total_clients'])
+            fl_active_clients.set(self.metrics['active_clients'])
+
             logger.info(f"FL client registered: {client_id} with {data_samples} samples")
             
         except Exception as e:
@@ -425,7 +496,10 @@ class FederatedLearning:
                 self.clients[client_id].status = 'updated'
                 self.clients[client_id].model_version = round_number
                 self.clients[client_id].local_accuracy = update.get('metrics', {}).get('accuracy')
-            
+
+            # Update Prometheus metrics
+            fl_model_updates_received_total.inc()
+
             logger.info(f"Received model update from {client_id} for round {round_number}")
             
         except Exception as e:
@@ -453,6 +527,9 @@ class FederatedLearning:
             
             self.gradients_buffer[self.current_round][client_id] = gradients
             
+            # Update Prometheus metrics
+            fl_gradient_updates_received_total.inc()
+
             # Send acknowledgment
             ack = {
                 'client_id': client_id,
@@ -530,9 +607,14 @@ class FederatedLearning:
                     
                     # Trigger aggregation
                     self._trigger_aggregation()
-                    
+
                     self.metrics['rounds_completed'] += 1
                     self.metrics['communication_rounds'] += len(selected_clients)
+
+                    # Update Prometheus metrics
+                    fl_rounds_total.inc()
+                    fl_current_round.set(self.current_round)
+                    fl_communication_rounds_total.inc(len(selected_clients))
                 
                 time.sleep(10)  # Check interval
                 
@@ -594,22 +676,33 @@ class FederatedLearning:
                 
                 if hasattr(self, '_aggregation_triggered') and self._aggregation_triggered:
                     self._aggregation_triggered = False
-                    
+
                     # Perform aggregation for each model type
                     for model_type in self.models.keys():
+                        # Measure aggregation duration
+                        start_time = time.time()
+
                         aggregated_weights = self._aggregate_models(model_type)
-                        
+
                         if aggregated_weights:
                             # Update global model
                             self._update_global_model(model_type, aggregated_weights)
-                            
+
                             # Evaluate global model
                             accuracy = self._evaluate_global_model(model_type)
                             self.metrics['global_accuracy'] = accuracy
-                            
+
                             # Broadcast updated model
                             self._broadcast_aggregated_model(model_type)
-                            
+
+                            # Record aggregation duration
+                            duration = time.time() - start_time
+                            fl_aggregation_duration_seconds.observe(duration)
+
+                            # Update Prometheus metrics
+                            fl_aggregations_completed_total.inc()
+                            fl_global_accuracy.set(accuracy)
+
                             logger.info(f"Aggregation complete for {model_type}, accuracy: {accuracy}")
                 
             except Exception as e:
@@ -822,6 +915,9 @@ class FederatedLearning:
                     if len(recent_accuracies) > 1:
                         improvement = recent_accuracies[-1] - recent_accuracies[0]
                         self.metrics['convergence_rate'] = improvement / len(recent_accuracies)
+
+                        # Update Prometheus convergence rate
+                        fl_convergence_rate.set(self.metrics['convergence_rate'])
                 
                 # Store training snapshot
                 snapshot = {
@@ -902,12 +998,24 @@ class FederatedLearning:
         def get_training_history():
             """Get FL training history"""
             return jsonify(self.training_history[-100:]), 200  # Last 100 rounds
-        
+
+        @app.route('/ric/v1/metrics', methods=['GET'])
+        def get_prometheus_metrics():
+            """Get Prometheus metrics in OpenMetrics format"""
+            # Update current gauge values before returning metrics
+            fl_current_round.set(self.current_round)
+            fl_total_clients.set(self.metrics['total_clients'])
+            fl_active_clients.set(self.metrics['active_clients'])
+            fl_global_accuracy.set(self.metrics['global_accuracy'])
+            fl_convergence_rate.set(self.metrics['convergence_rate'])
+
+            return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
         @app.route('/metrics', methods=['GET'])
-        def get_metrics():
-            """Get FL metrics"""
+        def get_metrics_json():
+            """Get FL metrics in JSON format (legacy endpoint)"""
             return jsonify(self.metrics), 200
-        
+
         app.run(host='0.0.0.0', port=self.config['http_port'])
     
     def stop(self):

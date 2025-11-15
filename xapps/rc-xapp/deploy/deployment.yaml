@@ -16,6 +16,10 @@ spec:
       labels:
         app: ran-control
         xapp: ran-control
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8100"
+        prometheus.io/path: "/ric/v1/metrics"
     spec:
       containers:
       - name: ran-control

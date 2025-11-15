@@ -16,10 +16,14 @@ spec:
       labels:
         app: traffic-steering
         xapp: traffic-steering
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8081"
+        prometheus.io/path: "/ric/v1/metrics"
     spec:
       containers:
       - name: traffic-steering
-        image: localhost:5000/xapp-traffic-steering:1.0.0
+        image: localhost:5000/xapp-traffic-steering:1.0.2
         imagePullPolicy: Always
         env:
         - name: RMR_SEED_RT
@@ -40,7 +44,7 @@ spec:
           containerPort: 4561
           protocol: TCP
         - name: http-api
-          containerPort: 8080
+          containerPort: 8081
           protocol: TCP
         resources:
           requests:
@@ -55,7 +59,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /ric/v1/health/alive
-            port: 8080
+            port: 8081
           initialDelaySeconds: 10
           periodSeconds: 15
           timeoutSeconds: 5
@@ -63,7 +67,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /ric/v1/health/ready
-            port: 8080
+            port: 8081
           initialDelaySeconds: 5
           periodSeconds: 15
           timeoutSeconds: 5

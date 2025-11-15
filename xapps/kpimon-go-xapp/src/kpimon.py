@@ -18,7 +18,7 @@ from ricxappframe.xapp_frame import RMRXapp, rmr
 from ricxappframe.xapp_sdl import SDLWrapper
 from mdclogpy import Logger
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import numpy as np
 
 # Configure logging
@@ -148,7 +148,7 @@ class KPIMonitor:
             self.influx_client = None
 
     def _setup_health_routes(self):
-        """Setup Flask routes for health checks"""
+        """Setup Flask routes for health checks and E2 indications"""
         @self.flask_app.route('/health/alive', methods=['GET'])
         def health_alive():
             return jsonify({"status": "alive"}), 200
@@ -158,6 +158,32 @@ class KPIMonitor:
             # Simplified: if Flask is running, the xApp is ready
             # This follows the pattern used in Traffic Steering and other xApps
             return jsonify({"status": "ready"}), 200
+
+        @self.flask_app.route('/e2/indication', methods=['POST'])
+        def e2_indication():
+            """Receive E2 indications from simulator (for testing)"""
+            try:
+                # Increment received counter
+                MESSAGES_RECEIVED.inc()
+
+                data = request.get_json()
+                if not data:
+                    return jsonify({"error": "No data provided"}), 400
+
+                # Process the indication
+                self._handle_indication(json.dumps(data))
+
+                # Increment processed counter
+                MESSAGES_PROCESSED.inc()
+
+                return jsonify({
+                    "status": "success",
+                    "message": "Indication processed"
+                }), 200
+
+            except Exception as e:
+                logger.error(f"Error processing E2 indication: {e}")
+                return jsonify({"error": str(e)}), 500
 
     def start(self):
         """Start the xApp"""

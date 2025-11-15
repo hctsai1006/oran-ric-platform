@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+# O-RAN RIC Grafana Dashboard 導入腳本
+# 作者: 蔡秀吉 (thc1006)
+# 日期: 2025-11-15
+#
+# Small CL #8: 導入 Grafana Dashboard
+#
+
+set -e
+
+# 顏色定義
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+GRAFANA_URL="http://localhost:3000"
+GRAFANA_USER="admin"
+GRAFANA_PASS="oran-ric-admin"
+DASHBOARD_DIR="/home/thc1006/oran-ric-platform/config/dashboards"
+
+echo "======================================"
+echo "   Grafana Dashboard 導入"
+echo "   作者: 蔡秀吉 (thc1006)"
+echo "   日期: $(date '+%Y-%m-%d %H:%M:%S')"
+echo "======================================"
+echo
+
+# 導入 Dashboard
+import_dashboard() {
+    local file=$1
+    local name=$2
+
+    echo -e "${BLUE}[INFO]${NC} 導入 ${name}..."
+
+    response=$(curl -s -X POST \
+        -H "Content-Type: application/json" \
+        -u "${GRAFANA_USER}:${GRAFANA_PASS}" \
+        -d @"${file}" \
+        "${GRAFANA_URL}/api/dashboards/db")
+
+    status=$(echo "$response" | jq -r '.status // "error"')
+
+    if [ "$status" = "success" ]; then
+        uid=$(echo "$response" | jq -r '.uid')
+        url=$(echo "$response" | jq -r '.url')
+        echo -e "${GREEN}[SUCCESS]${NC} ${name} 導入成功"
+        echo "         UID: ${uid}"
+        echo "         URL: ${GRAFANA_URL}${url}"
+        echo
+        return 0
+    else
+        echo -e "\033[0;31m[ERROR]\033[0m ${name} 導入失敗"
+        echo "$response" | jq '.'
+        echo
+        return 1
+    fi
+}
+
+# 導入所有 Dashboard
+echo "開始導入 Dashboard..."
+echo
+
+import_dashboard "${DASHBOARD_DIR}/oran-ric-overview.json" "O-RAN RIC Platform Overview"
+import_dashboard "${DASHBOARD_DIR}/rc-xapp-dashboard.json" "RC xApp Monitoring"
+import_dashboard "${DASHBOARD_DIR}/traffic-steering-dashboard.json" "Traffic Steering xApp"
+import_dashboard "${DASHBOARD_DIR}/qoe-predictor-dashboard.json" "QoE Predictor xApp"
+import_dashboard "${DASHBOARD_DIR}/federated-learning-dashboard.json" "Federated Learning xApp"
+import_dashboard "${DASHBOARD_DIR}/kpimon-dashboard.json" "KPIMON xApp"
+
+echo "======================================"
+echo "所有 Dashboard 導入完成！"
+echo
+echo "訪問 Grafana:"
+echo "  http://localhost:3000"
+echo
+echo "登入資訊:"
+echo "  帳號: admin"
+echo "  密碼: oran-ric-admin"
+echo "======================================"
+
+exit 0

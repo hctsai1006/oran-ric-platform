@@ -23,10 +23,11 @@ from sklearn.preprocessing import StandardScaler
 import tensorflow as tf
 from tensorflow import keras
 from ricxappframe.xapp_frame import RMRXapp, rmr
-from ricxappframe.mdclogger import Logger
-from flask import Flask, request, jsonify
+from mdclogpy import Logger
+from flask import Flask, request, jsonify, Response
 import redis
 import joblib
+from prometheus_client import Counter, Gauge, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 # Configure logging
 logger = Logger(name="QOE_PREDICTOR")
@@ -41,6 +42,16 @@ RIC_SUB_REQ = 12010
 RIC_SUB_RESP = 12011
 A1_POLICY_REQ = 20010
 A1_POLICY_RESP = 20011
+
+# Prometheus Metrics
+PREDICTIONS_TOTAL = Counter('qoe_predictions_total', 'Total number of QoE predictions made', ['metric_type'])
+ACTIVE_UES = Gauge('qoe_active_ues', 'Number of active UEs with QoE predictions')
+DEGRADATION_EVENTS = Counter('qoe_degradation_events_total', 'Total QoE degradation events detected', ['service_type'])
+PREDICTION_SCORE = Gauge('qoe_prediction_score', 'Latest QoE prediction score', ['ue_id', 'metric_type'])
+PREDICTION_LATENCY = Histogram('qoe_prediction_latency_seconds', 'Time taken to generate QoE predictions')
+MODEL_UPDATES = Counter('qoe_model_updates_total', 'Total number of model updates')
+FEATURE_BUFFER_SIZE = Gauge('qoe_feature_buffer_size', 'Number of features in buffer', ['ue_id'])
+RMR_MESSAGES_RECEIVED = Counter('qoe_rmr_messages_received_total', 'Total RMR messages received', ['msg_type'])
 
 class QoEPredictor:
     """
@@ -284,7 +295,10 @@ class QoEPredictor:
     def _handle_message(self, xapp, summary, payload):
         """Handle incoming RMR messages"""
         msg_type = summary[rmr.RMR_MS_MSG_TYPE]
-        
+
+        # Update Prometheus metrics
+        RMR_MESSAGES_RECEIVED.labels(msg_type=str(msg_type)).inc()
+
         if msg_type == RIC_INDICATION:
             self._handle_indication(payload)
         elif msg_type == A1_POLICY_REQ:
@@ -381,15 +395,24 @@ class QoEPredictor:
         """Main prediction loop"""
         while self.running:
             try:
+                # Update active UEs gauge
+                ACTIVE_UES.set(len(self.feature_buffer))
+
                 # Process each UE in buffer
                 for ue_id, buffer in self.feature_buffer.items():
+                    # Update feature buffer size metric
+                    FEATURE_BUFFER_SIZE.labels(ue_id=ue_id).set(len(buffer))
+
                     if len(buffer) >= 5:  # Minimum samples needed
+                        # Start timing prediction
+                        start_time = time.time()
+
                         # Prepare features for prediction
                         features_df = pd.DataFrame([b['features'] for b in buffer])
-                        
+
                         # Generate predictions for each QoE metric
                         predictions = {}
-                        
+
                         for metric, config in self.qoe_metrics.items():
                             try:
                                 # Select relevant features
@@ -429,19 +452,27 @@ class QoEPredictor:
                                             'confidence': self._calculate_confidence(X),
                                             'timestamp': datetime.now().isoformat()
                                         }
-                            
+
+                                        # Update Prometheus metrics
+                                        PREDICTIONS_TOTAL.labels(metric_type=metric).inc()
+                                        PREDICTION_SCORE.labels(ue_id=ue_id, metric_type=metric).set(float(pred_scaled))
+
                             except Exception as e:
                                 logger.error(f"Error predicting {metric}: {e}")
-                        
+
                         # Store predictions
                         if predictions:
                             self.predictions_cache[ue_id] = predictions
-                            
+
+                            # Record prediction latency
+                            prediction_duration = time.time() - start_time
+                            PREDICTION_LATENCY.observe(prediction_duration)
+
                             # Store in Redis
                             if self.redis_client:
                                 key = f"qoe:prediction:{ue_id}"
                                 self.redis_client.setex(key, 60, json.dumps(predictions))
-                            
+
                             # Check for QoE degradation
                             self._check_qoe_degradation(ue_id, predictions)
                 
@@ -504,9 +535,13 @@ class QoEPredictor:
                         })
             
             if degraded_services:
+                # Update degradation metrics
+                for service in degraded_services:
+                    DEGRADATION_EVENTS.labels(service_type=service['service']).inc()
+
                 # Generate optimization recommendation
                 recommendation = self._generate_optimization(ue_id, degraded_services)
-                
+
                 # Store in Redis
                 if self.redis_client:
                     key = f"qoe:degradation:{ue_id}"
@@ -515,7 +550,7 @@ class QoEPredictor:
                         'recommendation': recommendation,
                         'timestamp': datetime.now().isoformat()
                     }))
-                
+
                 logger.warning(f"QoE degradation detected for UE {ue_id}: {degraded_services}")
                 
         except Exception as e:
@@ -564,13 +599,16 @@ class QoEPredictor:
         while self.running:
             try:
                 time.sleep(self.config['models']['update_interval'])
-                
+
                 # Collect training data from Redis
                 if self.redis_client:
                     # This would be implemented to fetch labeled data
                     # and retrain models incrementally
                     logger.info("Checking for model updates...")
-                    
+
+                    # Update model update counter
+                    MODEL_UPDATES.inc()
+
             except Exception as e:
                 logger.error(f"Error in model update loop: {e}")
     
@@ -589,32 +627,65 @@ class QoEPredictor:
     
     def _start_api(self):
         """Start Flask REST API"""
-        
+
         @app.route('/health/alive', methods=['GET'])
         def health_alive():
             return jsonify({'status': 'alive'}), 200
-        
+
         @app.route('/health/ready', methods=['GET'])
         def health_ready():
             return jsonify({'status': 'ready'}), 200
-        
+
         @app.route('/predict/<ue_id>', methods=['GET'])
         def get_prediction(ue_id):
             """Get QoE prediction for a specific UE"""
             if ue_id in self.predictions_cache:
                 return jsonify(self.predictions_cache[ue_id]), 200
             return jsonify({'error': 'No predictions available'}), 404
-        
+
+        @app.route('/ric/v1/metrics', methods=['GET'])
+        def get_prometheus_metrics():
+            """
+            Prometheus metrics endpoint (O-RAN SC standard)
+            Returns metrics in Prometheus text format
+            """
+            metrics_output = generate_latest()
+            return Response(metrics_output, mimetype=CONTENT_TYPE_LATEST)
+
         @app.route('/metrics', methods=['GET'])
-        def get_metrics():
-            """Get aggregated QoE metrics"""
+        def get_json_metrics():
+            """
+            Legacy JSON metrics endpoint (deprecated)
+            Use /ric/v1/metrics for Prometheus format
+            """
             metrics = {
                 'total_predictions': len(self.predictions_cache),
                 'active_ues': len(self.feature_buffer),
-                'timestamp': datetime.now().isoformat()
+                'timestamp': datetime.now().isoformat(),
+                'note': 'This endpoint is deprecated. Use /ric/v1/metrics for Prometheus format.'
             }
             return jsonify(metrics), 200
-        
+
+        @app.route('/e2/indication', methods=['POST'])
+        def e2_indication():
+            """Receive E2 indications from simulator (for testing)"""
+            try:
+                data = request.get_json()
+                if not data:
+                    return jsonify({"error": "No data provided"}), 400
+
+                # Process the indication using the existing handler
+                self._handle_indication(json.dumps(data))
+
+                return jsonify({
+                    "status": "success",
+                    "message": "Indication processed"
+                }), 200
+
+            except Exception as e:
+                logger.error(f"Error processing E2 indication: {e}")
+                return jsonify({"error": str(e)}), 500
+
         app.run(host='0.0.0.0', port=self.config['http_port'])
     
     def stop(self):

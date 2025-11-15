@@ -17,8 +17,9 @@ from enum import Enum
 import numpy as np
 from ricxappframe.xapp_frame import RMRXapp, rmr
 from mdclogpy import Logger
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import redis
+from prometheus_client import Counter, Gauge, generate_latest, CONTENT_TYPE_LATEST
 
 # Configure logging
 logger = Logger(name="RAN_CONTROL")
@@ -26,6 +27,17 @@ logger.set_level(logging.INFO)
 
 # Flask app for REST API
 app = Flask(__name__)
+
+# Prometheus metrics
+control_actions_sent = Counter('rc_control_actions_sent_total', 'Total number of control actions sent')
+control_actions_success = Counter('rc_control_actions_success_total', 'Total number of successful control actions')
+control_actions_failed = Counter('rc_control_actions_failed_total', 'Total number of failed control actions')
+handovers_triggered = Counter('rc_handovers_triggered_total', 'Total number of handovers triggered')
+resource_optimizations = Counter('rc_resource_optimizations_total', 'Total number of resource optimizations')
+slice_reconfigurations = Counter('rc_slice_reconfigurations_total', 'Total number of slice reconfigurations')
+active_controls_gauge = Gauge('rc_active_controls', 'Number of active control actions')
+network_cells_gauge = Gauge('rc_network_cells', 'Number of monitored network cells')
+control_queue_size = Gauge('rc_control_queue_size', 'Size of control action queue')
 
 # E2SM-RC v2.0 Message Types (O-RAN Release J)
 RIC_CONTROL_REQ = 12040
@@ -255,14 +267,18 @@ class RANController:
                 
                 # Update metrics
                 self.metrics['control_actions_success'] += 1
-                
+                control_actions_success.inc()
+
                 # Log specific action metrics
                 if control['action_type'] == ControlActionType.HANDOVER:
                     self.metrics['handovers_triggered'] += 1
+                    handovers_triggered.inc()
                 elif control['action_type'] == ControlActionType.RESOURCE_ALLOCATION:
                     self.metrics['resource_optimizations'] += 1
+                    resource_optimizations.inc()
                 elif control['action_type'] == ControlActionType.SLICE_CONTROL:
                     self.metrics['slice_reconfigurations'] += 1
+                    slice_reconfigurations.inc()
                 
                 logger.info(f"Control action {action_id} completed successfully")
                 
@@ -291,6 +307,7 @@ class RANController:
                 
                 # Update metrics
                 self.metrics['control_actions_failed'] += 1
+                control_actions_failed.inc()
                 
                 logger.error(f"Control action {action_id} failed: {reason}")
                 
@@ -381,8 +398,10 @@ class RANController:
                         'timestamp': datetime.now().isoformat(),
                         'control': control
                     }
-                    
+
                     self.metrics['control_actions_sent'] += 1
+                    control_actions_sent.inc()
+                    active_controls_gauge.set(len(self.active_controls))
                     logger.info(f"Sent control action: {control.action_id}")
                 
                 time.sleep(self.config['control']['processing_interval'] / 1000.0)
@@ -772,16 +791,41 @@ class RANController:
                 return jsonify(self.active_controls[action_id]), 200
             return jsonify({'error': 'Action not found'}), 404
         
-        @app.route('/metrics', methods=['GET'])
+        @app.route('/ric/v1/metrics', methods=['GET'])
         def get_metrics():
-            """Get control metrics"""
-            return jsonify(self.metrics), 200
+            """Get control metrics in Prometheus format"""
+            # Update gauge metrics before returning
+            active_controls_gauge.set(len(self.active_controls))
+            network_cells_gauge.set(len(self.network_state))
+            control_queue_size.set(len(self.control_queue))
+
+            return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
         
         @app.route('/network/state', methods=['GET'])
         def get_network_state():
             """Get current network state"""
             return jsonify(self.network_state), 200
-        
+
+        @app.route('/e2/indication', methods=['POST'])
+        def e2_indication():
+            """Receive E2 indications from simulator (for testing)"""
+            try:
+                data = request.get_json()
+                if not data:
+                    return jsonify({"error": "No data provided"}), 400
+
+                # Process the indication using the existing handler
+                self._handle_indication(json.dumps(data))
+
+                return jsonify({
+                    "status": "success",
+                    "message": "Indication processed"
+                }), 200
+
+            except Exception as e:
+                logger.error(f"Error processing E2 indication: {e}")
+                return jsonify({"error": str(e)}), 500
+
         app.run(host='0.0.0.0', port=self.config['http_port'])
     
     def stop(self):

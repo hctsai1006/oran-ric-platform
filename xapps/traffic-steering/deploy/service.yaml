@@ -17,9 +17,13 @@ spec:
     port: 4561
     targetPort: 4561
     protocol: TCP
-  - name: http-api
+  - name: http-metrics
     port: 8080
     targetPort: 8080
+    protocol: TCP
+  - name: http-api
+    port: 8081
+    targetPort: 8081
     protocol: TCP
   selector:
     app: traffic-steering
