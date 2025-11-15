@@ -1,0 +1,197 @@
+# Prometheus Server Configuration for O-RAN RIC Platform
+# Author: 蔡秀吉 (thc1006)
+# Date: 2025-11-15
+# Purpose: Monitor xApp metrics following O-RAN SC standards
+
+# AlertManager - enabled for future fault management
+alertmanager:
+  enabled: true
+  persistentVolume:
+    enabled: false
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+
+# Node Exporter - disabled for now (single node cluster)
+nodeExporter:
+  enabled: false
+
+# Pushgateway - disabled (not used in RIC)
+pushgateway:
+  enabled: false
+
+# Prometheus Server
+server:
+  enabled: true
+
+  ## Prometheus data retention period
+  retention: "15d"
+
+  persistentVolume:
+    enabled: false
+    # For production, enable persistent storage:
+    # enabled: true
+    # size: 50Gi
+
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+
+  ## Global scrape configs
+  global:
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    evaluation_interval: 15s
+
+  ## Prometheus configuration
+  ##
+  ## This will be merged with the default scrape configs
+  ##
+  ## The default configuration already includes Kubernetes service discovery
+  ## We add specific configurations for RIC xApps
+  ##
+  extraScrapeConfigs: |
+    # Scrape xApps in ricxapp namespace
+    - job_name: 'ric-xapps'
+      kubernetes_sd_configs:
+        - role: pod
+          namespaces:
+            names:
+              - ricxapp
+      relabel_configs:
+        # Only scrape pods with prometheus.io/scrape annotation
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: true
+        # Use custom scrape path if specified
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        # Use custom port if specified
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          target_label: __address__
+        # Add pod name as label
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: replace
+          target_label: pod
+        # Add namespace as label
+        - source_labels: [__meta_kubernetes_namespace]
+          action: replace
+          target_label: namespace
+        # Add app label
+        - source_labels: [__meta_kubernetes_pod_label_app]
+          action: replace
+          target_label: app
+
+    # Scrape RIC Platform components in ricplt namespace
+    - job_name: 'ric-platform'
+      kubernetes_sd_configs:
+        - role: pod
+          namespaces:
+            names:
+              - ricplt
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          action: keep
+          regex: true
+        - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          action: replace
+          target_label: __metrics_path__
+          regex: (.+)
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          target_label: __address__
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: replace
+          target_label: pod
+        - source_labels: [__meta_kubernetes_namespace]
+          action: replace
+          target_label: namespace
+
+  service:
+    type: ClusterIP
+    servicePort: 80
+
+  ## Prometheus ingress - disabled for now
+  ingress:
+    enabled: false
+
+# Server Configmap Annotations
+serverFiles:
+  alerting_rules.yml: {}
+  recording_rules.yml: {}
+  prometheus.yml:
+    rule_files:
+      - /etc/config/recording_rules.yml
+      - /etc/config/alerting_rules.yml
+
+    scrape_configs:
+      - job_name: prometheus
+        static_configs:
+          - targets:
+            - localhost:9090
+
+      # Default Kubernetes API server scraping
+      - job_name: 'kubernetes-apiservers'
+        kubernetes_sd_configs:
+          - role: endpoints
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: default;kubernetes;https
+
+      # Default Kubernetes nodes scraping
+      - job_name: 'kubernetes-nodes'
+        kubernetes_sd_configs:
+          - role: node
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+
+      # Default Kubernetes pod scraping
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: kubernetes_pod_name

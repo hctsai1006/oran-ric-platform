@@ -1,0 +1,217 @@
+# O-RAN RIC xApp Prometheus Alert Rules
+# 作者: 蔡秀吉 (thc1006)
+# 日期: 2025-11-15
+#
+# Purpose: Define alert rules for O-RAN xApps monitoring
+
+groups:
+  - name: xapp_availability
+    interval: 30s
+    rules:
+      - alert: xAppDown
+        expr: up{job="kubernetes-pods", app=~"kpimon|traffic-steering|qoe-predictor|ran-control|federated-learning"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: xapp
+        annotations:
+          summary: "xApp {{ $labels.app }} is down"
+          description: "xApp {{ $labels.app }} in namespace {{ $labels.kubernetes_namespace }} has been down for more than 2 minutes."
+
+      - alert: xAppPodNotReady
+        expr: kube_pod_status_ready{namespace="ricxapp", condition="false"} == 1
+        for: 5m
+        labels:
+          severity: warning
+          component: xapp
+        annotations:
+          summary: "xApp Pod {{ $labels.pod }} is not ready"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has been not ready for more than 5 minutes."
+
+  - name: kpimon_alerts
+    interval: 30s
+    rules:
+      - alert: KPIMONMessageProcessingStalled
+        expr: rate(kpimon_messages_received_total[5m]) == 0 and kpimon_messages_received_total > 0
+        for: 5m
+        labels:
+          severity: critical
+          component: kpimon
+        annotations:
+          summary: "KPIMON message processing has stalled"
+          description: "KPIMON has not received any new messages in the last 5 minutes, but has received messages before. This may indicate E2 connection issues."
+
+      - alert: KPIMONHighMessageRate
+        expr: rate(kpimon_messages_received_total[1m]) > 100
+        for: 2m
+        labels:
+          severity: warning
+          component: kpimon
+        annotations:
+          summary: "KPIMON experiencing high message rate"
+          description: "KPIMON is receiving more than 100 messages per second. Current rate: {{ $value | humanize }} msg/s"
+
+      - alert: KPIMONProcessingLag
+        expr: (kpimon_messages_received_total - kpimon_messages_processed_total) > 1000
+        for: 5m
+        labels:
+          severity: warning
+          component: kpimon
+        annotations:
+          summary: "KPIMON has significant processing lag"
+          description: "KPIMON has {{ $value | humanize }} unprocessed messages. This may indicate performance issues."
+
+      - alert: KPIMONHighPRBUsage
+        expr: kpimon_kpi_value{kpi_type=~"RRU.PrbUsedDl|RRU.PrbUsedUl"} > 85
+        for: 10m
+        labels:
+          severity: warning
+          component: kpimon
+        annotations:
+          summary: "High PRB usage detected in cell {{ $labels.cell_id }}"
+          description: "PRB usage for {{ $labels.kpi_type }} in cell {{ $labels.cell_id }} is {{ $value | humanize }}% (threshold: 85%)"
+
+      - alert: KPIMONPoorSignalQuality
+        expr: kpimon_kpi_value{kpi_type="UE.RSRP"} < -110
+        for: 15m
+        labels:
+          severity: warning
+          component: kpimon
+        annotations:
+          summary: "Poor signal quality detected in cell {{ $labels.cell_id }}"
+          description: "RSRP in cell {{ $labels.cell_id }} is {{ $value | humanize }} dBm (threshold: -110 dBm)"
+
+      - alert: KPIMONHighPacketLoss
+        expr: kpimon_kpi_value{kpi_type=~"DRB.PacketLossDl|DRB.PacketLossUl"} > 5
+        for: 10m
+        labels:
+          severity: warning
+          component: kpimon
+        annotations:
+          summary: "High packet loss detected in cell {{ $labels.cell_id }}"
+          description: "Packet loss for {{ $labels.kpi_type }} in cell {{ $labels.cell_id }} is {{ $value | humanize }}% (threshold: 5%)"
+
+  - name: traffic_steering_alerts
+    interval: 30s
+    rules:
+      - alert: TrafficSteeringHighHandoverFailureRate
+        expr: rate(traffic_steering_handover_failures_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: traffic-steering
+        annotations:
+          summary: "High handover failure rate detected"
+          description: "Traffic Steering xApp is experiencing {{ $value | humanizePercentage }} handover failure rate (threshold: 10%)"
+
+      - alert: TrafficSteeringNoDecisions
+        expr: rate(traffic_steering_decisions_total[10m]) == 0 and traffic_steering_decisions_total > 0
+        for: 15m
+        labels:
+          severity: warning
+          component: traffic-steering
+        annotations:
+          summary: "Traffic Steering has stopped making decisions"
+          description: "Traffic Steering xApp has not made any steering decisions in the last 15 minutes"
+
+  - name: qoe_predictor_alerts
+    interval: 30s
+    rules:
+      - alert: QoEPredictorLowQoEScore
+        expr: qoe_predictor_score < 30
+        for: 10m
+        labels:
+          severity: warning
+          component: qoe-predictor
+        annotations:
+          summary: "Low QoE score detected for UE {{ $labels.ue_id }}"
+          description: "QoE score for UE {{ $labels.ue_id }} is {{ $value | humanize }} (threshold: 30)"
+
+      - alert: QoEPredictorPredictionLag
+        expr: time() - qoe_predictor_last_prediction_timestamp > 300
+        for: 5m
+        labels:
+          severity: warning
+          component: qoe-predictor
+        annotations:
+          summary: "QoE Predictor predictions are stale"
+          description: "QoE Predictor has not made predictions for {{ $value | humanizeDuration }}. Last prediction was at {{ $labels.timestamp }}"
+
+  - name: ran_control_alerts
+    interval: 30s
+    rules:
+      - alert: RANControlHighControlFailureRate
+        expr: rate(ran_control_failures_total[5m]) > 0.2
+        for: 5m
+        labels:
+          severity: critical
+          component: ran-control
+        annotations:
+          summary: "High RAN control failure rate"
+          description: "RAN Control xApp is experiencing {{ $value | humanizePercentage }} control failure rate (threshold: 20%)"
+
+      - alert: RANControlNoControlMessages
+        expr: rate(ran_control_messages_sent_total[10m]) == 0 and ran_control_messages_sent_total > 0
+        for: 15m
+        labels:
+          severity: warning
+          component: ran-control
+        annotations:
+          summary: "RAN Control has stopped sending control messages"
+          description: "RAN Control xApp has not sent any control messages in the last 15 minutes"
+
+  - name: xapp_resource_usage
+    interval: 30s
+    rules:
+      - alert: xAppHighCPUUsage
+        expr: rate(container_cpu_usage_seconds_total{namespace="ricxapp", pod=~"kpimon.*|traffic-steering.*|qoe-predictor.*|ran-control.*|federated-learning.*"}[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+          component: xapp
+        annotations:
+          summary: "xApp {{ $labels.pod }} has high CPU usage"
+          description: "xApp {{ $labels.pod }} CPU usage is {{ $value | humanizePercentage }} (threshold: 80%)"
+
+      - alert: xAppHighMemoryUsage
+        expr: container_memory_working_set_bytes{namespace="ricxapp", pod=~"kpimon.*|traffic-steering.*|qoe-predictor.*|ran-control.*|federated-learning.*"} / container_spec_memory_limit_bytes{namespace="ricxapp"} > 0.9
+        for: 10m
+        labels:
+          severity: critical
+          component: xapp
+        annotations:
+          summary: "xApp {{ $labels.pod }} has high memory usage"
+          description: "xApp {{ $labels.pod }} memory usage is {{ $value | humanizePercentage }} (threshold: 90%)"
+
+      - alert: xAppPodRestartLoop
+        expr: rate(kube_pod_container_status_restarts_total{namespace="ricxapp"}[30m]) > 0.1
+        for: 15m
+        labels:
+          severity: critical
+          component: xapp
+        annotations:
+          summary: "xApp Pod {{ $labels.pod }} is in restart loop"
+          description: "xApp Pod {{ $labels.pod }} has restarted {{ $value | humanize }} times in the last 30 minutes"
+
+  - name: e2_interface_alerts
+    interval: 30s
+    rules:
+      - alert: E2SubscriptionFailures
+        expr: rate(kpimon_subscription_failures_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: critical
+          component: e2-interface
+        annotations:
+          summary: "E2 subscription failures detected"
+          description: "xApp is experiencing E2 subscription failures at a rate of {{ $value | humanize }} failures/sec"
+
+      - alert: E2IndicationDeliveryLag
+        expr: histogram_quantile(0.95, rate(kpimon_processing_time_seconds_bucket[5m])) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+          component: e2-interface
+        annotations:
+          summary: "High E2 indication processing latency"
+          description: "95th percentile E2 indication processing time is {{ $value | humanizeDuration }} (threshold: 100ms)"

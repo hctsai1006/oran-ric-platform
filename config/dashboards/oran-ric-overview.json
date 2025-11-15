@@ -1,0 +1,279 @@
+{
+  "dashboard": {
+    "title": "O-RAN RIC Platform Overview",
+    "tags": ["oran", "ric", "overview"],
+    "timezone": "browser",
+    "editable": true,
+    "graphTooltip": 1,
+    "panels": [
+      {
+        "id": 1,
+        "title": "xApp 健康狀態",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 0, "w": 24, "h": 4},
+        "targets": [
+          {
+            "expr": "up{kubernetes_namespace=\"ricxapp\"}",
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "orientation": "auto",
+          "textMode": "auto",
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"type": "value", "value": "0", "text": "DOWN", "color": "red"},
+              {"type": "value", "value": "1", "text": "UP", "color": "green"}
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "RC xApp - 控制動作總數",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 4, "w": 8, "h": 6},
+        "targets": [
+          {
+            "expr": "rc_control_actions_sent_total",
+            "legendFormat": "已發送",
+            "refId": "A"
+          },
+          {
+            "expr": "rc_control_actions_success_total",
+            "legendFormat": "成功",
+            "refId": "B"
+          },
+          {
+            "expr": "rc_control_actions_failed_total",
+            "legendFormat": "失敗",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "次數"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Traffic Steering - 切換決策",
+        "type": "graph",
+        "gridPos": {"x": 8, "y": 4, "w": 8, "h": 6},
+        "targets": [
+          {
+            "expr": "rate(ts_handover_decisions_total[5m])",
+            "legendFormat": "決策速率",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(ts_handover_triggered_total[5m])",
+            "legendFormat": "觸發速率",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "ops", "label": "每秒決策數"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 4,
+        "title": "QoE Predictor - 預測統計",
+        "type": "graph",
+        "gridPos": {"x": 16, "y": 4, "w": 8, "h": 6},
+        "targets": [
+          {
+            "expr": "qoe_predictions_total",
+            "legendFormat": "預測總數",
+            "refId": "A"
+          },
+          {
+            "expr": "qoe_degradation_events_total",
+            "legendFormat": "品質劣化事件",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "次數"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "所有 xApp 活躍 UE 數",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 10, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "rc_active_ues",
+            "legendFormat": "RC xApp",
+            "refId": "A"
+          },
+          {
+            "expr": "ts_active_ues",
+            "legendFormat": "Traffic Steering",
+            "refId": "B"
+          },
+          {
+            "expr": "qoe_active_ues",
+            "legendFormat": "QoE Predictor",
+            "refId": "C"
+          },
+          {
+            "expr": "kpimon_active_ues",
+            "legendFormat": "KPIMON",
+            "refId": "D"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "UE 數量"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Federated Learning - 訓練進度",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 10, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "fl_rounds_total",
+            "legendFormat": "訓練輪次",
+            "refId": "A"
+          },
+          {
+            "expr": "fl_models_trained_total",
+            "legendFormat": "已訓練模型數",
+            "refId": "B"
+          },
+          {
+            "expr": "fl_model_accuracy * 100",
+            "legendFormat": "模型準確度 (%)",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "數值"},
+          {"format": "percent"}
+        ]
+      },
+      {
+        "id": 7,
+        "title": "KPIMON - 網路吞吐量",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "kpimon_throughput_dl_mbps",
+            "legendFormat": "下行 (DL)",
+            "refId": "A"
+          },
+          {
+            "expr": "kpimon_throughput_ul_mbps",
+            "legendFormat": "上行 (UL)",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"format": "Mbits", "label": "吞吐量 (Mbps)"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 8,
+        "title": "KPIMON - PRB 使用率",
+        "type": "gauge",
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "kpimon_prb_usage_percent",
+            "legendFormat": "PRB 使用率",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 70, "color": "yellow"},
+                {"value": 90, "color": "red"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "xApp CPU 使用情況",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 22, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "rate(process_cpu_seconds_total{kubernetes_namespace=\"ricxapp\"}[5m]) * 100",
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "label": "CPU 使用率 (%)"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 10,
+        "title": "xApp 記憶體使用情況",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 22, "w": 12, "h": 6},
+        "targets": [
+          {
+            "expr": "process_resident_memory_bytes{kubernetes_namespace=\"ricxapp\"} / 1024 / 1024",
+            "legendFormat": "{{kubernetes_pod_name}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "decmbytes", "label": "記憶體 (MB)"},
+          {"format": "short"}
+        ]
+      }
+    ],
+    "refresh": "30s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": ["10s", "30s", "1m", "5m", "15m", "30m", "1h"]
+    },
+    "version": 1
+  },
+  "overwrite": true
+}

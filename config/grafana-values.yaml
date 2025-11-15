@@ -1,0 +1,83 @@
+# Grafana Configuration for O-RAN RIC Platform
+# Author: 蔡秀吉 (thc1006)
+# Date: 2025-11-15
+
+# Grafana 管理員設定
+adminUser: admin
+adminPassword: oran-ric-admin
+
+# Persistence (持久化儲存)
+persistence:
+  enabled: false  # 開發環境使用，生產環境建議改為 true
+  size: 10Gi
+
+# Service 設定
+service:
+  type: ClusterIP
+  port: 80
+
+# 資源限制
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# 數據源自動配置
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://r4-infrastructure-prometheus-server.ricplt:80
+      access: proxy
+      isDefault: true
+      jsonData:
+        timeInterval: "15s"
+      editable: true
+
+# Dashboard Providers 配置
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'oran-ric-dashboards'
+      orgId: 1
+      folder: 'O-RAN RIC'
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/oran-ric
+
+# Grafana 設定
+grafana.ini:
+  server:
+    root_url: "http://localhost:3000"
+  analytics:
+    check_for_updates: false
+  log:
+    mode: console
+  paths:
+    data: /var/lib/grafana/
+    logs: /var/log/grafana
+    plugins: /var/lib/grafana/plugins
+    provisioning: /etc/grafana/provisioning
+
+# 插件安裝（可選）
+plugins: []
+  # - grafana-piechart-panel
+  # - grafana-clock-panel
+
+# 環境變數
+env:
+  GF_INSTALL_PLUGINS: ""
+
+# Security Context
+securityContext:
+  runAsUser: 472
+  runAsGroup: 472
+  fsGroup: 472

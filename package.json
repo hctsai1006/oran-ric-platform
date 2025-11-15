@@ -1,0 +1,25 @@
+{
+  "name": "oran-ric-platform",
+  "version": "1.0.0",
+  "description": "O-RAN RIC Platform Deployment and Testing",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:grafana": "playwright test tests/e2e/grafana-dashboards.spec.js",
+    "test:grafana:headed": "playwright test tests/e2e/grafana-dashboards.spec.js --headed",
+    "test:report": "playwright show-report test-results/html-report"
+  },
+  "keywords": [
+    "o-ran",
+    "ric",
+    "near-rt-ric",
+    "xapp",
+    "testing"
+  ],
+  "author": "Tsai Hsiu-Chi (thc1006)",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
