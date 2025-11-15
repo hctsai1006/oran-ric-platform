@@ -18,6 +18,7 @@ from ricxappframe.xapp_frame import RMRXapp, rmr
 from ricxappframe.xapp_sdl import SDLWrapper
 from mdclogpy import Logger
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
+from flask import Flask, jsonify
 import numpy as np
 
 # Configure logging
@@ -79,7 +80,11 @@ class KPIMonitor:
             "QoS.DlPktDelayPerQCI": {"id": 19, "type": "qos", "unit": "ms"},
             "QoS.UlPktDelayPerQCI": {"id": 20, "type": "qos", "unit": "ms"}
         }
-        
+
+        # Initialize Flask app for health checks
+        self.flask_app = Flask(__name__)
+        self._setup_health_routes()
+
         logger.info(f"KPIMON xApp initialized with config: {self.config}")
     
     def _load_config(self, config_path: str) -> Dict:
@@ -141,14 +146,42 @@ class KPIMonitor:
         except Exception as e:
             logger.error(f"Failed to connect to InfluxDB: {e}")
             self.influx_client = None
-    
+
+    def _setup_health_routes(self):
+        """Setup Flask routes for health checks"""
+        @self.flask_app.route('/health/alive', methods=['GET'])
+        def health_alive():
+            return jsonify({"status": "alive"}), 200
+
+        @self.flask_app.route('/health/ready', methods=['GET'])
+        def health_ready():
+            is_ready = self.running and self.xapp is not None
+            status_code = 200 if is_ready else 503
+            return jsonify({
+                "status": "ready" if is_ready else "not_ready",
+                "subscriptions": len(self.subscriptions),
+                "kpi_buffer_size": len(self.kpi_buffer)
+            }), status_code
+
     def start(self):
         """Start the xApp"""
         logger.info("Starting KPIMON xApp...")
-        
+
         # Start Prometheus metrics server
         start_http_server(8080)
-        
+        logger.info("Prometheus metrics server started on port 8080")
+
+        # Start Flask health check server on port 8081
+        flask_thread = threading.Thread(target=lambda: self.flask_app.run(
+            host='0.0.0.0',
+            port=8081,
+            debug=False,
+            use_reloader=False
+        ))
+        flask_thread.daemon = True
+        flask_thread.start()
+        logger.info("Flask health check server started on port 8081")
+
         # Initialize RMR xApp
         # Fixed: Changed from RmrXapp to RMRXapp (correct class name per official docs)
         # Added use_fake_sdl parameter as required by ricxappframe 3.2.2

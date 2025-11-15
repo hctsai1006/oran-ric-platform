@@ -41,6 +41,9 @@ spec:
         - name: http-metrics
           containerPort: 8080
           protocol: TCP
+        - name: http-health
+          containerPort: 8081
+          protocol: TCP
         resources:
           requests:
             cpu: 200m
