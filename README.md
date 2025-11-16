@@ -21,132 +21,122 @@
 
 **For**: 5G RAN testing without physical equipment, xApp development, performance benchmarking, educational deployments, CI/CD integration.
 
-**Deploy**: Clone → Run deployment script → Access Grafana (10 minutes).
+**Deploy**: Clone → Run deployment script → Access Grafana (15 minutes).
 
-**New in v2.0.0**: E2 Node extracted to [separate repo](https://github.com/thc1006/oran-e2-node), complete metrics integration, 8 alert rule categories, automated testing.
+**New in v2.0.0**: E2 Node extracted to [separate repo](https://github.com/thc1006/oran-e2-node), complete metrics integration, 7 alert rule groups, automated testing.
+
+---
+
+## Table of Contents
+
+**Getting Started**
+- [Quick Start](#quick-start) - Deploy in 15 minutes
+- [Installation Guide](#installation-guide) - Detailed setup instructions
+- [Architecture](#architecture) - System overview
+
+**Components**
+- [xApps](#xapps) - Available applications
+- [Monitoring](#monitoring--observability) - Metrics and dashboards
+- [Testing](#testing) - Validation and E2E tests
+
+**Operations**
+- [Documentation](#documentation) - Guides and references
+- [What's New](#whats-new-in-v200) - Version 2.0.0 changes
+- [Troubleshooting](docs/deployment/TROUBLESHOOTING.md) - Common issues
 
 ---
 
 ## Quick Start
 
-### System Requirements
-- **OS**: Ubuntu 20.04/22.04/24.04 LTS (recommended)
-- **Resources**: 8+ CPU cores, 16GB+ RAM, 100GB+ disk
-- **Network**: Internet access for package downloads
+> **Time to deploy**: ~15 minutes | **Difficulty**: Beginner
 
-### Installation (One-Time Setup)
+### Prerequisites Check
 
-#### Option A: Automated Setup (Recommended)
+| Component | Requirement | Check Command |
+|-----------|-------------|---------------|
+| OS | Debian 11+/Ubuntu 20.04+ | `lsb_release -a` |
+| CPU | 8+ cores | `nproc` |
+| RAM | 16GB+ | `free -h` |
+| Disk | 100GB+ free | `df -h` |
+
+> **Tested on**: Debian 13, Ubuntu 22.04/24.04 LTS
+
+### Fast Track Deployment
+
+#### Step 1: Install Prerequisites (~5 min)
 
 ```bash
-# 1. Install Docker
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker $USER
-newgrp docker
+# Install Docker + Helm + k3s with one script
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER && newgrp docker
 
-# 2. Install Helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-# 3. Install k3s and setup cluster (includes CNI, MetalLB, namespaces)
 git clone https://github.com/thc1006/oran-ric-platform.git
 cd oran-ric-platform
 sudo bash scripts/deployment/setup-k3s.sh
-
-# 4. Reload shell to apply KUBECONFIG
 source ~/.bashrc
 ```
 
-**Verification:**
+**Verify installation:**
 ```bash
-docker --version    # Should show Docker 27.x+
-helm version        # Should show v3.x+
-kubectl get nodes   # Should show Ready node
+kubectl get nodes    # Should show: Ready
 ```
 
-#### Option B: Manual Step-by-Step
+#### Step 2: Deploy Platform (~8 min)
 
 ```bash
-# 1. Install Docker
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo usermod -aG docker $USER
-newgrp docker
-
-# 2. Install Helm
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# 3. Install k3s
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.5+k3s1 sh -s - server \
-  --write-kubeconfig-mode 644 \
-  --disable traefik \
-  --disable servicelb
-
-# 4. Setup KUBECONFIG
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
-source ~/.bashrc
-
-# 5. Create namespaces
-kubectl create namespace ricplt
-kubectl create namespace ricxapp
-kubectl create namespace ricobs
-```
-
-### Deploy (5 Steps)
-
-```bash
-# 1. Clone repository (if not already cloned)
-git clone https://github.com/thc1006/oran-ric-platform.git
-cd oran-ric-platform
-
-# 2. Deploy Prometheus
+# Deploy monitoring stack
 helm install r4-infrastructure-prometheus ./ric-dep/helm/infrastructure/subcharts/prometheus \
   --namespace ricplt --values ./config/prometheus-values.yaml
 
-# 3. Deploy Grafana
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
+helm repo add grafana https://grafana.github.io/helm-charts && helm repo update
 helm install oran-grafana grafana/grafana -n ricplt -f ./config/grafana-values.yaml
 
-# 4. Deploy xApps
+# Deploy xApps
 kubectl apply -f ./xapps/kpimon-go-xapp/deploy/ -n ricxapp
 kubectl apply -f ./xapps/traffic-steering/deploy/ -n ricxapp
 kubectl apply -f ./xapps/rc-xapp/deploy/ -n ricxapp
 
-# 5. Deploy E2 Simulator
+# Deploy traffic generator
 bash ./scripts/deployment/deploy-e2-simulator.sh
 ```
 
-**Access Grafana:**
-```bash
-# Get admin password
-kubectl get secret --namespace ricplt oran-grafana -o jsonpath="{.data.admin-password}" | base64 --decode && echo
+#### Step 3: Access Dashboard (~2 min)
 
-# Setup port-forward
+```bash
+# Get Grafana password
+kubectl get secret -n ricplt oran-grafana -o jsonpath="{.data.admin-password}" | base64 -d; echo
+
+# Start port forwarding (keep terminal open)
 kubectl port-forward -n ricplt svc/oran-grafana 3000:80
-
-# Open http://localhost:3000 (username: admin, password: from above command)
 ```
 
-**Verification:**
+**Open browser:** http://localhost:3000 (username: `admin`, password: from above)
+
+### Verify Deployment
+
 ```bash
-kubectl get pods -n ricxapp  # All pods should be Running (1/1)
-kubectl get pods -n ricplt   # Prometheus and Grafana should be Running
+# Check all components are running
+kubectl get pods -n ricxapp -o wide
+kubectl get pods -n ricplt | grep -E 'grafana|prometheus'
 ```
 
-**Detailed guide:** [WORKING_DEPLOYMENT_GUIDE.md](docs/deployment/WORKING_DEPLOYMENT_GUIDE.md) | **Troubleshooting:** [TROUBLESHOOTING.md](docs/deployment/TROUBLESHOOTING.md)
+**Expected output:**
+```
+NAME                              READY   STATUS
+kpimon-xxxxx                      1/1     Running
+traffic-steering-xxxxx            1/1     Running
+ran-control-xxxxx                 1/1     Running
+e2-simulator-xxxxx                1/1     Running
+oran-grafana-xxxxx                1/1     Running
+r4-infrastructure-prometheus-xxx  1/1     Running
+```
+
+> **Next Steps:**
+> - View metrics in Grafana dashboards
+> - Check [WORKING_DEPLOYMENT_GUIDE.md](docs/deployment/WORKING_DEPLOYMENT_GUIDE.md) for detailed walkthrough
+> - If issues occur: [TROUBLESHOOTING.md](docs/deployment/TROUBLESHOOTING.md)
 
 ---
 
@@ -175,6 +165,156 @@ kubectl get pods -n ricplt   # Prometheus and Grafana should be Running
 
 ---
 
+## Installation Guide
+
+> For users who need detailed control over the installation process or want to understand each component.
+
+### System Preparation
+
+#### 1. Install Docker
+
+**Quick method:**
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+**Manual method (Debian/Ubuntu):**
+```bash
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+
+# Download Docker GPG key (works for both Debian and Ubuntu)
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add Docker repository (auto-detects Debian/Ubuntu)
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+```
+
+> **Note**: This method works for both Debian and Ubuntu. Docker repository auto-detects your distribution.
+
+#### 2. Install Helm
+
+```bash
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm version  # Verify installation
+```
+
+#### 3. Install and Configure k3s
+
+**Automated (recommended):**
+```bash
+git clone https://github.com/thc1006/oran-ric-platform.git
+cd oran-ric-platform
+sudo bash scripts/deployment/setup-k3s.sh
+```
+
+**Manual:**
+```bash
+# Install k3s
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.5+k3s1 sh -s - server \
+  --write-kubeconfig-mode 644 \
+  --disable traefik \
+  --disable servicelb
+
+# Configure kubectl access
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
+
+# Create RIC namespaces
+kubectl create namespace ricplt
+kubectl create namespace ricxapp
+kubectl create namespace ricobs
+```
+
+### Component Deployment
+
+#### Deploy Prometheus
+
+```bash
+cd oran-ric-platform
+helm install r4-infrastructure-prometheus \
+  ./ric-dep/helm/infrastructure/subcharts/prometheus \
+  --namespace ricplt \
+  --values ./config/prometheus-values.yaml
+```
+
+**Verify:**
+```bash
+kubectl get pods -n ricplt -l app=prometheus
+# Wait for all pods to be Running
+```
+
+#### Deploy Grafana
+
+```bash
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install oran-grafana grafana/grafana \
+  -n ricplt \
+  -f ./config/grafana-values.yaml
+```
+
+**Get admin password:**
+```bash
+kubectl get secret -n ricplt oran-grafana \
+  -o jsonpath="{.data.admin-password}" | base64 -d && echo
+```
+
+#### Deploy xApps
+
+Deploy each xApp individually for better control:
+
+```bash
+# KPIMON - KPI Monitoring
+kubectl apply -f ./xapps/kpimon-go-xapp/deploy/ -n ricxapp
+
+# Traffic Steering
+kubectl apply -f ./xapps/traffic-steering/deploy/ -n ricxapp
+
+# RAN Control
+kubectl apply -f ./xapps/rc-xapp/deploy/ -n ricxapp
+
+# QoE Predictor (optional)
+kubectl apply -f ./xapps/qoe-predictor/deploy/ -n ricxapp
+
+# Federated Learning (optional)
+kubectl apply -f ./xapps/federated-learning/deploy/ -n ricxapp
+```
+
+#### Deploy E2 Simulator
+
+```bash
+bash ./scripts/deployment/deploy-e2-simulator.sh
+```
+
+### Verification Checklist
+
+- [ ] Docker installed and accessible without sudo
+- [ ] Helm v3+ available
+- [ ] kubectl can access k3s cluster
+- [ ] All RIC namespaces created
+- [ ] Prometheus pods running
+- [ ] Grafana accessible
+- [ ] xApps in Running state
+- [ ] E2 Simulator generating traffic
+
+```bash
+# Run full verification
+kubectl get pods -A | grep -E 'ricplt|ricxapp'
+```
+
+---
+
 ## xApps
 
 | xApp | Version | Purpose | Key Features |
@@ -196,84 +336,160 @@ kubectl get pods -n ricplt   # Prometheus and Grafana should be Running
 
 ## Monitoring & Observability
 
+### Quick Access
+
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| **Grafana** | http://localhost:3000 | admin / `kubectl get secret -n ricplt oran-grafana -o jsonpath="{.data.admin-password}" \| base64 -d` |
+| **Prometheus** | http://localhost:9090 | None required |
+
+**Port forwarding commands:**
+```bash
+# Grafana
+kubectl port-forward -n ricplt svc/oran-grafana 3000:80
+
+# Prometheus
+kubectl port-forward -n ricplt svc/r4-infrastructure-prometheus-server 9090:80
+```
+
 ### Prometheus Metrics
 
-**Auto-discovery via annotations:**
+All xApps expose metrics on port **8080** with automatic Prometheus discovery:
+
+**Auto-discovery configuration:**
 ```yaml
 prometheus.io/scrape: "true"
 prometheus.io/port: "8080"
 prometheus.io/path: "/ric/v1/metrics"
 ```
 
-**Example Metrics:**
+**Key Metrics by Category:**
+
+| Category | Metric | Description |
+|----------|--------|-------------|
+| **Messages** | `kpimon_messages_received_total` | Total E2 indications received |
+| | `kpimon_messages_processed_total` | Successfully processed messages |
+| **Performance** | `kpimon_processing_time_seconds` | Message processing latency (histogram) |
+| **Subscriptions** | `kpimon_active_subscriptions` | Active E2 subscriptions count |
+| **KPIs** | `kpimon_kpi_value{type="prb_usage_dl"}` | PRB utilization percentage |
+
+**Example Queries:**
 ```promql
-kpimon_messages_received_total          # Total messages received
-kpimon_messages_processed_total         # Total messages processed
-kpimon_processing_time_seconds          # Processing latency histogram
-kpimon_active_subscriptions             # Active E2 subscriptions
-kpimon_kpi_value{type="prb_usage_dl"}   # PRB utilization
+# Message processing rate
+rate(kpimon_messages_received_total[5m])
+
+# Average processing time
+histogram_quantile(0.95, rate(kpimon_processing_time_seconds_bucket[5m]))
+
+# xApp resource usage
+container_cpu_usage_seconds_total{namespace="ricxapp"}
 ```
 
-### Alert Rules (8 Categories)
+### Alert Rules
 
-| Category | Alerts | Examples |
-|----------|--------|----------|
-| xApp Availability | Pod down, restart loops | `KPIMONDown`, `HighRestartRate` |
-| Message Processing | Stalled, high latency | `MessageProcessingStalled` |
-| Resource Usage | CPU/memory limits | `HighCPUUsage`, `HighMemoryUsage` |
-| E2 Interface | Connection failures | `E2ConnectionLost` |
-| Business Logic | PRB, signal quality | `HighPRBUsage`, `LowRSRP` |
-| Prometheus | Scrape failures | `PrometheusScrapeFailure` |
-| Network | Service unreachable | `ServiceDown` |
-| Data Quality | Missing/stale metrics | `MetricsMissing` |
+**7 Alert Groups** covering availability, performance, and data quality:
 
-**Configuration:** [monitoring/prometheus/alerts/xapp-alerts.yml](monitoring/prometheus/alerts/xapp-alerts.yml)
+| Alert Group | Focus | Coverage |
+|-------------|-------|----------|
+| **xapp_availability** | Pod health & readiness | All xApps pod status monitoring |
+| **kpimon_alerts** | KPIMON specific | Message processing, rates, errors |
+| **traffic_steering_alerts** | Traffic Steering specific | Handover decisions, SDL operations |
+| **qoe_predictor_alerts** | QoE Predictor specific | Predictions, model performance |
+| **ran_control_alerts** | RAN Control specific | Control actions, success rates |
+| **xapp_resource_usage** | Resource monitoring | CPU, memory usage across xApps |
+| **e2_interface_alerts** | E2 connectivity | Connection status, indication processing |
+
+**Configuration file:** [monitoring/prometheus/alerts/xapp-alerts.yml](monitoring/prometheus/alerts/xapp-alerts.yml)
 
 ### Grafana Dashboards
 
-**Access:** http://localhost:3000 (after port-forward)
+**Available Dashboards** (auto-created during deployment):
 
-**Dashboards:**
-- xApp Performance (message rates, latency, errors)
-- E2 Interface Metrics (indication counts, processing time)
-- Resource Utilization (CPU, memory, network)
-- Alert Overview (active/historical alerts)
+| Dashboard | Key Metrics | Purpose |
+|-----------|-------------|---------|
+| **O-RAN RIC Platform Overview** | Total xApps, RMR messages, E2 connections | System-wide health |
+| **KPIMON xApp** | Messages received, processing time, subscriptions | KPI monitoring |
+| **Traffic Steering xApp** | Handover decisions, active UEs, decision latency | Traffic management |
+| **QoE Predictor xApp** | Active UEs, prediction latency, predictions total | QoE tracking |
+| **RAN Control xApp** | Control actions, handovers, success rate | RAN optimization |
+| **Federated Learning xApp** | Training rounds, clients, accuracy, duration | ML training |
 
-**Automated Testing:** 6 Playwright E2E tests verify dashboard functionality
+**Import dashboards:**
+```bash
+bash ./scripts/deployment/import-dashboards.sh
+```
+
+> **Testing**: 6 Playwright E2E tests (one per dashboard) validate metrics presence (see [Testing](#testing))
 
 ---
 
 ## Testing
 
-### E2E Testing (Playwright)
+### Automated Testing (Playwright)
 
+**Test Suite Coverage:**
+
+| Test Type | Coverage | Command |
+|-----------|----------|---------|
+| **Grafana Dashboards** | 6 dashboards, metrics validation | `npm run test:grafana` |
+| **Dashboard Accessibility** | Login, navigation, panel loading | Included in above |
+| **Metrics Presence** | All expected metrics exist | Included in above |
+
+**Run tests:**
 ```bash
-npm install              # First time only
-npm run test:grafana     # Run 6 dashboard tests
+# First time setup
+npm install
+
+# Run all Grafana dashboard tests
+npm run test:grafana
+
+# Run with visible browser (debugging)
+npm run test:grafana:headed
+
+# View test report
+npm run test:report
 ```
 
-**Coverage:** Dashboard accessibility, metrics presence, panel rendering, query execution, alert verification.
+**Test results location:**
+- Screenshots: `test-results/screenshots/`
+- Reports: `test-results/reports/`
 
-### E2 Simulator
+### E2 Simulator Testing
 
-**Continuous Traffic Generation:**
+**Monitor continuous traffic:**
 ```bash
 kubectl logs -n ricxapp -l app=e2-simulator -f
-# Output: Simulation Iteration 120 → Successfully sent to kpimon (200) → ...
 ```
 
-**Manual Test:**
+**Expected output:**
+```
+=== Simulation Iteration 120 ===
+Successfully sent to kpimon (200)
+Successfully sent to traffic-steering (200)
+Successfully sent to qoe-predictor (200)
+Successfully sent to ran-control (200)
+```
+
+**Manual E2 indication test:**
 ```bash
-kubectl exec -n ricxapp e2-simulator-xxx -- \
-  curl -X POST http://kpimon.ricxapp.svc.cluster.local:8081/e2/indication \
+# Get simulator pod name
+POD=$(kubectl get pod -n ricxapp -l app=e2-simulator -o jsonpath='{.items[0].metadata.name}')
+
+# Send test indication to KPIMON
+kubectl exec -n ricxapp $POD -- curl -X POST \
+  http://kpimon.ricxapp.svc.cluster.local:8081/e2/indication \
   -H "Content-Type: application/json" \
-  -d '{"cell_id": 1234567, "prb_usage_dl": 45.5}'
+  -d '{"cell_id": 1234567, "prb_usage_dl": 45.5, "prb_usage_ul": 32.1}'
 ```
 
-**Performance Targets:**
-- E2 indication processing: < 10ms
-- Control command latency: < 100ms
-- xApp startup: < 30s
+### Performance Benchmarks
+
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| **E2 indication processing** | < 10ms | `kpimon_processing_time_seconds` P95 |
+| **Control command latency** | < 100ms | `rc_control_latency_seconds` P95 |
+| **xApp startup time** | < 30s | Pod `Ready` condition timestamp |
+| **Message throughput** | > 1000 msg/sec | `rate(kpimon_messages_received_total[1m])` |
 
 ---
 
