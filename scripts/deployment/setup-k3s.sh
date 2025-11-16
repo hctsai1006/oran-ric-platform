@@ -74,6 +74,11 @@ clean_iptables() {
     sudo iptables -t mangle -F 2>/dev/null || true
     sudo iptables -t mangle -X 2>/dev/null || true
 
+    # Restart Docker to recreate its iptables chains
+    log_info "Restarting Docker to recreate iptables chains..."
+    sudo systemctl restart docker
+    sleep 3
+
     log_info "iptables cleanup completed"
 }
 
