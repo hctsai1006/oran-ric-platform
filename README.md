@@ -41,7 +41,7 @@
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 
 # 1. Clone with submodules
-git clone --recurse-submodules https://github.com/thc1006/oran-ric-platform.git
+git clone https://github.com/thc1006/oran-ric-platform.git
 cd oran-ric-platform
 
 # 2. Create namespaces
