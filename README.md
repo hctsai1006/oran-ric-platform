@@ -63,6 +63,8 @@
 
 ### Fast Track Deployment
 
+> **⚠️ IMPORTANT**: This assumes Docker images are already built. First-time users should follow the [Installation Guide](#installation-guide) instead.
+
 #### Step 1: Install Prerequisites (~5 min)
 
 ```bash
@@ -83,7 +85,20 @@ source ~/.bashrc
 kubectl get nodes    # Should show: Ready
 ```
 
-#### Step 2: Deploy Platform (~8 min)
+#### Step 2: Build Images (~10 min, first-time only)
+
+```bash
+# Setup local registry
+docker run -d --restart=always --name registry -p 5000:5000 registry:2
+
+# Build and push images (see Installation Guide for details)
+cd xapps/kpimon-go-xapp && docker build -t localhost:5000/xapp-kpimon:1.0.1 . && docker push localhost:5000/xapp-kpimon:1.0.1 && cd ../..
+cd xapps/traffic-steering && docker build -t localhost:5000/xapp-traffic-steering:1.0.2 . && docker push localhost:5000/xapp-traffic-steering:1.0.2 && cd ../..
+cd xapps/rc-xapp && docker build -t localhost:5000/xapp-ran-control:1.0.1 . && docker push localhost:5000/xapp-ran-control:1.0.1 && cd ../..
+cd simulator/e2-simulator && docker build -t localhost:5000/e2-simulator:1.0.0 . && docker push localhost:5000/e2-simulator:1.0.0 && cd ../..
+```
+
+#### Step 3: Deploy RIC Platform (~8 min)
 
 ```bash
 # Deploy monitoring stack
@@ -102,7 +117,7 @@ kubectl apply -f ./xapps/rc-xapp/deploy/ -n ricxapp
 kubectl apply -f ./simulator/e2-simulator/deploy/deployment.yaml
 ```
 
-#### Step 3: Access Dashboard (~2 min)
+#### Step 4: Access Dashboard (~2 min)
 
 ```bash
 # Get Grafana password
@@ -234,6 +249,59 @@ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
 kubectl create namespace ricplt
 kubectl create namespace ricxapp
 kubectl create namespace ricobs
+```
+
+### Build Container Images
+
+> **IMPORTANT**: Before deploying xApps, you must build and push images to the local registry.
+
+#### Setup Local Docker Registry
+
+```bash
+# Start local registry (if not already running)
+docker run -d --restart=always --name registry -p 5000:5000 \
+  -v /var/lib/registry:/var/lib/registry \
+  registry:2
+
+# Verify registry is running
+curl -s http://localhost:5000/v2/_catalog
+```
+
+#### Build xApp Images
+
+```bash
+cd /home/thc1006/oran-ric-platform
+
+# Build KPIMON
+cd xapps/kpimon-go-xapp
+docker build -t localhost:5000/xapp-kpimon:1.0.1 .
+docker push localhost:5000/xapp-kpimon:1.0.1
+
+# Build Traffic Steering
+cd ../traffic-steering
+docker build -t localhost:5000/xapp-traffic-steering:1.0.2 .
+docker push localhost:5000/xapp-traffic-steering:1.0.2
+
+# Build RAN Control
+cd ../rc-xapp
+docker build -t localhost:5000/xapp-ran-control:1.0.1 .
+docker push localhost:5000/xapp-ran-control:1.0.1
+
+cd ../..
+```
+
+#### Build E2 Simulator Image
+
+```bash
+cd simulator/e2-simulator
+docker build -t localhost:5000/e2-simulator:1.0.0 .
+docker push localhost:5000/e2-simulator:1.0.0
+cd ../..
+```
+
+**Verify images:**
+```bash
+curl -s http://localhost:5000/v2/_catalog | python3 -m json.tool
 ```
 
 ### Component Deployment
