@@ -85,6 +85,18 @@ source ~/.bashrc
 kubectl get nodes    # Should show: Ready
 ```
 
+> **⚠️ IMPORTANT - If you see "connection refused" error:**
+> ```bash
+> # Manually set KUBECONFIG (if setup-k3s.sh didn't complete successfully)
+> export KUBECONFIG=$HOME/.kube/config
+> echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
+> source ~/.bashrc
+>
+> # Verify Helm can access the cluster
+> helm version
+> kubectl cluster-info
+> ```
+
 **Create RIC namespaces:**
 ```bash
 kubectl create namespace ricplt
@@ -254,15 +266,32 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.5+k3s1 sh -s - server \
   --disable traefik \
   --disable servicelb
 
-# Configure kubectl access
-export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
+# Configure kubectl access (CRITICAL - required for Helm to work!)
+mkdir -p $HOME/.kube
+sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+sudo chown $USER:$USER $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
+source ~/.bashrc
+
+# Verify cluster access
+kubectl cluster-info
+helm version  # Both should work without errors
 
 # Create RIC namespaces
 kubectl create namespace ricplt
 kubectl create namespace ricxapp
 kubectl create namespace ricobs
 ```
+
+> **⚠️ Troubleshooting "connection refused" errors:**
+> If Helm shows "Kubernetes cluster unreachable" errors, the KUBECONFIG is not set correctly.
+> Run these commands to fix:
+> ```bash
+> export KUBECONFIG=$HOME/.kube/config
+> source ~/.bashrc
+> helm version  # Should now work
+> ```
 
 ### Build Container Images
 
