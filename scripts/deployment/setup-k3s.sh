@@ -19,7 +19,7 @@ K3S_VERSION="v1.28.5+k3s1"
 CLUSTER_DOMAIN="cluster.local"
 METALLB_VERSION="v0.13.12"
 CILIUM_VERSION="1.14.5"
-NGINX_VERSION="1.9.5"
+NGINX_VERSION="4.11.8"
 
 # Function to print colored messages
 log_info() {
@@ -37,28 +37,44 @@ log_error() {
 # Check prerequisites
 check_prerequisites() {
     log_info "Checking prerequisites..."
-    
+
     # Check OS
     if [[ ! -f /etc/os-release ]]; then
         log_error "Cannot detect OS version"
         exit 1
     fi
-    
+
     # Check resources
     TOTAL_MEM=$(free -g | awk '/^Mem:/{print $2}')
     if [[ $TOTAL_MEM -lt 8 ]]; then
         log_warn "System has less than 8GB RAM. RIC platform may not run optimally."
     fi
-    
+
     TOTAL_CORES=$(nproc)
     if [[ $TOTAL_CORES -lt 4 ]]; then
         log_warn "System has less than 4 CPU cores. Performance may be impacted."
     fi
-    
+
     # Check if k3s already installed
     if command -v k3s &> /dev/null; then
         log_warn "k3s is already installed. Proceeding with configuration..."
     fi
+}
+
+# Clean iptables rules from previous installations
+clean_iptables() {
+    log_info "Cleaning old iptables rules from previous CNI installations..."
+
+    # Clean all iptables rules to prevent conflicts with Cilium
+    # This is necessary when reinstalling to avoid iptables rule conflicts
+    sudo iptables -t nat -F 2>/dev/null || true
+    sudo iptables -t nat -X 2>/dev/null || true
+    sudo iptables -t filter -F 2>/dev/null || true
+    sudo iptables -t filter -X 2>/dev/null || true
+    sudo iptables -t mangle -F 2>/dev/null || true
+    sudo iptables -t mangle -X 2>/dev/null || true
+
+    log_info "iptables cleanup completed"
 }
 
 # Install k3s
@@ -298,13 +314,16 @@ verify_installation() {
 main() {
     echo ""
     check_prerequisites
-    
+
     echo ""
     install_k3s
-    
+
+    echo ""
+    clean_iptables
+
     echo ""
     install_cilium
-    
+
     echo ""
     install_metallb
     
