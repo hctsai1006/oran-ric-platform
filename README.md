@@ -110,10 +110,10 @@ cd simulator/e2-simulator && docker build -t localhost:5000/e2-simulator:1.0.0 .
 #### Step 3: Deploy RIC Platform (~8 min)
 
 ```bash
-# Deploy monitoring stack
-helm install r4-infrastructure-prometheus ./ric-dep/helm/infrastructure/subcharts/prometheus \
-  --namespace ricplt --values ./config/prometheus-values.yaml
+# Deploy Prometheus (single-line for easy copy-paste)
+helm install r4-infrastructure-prometheus ./ric-dep/helm/infrastructure/subcharts/prometheus --namespace ricplt --values ./config/prometheus-values.yaml
 
+# Deploy Grafana
 helm repo add grafana https://grafana.github.io/helm-charts && helm repo update
 helm install oran-grafana grafana/grafana -n ricplt -f ./config/grafana-values.yaml
 
@@ -333,10 +333,7 @@ curl -s http://localhost:5000/v2/_catalog | python3 -m json.tool
 
 ```bash
 cd oran-ric-platform
-helm install r4-infrastructure-prometheus \
-  ./ric-dep/helm/infrastructure/subcharts/prometheus \
-  --namespace ricplt \
-  --values ./config/prometheus-values.yaml
+helm install r4-infrastructure-prometheus ./ric-dep/helm/infrastructure/subcharts/prometheus --namespace ricplt --values ./config/prometheus-values.yaml
 ```
 
 **Verify:**
@@ -350,15 +347,12 @@ kubectl get pods -n ricplt -l app=prometheus
 ```bash
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-helm install oran-grafana grafana/grafana \
-  -n ricplt \
-  -f ./config/grafana-values.yaml
+helm install oran-grafana grafana/grafana -n ricplt -f ./config/grafana-values.yaml
 ```
 
 **Get admin password:**
 ```bash
-kubectl get secret -n ricplt oran-grafana \
-  -o jsonpath="{.data.admin-password}" | base64 -d && echo
+kubectl get secret -n ricplt oran-grafana -o jsonpath="{.data.admin-password}" | base64 -d && echo
 ```
 
 #### Deploy xApps
