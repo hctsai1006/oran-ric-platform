@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# O-RAN RIC Grafana Dashboard 導入腳本
+# O-RAN RIC Grafana Dashboard 匯入腳本
 # 作者: 蔡秀吉 (thc1006)
 # 日期: 2025-11-15
 #
-# Small CL #8: 導入 Grafana Dashboard
+# Small CL #8: 匯入 Grafana Dashboard
 #
 
 set -e
@@ -20,18 +20,18 @@ GRAFANA_PASS="oran-ric-admin"
 DASHBOARD_DIR="/home/thc1006/oran-ric-platform/config/dashboards"
 
 echo "======================================"
-echo "   Grafana Dashboard 導入"
+echo "   Grafana Dashboard 匯入"
 echo "   作者: 蔡秀吉 (thc1006)"
 echo "   日期: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================"
 echo
 
-# 導入 Dashboard
+# 匯入 Dashboard
 import_dashboard() {
     local file=$1
     local name=$2
 
-    echo -e "${BLUE}[INFO]${NC} 導入 ${name}..."
+    echo -e "${BLUE}[資訊]${NC} 匯入 ${name}..."
 
     response=$(curl -s -X POST \
         -H "Content-Type: application/json" \
@@ -44,21 +44,21 @@ import_dashboard() {
     if [ "$status" = "success" ]; then
         uid=$(echo "$response" | jq -r '.uid')
         url=$(echo "$response" | jq -r '.url')
-        echo -e "${GREEN}[SUCCESS]${NC} ${name} 導入成功"
+        echo -e "${GREEN}[成功]${NC} ${name} 匯入成功"
         echo "         UID: ${uid}"
         echo "         URL: ${GRAFANA_URL}${url}"
         echo
         return 0
     else
-        echo -e "\033[0;31m[ERROR]\033[0m ${name} 導入失敗"
+        echo -e "\033[0;31m[錯誤]\033[0m ${name} 匯入失敗"
         echo "$response" | jq '.'
         echo
         return 1
     fi
 }
 
-# 導入所有 Dashboard
-echo "開始導入 Dashboard..."
+# 匯入所有 Dashboard
+echo "開始匯入 Dashboard..."
 echo
 
 import_dashboard "${DASHBOARD_DIR}/oran-ric-overview.json" "O-RAN RIC Platform Overview"
@@ -69,9 +69,9 @@ import_dashboard "${DASHBOARD_DIR}/federated-learning-dashboard.json" "Federated
 import_dashboard "${DASHBOARD_DIR}/kpimon-dashboard.json" "KPIMON xApp"
 
 echo "======================================"
-echo "所有 Dashboard 導入完成！"
+echo "所有 Dashboard 匯入完成！"
 echo
-echo "訪問 Grafana:"
+echo "存取 Grafana:"
 echo "  http://localhost:3000"
 echo
 echo "登入資訊:"

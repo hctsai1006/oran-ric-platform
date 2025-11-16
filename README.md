@@ -77,14 +77,26 @@ curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 git clone https://github.com/thc1006/oran-ric-platform.git
 cd oran-ric-platform
 sudo bash scripts/deployment/setup-k3s.sh
+
+# Configure kubectl access (CRITICAL - must run in new shell after setup-k3s.sh)
+export KUBECONFIG=$HOME/.kube/config
 source ~/.bashrc
+
+# Create RIC namespaces
+kubectl create namespace ricplt
+kubectl create namespace ricxapp
+kubectl create namespace ricobs
+
+# Start local Docker registry
+docker run -d --restart=always --name registry -p 5000:5000 \
+  -v /var/lib/registry:/var/lib/registry registry:2
 ```
 
 **Verify installation:**
 ```bash
 kubectl get nodes              # Should show: Ready
 helm version                   # Should show version without errors
-kubectl get namespaces         # Should show: ricplt, ricxapp, ricobs
+kubectl get namespaces | grep -E 'ricplt|ricxapp|ricobs'  # Should show all 3 namespaces
 docker ps | grep registry      # Should show: localhost:5000 running
 ```
 
@@ -127,8 +139,14 @@ kubectl apply -f ./simulator/e2-simulator/deploy/deployment.yaml -n ricxapp
 # Get Grafana password
 kubectl get secret -n ricplt oran-grafana -o jsonpath="{.data.admin-password}" | base64 -d; echo
 
-# Start port forwarding (keep terminal open)
+# Start port forwarding (keep terminal open in background or new terminal)
 kubectl port-forward -n ricplt svc/oran-grafana 3000:80
+```
+
+**In a new terminal, import dashboards:**
+```bash
+cd oran-ric-platform
+bash ./scripts/deployment/import-dashboards.sh
 ```
 
 **Open browser:** http://localhost:3000 (username: `admin`, password: from above)
@@ -237,6 +255,22 @@ helm version  # Verify installation
 git clone https://github.com/thc1006/oran-ric-platform.git
 cd oran-ric-platform
 sudo bash scripts/deployment/setup-k3s.sh
+
+# Configure kubectl access (CRITICAL - must run after setup-k3s.sh)
+mkdir -p $HOME/.kube
+sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+sudo chown $USER:$USER $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
+source ~/.bashrc
+
+# Create RIC namespaces
+kubectl create namespace ricplt
+kubectl create namespace ricxapp
+kubectl create namespace ricobs
+
+# Verify
+kubectl get namespaces | grep -E 'ricplt|ricxapp|ricobs'
 ```
 
 **Manual:**
@@ -354,6 +388,15 @@ helm install oran-grafana grafana/grafana -n ricplt -f ./config/grafana-values.y
 **Get admin password:**
 ```bash
 kubectl get secret -n ricplt oran-grafana -o jsonpath="{.data.admin-password}" | base64 -d && echo
+```
+
+**Import Grafana dashboards:**
+```bash
+# Start port forwarding in background or separate terminal
+kubectl port-forward -n ricplt svc/oran-grafana 3000:80 &
+
+# Import all dashboards
+bash ./scripts/deployment/import-dashboards.sh
 ```
 
 #### Deploy xApps
