@@ -29,10 +29,165 @@
 
 ---
 
+## 🚀 Wednesday 一鍵部署（生產就緒版）
+
+> **⭐ 新功能**: 整合 Phase 0 緊急修復的安全部署腳本，包含 Redis 持久化、密碼加密、自動備份機制。
+
+### 快速開始（5 步驟，45 分鐘）
+
+```bash
+# 1. 前置檢查（2 分鐘）
+kubectl get nodes                    # 確認 k3s 運行
+free -h                              # 確認至少 16GB RAM
+df -h                                # 確認至少 50GB 磁碟空間
+
+# 2. 確認映像已構建（如果是首次部署，參考下方"建置映像"）
+curl -s http://localhost:5000/v2/_catalog | python3 -m json.tool
+
+# 3. 執行一鍵部署（40-60 分鐘）
+sudo bash scripts/wednesday-safe-deploy.sh
+
+# 4. 訪問 Grafana（1 分鐘）
+# 腳本執行完成後會顯示密碼和訪問方式
+# 或手動執行：
+kubectl port-forward -n ricplt svc/grafana 3000:80
+
+# 5. 驗證部署（2 分鐘）
+kubectl get pods -A | grep -E 'ricplt|ricxapp'
+```
+
+### 部署腳本功能亮點
+
+**wednesday-safe-deploy.sh** 自動執行以下操作：
+
+✅ **安全增強**
+- 自動生成安全密碼（Grafana、Redis）
+- 建立 Kubernetes Secrets
+- 移除所有明文密碼配置
+
+✅ **資料保護**
+- 啟用 Redis AOF 持久化（appendonly: yes）
+- 配置 RDB 快照（防止資料遺失）
+- 建立每日自動備份 CronJob
+- 設定 InfluxDB 7 天保留策略
+
+✅ **完整部署**
+- RIC Platform 核心元件
+- Prometheus + Grafana 監控堆疊
+- 5 個生產級 xApps（KPIMON, TS, QP, RC, FL）
+- E2 Simulator（含 FL 配置修正）
+
+✅ **智慧驗證**
+- 部署前系統檢查
+- 部署前自動備份
+- 部署後完整驗證（7 大類別）
+- 生成詳細部署報告
+
+### 首次部署：建置映像
+
+如果是首次部署，需要先建置並推送 Docker 映像到本地 registry：
+
+```bash
+# 啟動本地 Docker Registry
+docker run -d --restart=always --name registry -p 5000:5000 \
+  -v /var/lib/registry:/var/lib/registry registry:2
+
+# 建置所有映像（一行命令）
+cd xapps/kpimon-go-xapp && docker build -t localhost:5000/xapp-kpimon:1.0.1 . && docker push localhost:5000/xapp-kpimon:1.0.1 && cd ../.. && \
+cd xapps/traffic-steering && docker build -t localhost:5000/xapp-traffic-steering:1.0.2 . && docker push localhost:5000/xapp-traffic-steering:1.0.2 && cd ../.. && \
+cd xapps/rc-xapp && docker build -t localhost:5000/xapp-ran-control:1.0.1 . && docker push localhost:5000/xapp-ran-control:1.0.1 && cd ../.. && \
+cd xapps/qoe-predictor && docker build -t localhost:5000/xapp-qoe-predictor:1.0.0 . && docker push localhost:5000/xapp-qoe-predictor:1.0.0 && cd ../.. && \
+cd xapps/federated-learning && docker build -t localhost:5000/xapp-federated-learning:1.0.0 . && docker push localhost:5000/xapp-federated-learning:1.0.0 && cd ../.. && \
+cd simulator/e2-simulator && docker build -t localhost:5000/e2-simulator:1.0.0 . && docker push localhost:5000/e2-simulator:1.0.0 && cd ../..
+```
+
+### 部署後驗證清單
+
+腳本執行完成後，執行以下檢查：
+
+```bash
+# 1. 檢查所有 Pods 運行
+kubectl get pods -A | grep -v Running | grep -v Completed
+# 應該沒有輸出（所有 Pods 都正常）
+
+# 2. 檢查 Redis 持久化已啟用
+kubectl exec -n ricplt deployment/ricplt-dbaas-server -- redis-cli CONFIG GET appendonly
+# 預期輸出: "yes"
+
+# 3. 檢查每日備份 CronJob
+kubectl get cronjob -n ricplt
+# 應該看到: ric-daily-backup
+
+# 4. 取得 Grafana 密碼
+kubectl get secret grafana-admin-secret -n ricplt -o jsonpath='{.data.admin-password}' | base64 -d; echo
+
+# 5. 訪問 Grafana
+kubectl port-forward -n ricplt svc/grafana 3000:80
+# 瀏覽器開啟: http://localhost:3000
+# 帳號: admin / 密碼: 上一步的輸出
+```
+
+### 重要文件位置
+
+部署完成後，以下文件包含重要資訊：
+
+```bash
+# 部署日誌
+/tmp/wednesday-deploy-YYYYMMDD-HHMMSS.log
+
+# 部署報告
+/tmp/wednesday-deploy-YYYYMMDD-HHMMSS-report.txt
+
+# 密碼檔案（請立即備份到安全位置！）
+/tmp/wednesday-backup-YYYYMMDD-HHMMSS/PASSWORDS.txt
+
+# 備份所有配置
+/tmp/wednesday-backup-YYYYMMDD-HHMMSS/
+```
+
+### 常見問題排查
+
+**問題 1: kubectl 連線失敗**
+```bash
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+# 或
+export KUBECONFIG=$HOME/.kube/config
+```
+
+**問題 2: Pod 卡在 Pending**
+```bash
+kubectl describe pod <pod-name> -n <namespace>
+kubectl top nodes  # 檢查資源使用
+```
+
+**問題 3: 映像拉取失敗**
+```bash
+# 確認本地 registry 運行
+docker ps | grep registry
+
+# 確認映像已推送
+curl -s http://localhost:5000/v2/_catalog
+```
+
+### 技術分析報告
+
+完整的系統分析與 90 天行動計畫，請參考：
+
+- 📊 [主執行摘要](docs/MASTER_EXECUTIVE_SUMMARY.md) - 5 分鐘了解系統狀況
+- 🗺️ [90 天行動計畫](docs/90_DAY_ACTION_PLAN.md) - 完整執行計畫
+- 🔒 [安全審查報告](docs/SECURITY_AUDIT_REPORT.md) - 28 個安全漏洞分析
+- 📈 [效能分析](docs/technical-debt/PERFORMANCE_ANALYSIS.md) - 效能優化建議
+- 📑 [所有報告索引](docs/ANALYSIS_REPORTS_INDEX.md) - 15 份報告導覽
+
+---
+
 ## Table of Contents
 
+**Wednesday 部署（推薦）**
+- [🚀 Wednesday 一鍵部署](#-wednesday-一鍵部署生產就緒版) - **生產就緒的安全部署** ⭐⭐⭐
+
 **Getting Started**
-- [部署模式選擇](#部署模式選擇) - 選擇適合的部署方式 ⭐
+- [部署模式選擇](#部署模式選擇) - 選擇適合的部署方式
 - [Quick Start](#quick-start) - Deploy in 15 minutes
 - [Installation Guide](#installation-guide) - Detailed setup instructions
 - [Architecture](#architecture) - System overview
