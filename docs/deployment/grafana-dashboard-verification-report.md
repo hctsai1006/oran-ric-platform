@@ -250,7 +250,7 @@ http://localhost:3000/d/24f0ebc8-2c62-410f-bb4e-be0c0e957bbf  # Federated Learni
 
 **Issue:** Initial dashboards had no UID and couldn't be found
 **Resolution:**
-- Created import script `/home/thc1006/oran-ric-platform/scripts/import-grafana-dashboards.sh`
+- Created import script `/home/thc1006/oran-ric-platform/scripts/deployment/import-dashboards.sh`
 - Script automatically detects dashboard JSON format
 - Successfully imported all 6 dashboards with generated UIDs
 
@@ -338,7 +338,7 @@ http://localhost:3000/d/24f0ebc8-2c62-410f-bb4e-be0c0e957bbf  # Federated Learni
 - `/home/thc1006/oran-ric-platform/package.json` - Node.js dependencies
 
 ### Import Scripts
-- `/home/thc1006/oran-ric-platform/scripts/import-grafana-dashboards.sh` - Dashboard import automation
+- `/home/thc1006/oran-ric-platform/scripts/deployment/import-dashboards.sh` - Dashboard import automation
 
 ### Test Results
 - `/home/thc1006/oran-ric-platform/test-results/screenshots/` - Dashboard screenshots (6 files)
@@ -418,7 +418,7 @@ npm run test:report
 ### Import Dashboards
 ```bash
 # Import all dashboards from config/dashboards/
-/home/thc1006/oran-ric-platform/scripts/import-grafana-dashboards.sh
+/home/thc1006/oran-ric-platform/scripts/deployment/import-dashboards.sh
 
 # Or manually with curl
 curl -X POST -H "Content-Type: application/json" \
