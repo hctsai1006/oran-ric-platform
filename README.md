@@ -297,6 +297,37 @@ bash scripts/deployment/deploy-ric-platform.sh
 
 > **⚠️ IMPORTANT**: This assumes Docker images are already built. First-time users should follow the [Installation Guide](#installation-guide) instead.
 
+> **📋 Critical Setup Requirements** (必读！Read First!)
+>
+> Before starting deployment, ensure these steps are completed:
+>
+> 1. **KUBECONFIG Configuration** (必须/Required)
+>    - All `kubectl` and `helm` commands require proper KUBECONFIG setup
+>    - After k3s installation, configure kubectl access:
+>      ```bash
+>      mkdir -p $HOME/.kube
+>      sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+>      sudo chown $USER:$USER $HOME/.kube/config
+>      export KUBECONFIG=$HOME/.kube/config
+>      echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
+>      source ~/.bashrc
+>      ```
+>    - **Verify**: `kubectl get nodes` should show your node
+>
+> 2. **E2 Simulator Submodule** (必须/Required)
+>    - E2 Simulator is a git submodule (separate repository)
+>    - **Must initialize before building images**:
+>      ```bash
+>      cd oran-ric-platform
+>      git submodule update --init --recursive
+>      ```
+>    - **Verify**: `ls simulator/e2-simulator/` should show Dockerfile and src/
+>
+> 3. **GPU Support** (可选/Optional - for Federated Learning GPU)
+>    - Required only if you want to use GPU-accelerated Federated Learning
+>    - See [GPU Support Setup](#gpu-support-optional) below
+>    - CPU version works without GPU setup
+
 #### Step 1: Install Prerequisites (~5 min)
 
 ```bash
@@ -334,7 +365,18 @@ kubectl get namespaces | grep -E 'ricplt|ricxapp|ricobs'  # Should show all 3 na
 docker ps | grep registry      # Should show: localhost:5000 running
 ```
 
-#### Step 2: Build Images (~10 min, first-time only)
+#### Step 2: Initialize E2 Simulator Submodule (~1 min, first-time only)
+
+```bash
+# Initialize E2 Simulator git submodule
+cd oran-ric-platform
+git submodule update --init --recursive
+
+# Verify submodule is initialized
+ls simulator/e2-simulator/  # Should show: Dockerfile, src/, deploy/, etc.
+```
+
+#### Step 3: Build Images (~10 min, first-time only)
 
 ```bash
 # Build and push images to local registry (localhost:5000)
@@ -346,7 +388,7 @@ cd xapps/federated-learning && docker build -t localhost:5000/xapp-federated-lea
 cd simulator/e2-simulator && docker build -t localhost:5000/e2-simulator:1.0.0 . && docker push localhost:5000/e2-simulator:1.0.0 && cd ../..
 ```
 
-#### Step 3: Deploy RIC Platform (~8 min)
+#### Step 4: Deploy RIC Platform (~8 min)
 
 ```bash
 # Deploy Prometheus (single-line for easy copy-paste)
@@ -367,7 +409,7 @@ kubectl apply -f ./xapps/federated-learning/deploy/ -n ricxapp
 kubectl apply -f ./simulator/e2-simulator/deploy/deployment.yaml -n ricxapp
 ```
 
-#### Step 4: Access Dashboard (~2 min)
+#### Step 5: Access Dashboard (~2 min)
 
 ```bash
 # Get Grafana password
@@ -405,6 +447,46 @@ e2-simulator-xxxxx                1/1     Running
 oran-grafana-xxxxx                1/1     Running
 r4-infrastructure-prometheus-xxx  1/1     Running
 ```
+
+### GPU Support (Optional)
+
+> **Note**: GPU support is only needed for GPU-accelerated Federated Learning. The CPU version (`federated-learning`) works without GPU setup.
+
+If you have NVIDIA GPU and want to enable GPU-accelerated training:
+
+**Prerequisites:**
+- NVIDIA GPU (tested with RTX 3060)
+- NVIDIA drivers installed (`nvidia-smi` command available)
+- CUDA toolkit (optional, for development)
+
+**Setup GPU Support:**
+
+```bash
+# Run the GPU setup script
+cd oran-ric-platform
+sudo bash scripts/setup-gpu-support.sh
+```
+
+This script will:
+1. Install NVIDIA Device Plugin for Kubernetes
+2. Label nodes with `nvidia.com/gpu=true`
+3. Verify GPU resources are available
+
+**Verify GPU Pod Scheduling:**
+
+```bash
+# Check if GPU pod is now running (not Pending)
+kubectl get pods -n ricxapp -l version=v1.0.0-gpu
+
+# Check GPU usage inside pod
+GPU_POD=$(kubectl get pod -n ricxapp -l version=v1.0.0-gpu -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -n ricxapp $GPU_POD -- nvidia-smi
+```
+
+**Troubleshooting:**
+- If pod still Pending: `kubectl describe pod -n ricxapp -l version=v1.0.0-gpu`
+- Check NVIDIA Device Plugin: `kubectl get pods -n kube-system -l name=nvidia-device-plugin-ds`
+- Verify node has GPU: `kubectl get nodes -o=custom-columns=NAME:.metadata.name,GPU:.status.capacity.'nvidia\.com/gpu'`
 
 > **Next Steps:**
 > - View metrics in Grafana dashboards
@@ -795,6 +877,29 @@ kubectl get pods -A | grep -E 'ricplt|ricxapp'
 - `GET /ric/v1/metrics` - Prometheus metrics
 
 **Documentation:** Each xApp has detailed README in `xapps/<name>/`
+
+### Federated Learning xApp - Architecture Note
+
+The Federated Learning xApp has two deployment variants:
+
+1. **CPU Version** (`federated-learning`) - Default, always deployed
+   - Works on any Kubernetes cluster
+   - Suitable for development and testing
+   - Uses TensorFlow CPU backend
+
+2. **GPU Version** (`federated-learning-gpu`) - Optional, requires GPU setup
+   - Requires NVIDIA GPU and Device Plugin
+   - Significantly faster training (5-10x speedup)
+   - Recommended for production with large models
+   - See [GPU Support](#gpu-support-optional) for setup
+
+**Future Consideration**: Due to its unique GPU dependencies and specialized ML infrastructure requirements, the Federated Learning xApp is a candidate for extraction into a separate repository (similar to E2 Simulator). This would enable:
+- Independent development cycle for ML features
+- Specialized CI/CD for GPU testing
+- Cleaner dependency management (CUDA, cuDNN, TensorRT)
+- Optional installation for users not needing FL capabilities
+
+For now, both versions coexist in this repository for easier integration and testing.
 
 ---
 

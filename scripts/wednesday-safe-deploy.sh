@@ -99,6 +99,24 @@ cleanup_on_error() {
 trap cleanup_on_error ERR
 
 # ============================================================================
+# GPU 檢測函數
+# ============================================================================
+detect_gpu_support() {
+    # 檢查是否有任何節點具有 nvidia.com/gpu 資源
+    # 返回: 0 (true) 如果有 GPU，1 (false) 如果沒有 GPU
+
+    local gpu_count=$(kubectl get nodes -o json 2>/dev/null | \
+        jq -r '.items[].status.capacity."nvidia.com/gpu" // "0"' | \
+        awk '{sum += $1} END {print sum}')
+
+    if [ -z "$gpu_count" ] || [ "$gpu_count" = "0" ]; then
+        return 1  # No GPU found
+    else
+        return 0  # GPU found
+    fi
+}
+
+# ============================================================================
 # 歡迎訊息
 # ============================================================================
 print_welcome() {
@@ -136,7 +154,7 @@ check_prerequisites() {
     step "檢查必要工具..."
     local missing_tools=()
 
-    for tool in kubectl helm docker openssl; do
+    for tool in kubectl helm docker openssl jq; do
         if ! command -v $tool &> /dev/null; then
             missing_tools+=($tool)
             error "缺少工具: $tool"
@@ -172,6 +190,19 @@ check_prerequisites() {
     kubectl get nodes
     success "節點檢查通過"
 
+    step "檢查並初始化 E2 Simulator Submodule..."
+    if [ ! -f "$PROJECT_ROOT/simulator/e2-simulator/Dockerfile" ]; then
+        info "E2 Simulator submodule 未初始化，正在初始化..."
+        cd "$PROJECT_ROOT"
+        if ! git submodule update --init --recursive; then
+            error "E2 Simulator submodule 初始化失敗"
+            exit 1
+        fi
+        success "E2 Simulator submodule 初始化完成"
+    else
+        success "E2 Simulator submodule 已初始化"
+    fi
+
     step "檢查磁碟空間..."
     local available_space=$(df -BG / | awk 'NR==2 {print $4}' | sed 's/G//')
     if [ "$available_space" -lt 20 ]; then
@@ -179,6 +210,15 @@ check_prerequisites() {
         warn "建議至少有 50GB 可用空間"
     else
         success "可用磁碟空間: ${available_space}GB"
+    fi
+
+    step "檢測 GPU 資源..."
+    if detect_gpu_support; then
+        success "檢測到 GPU 資源，將部署 GPU 版本的 Federated Learning xApp"
+        export GPU_AVAILABLE=true
+    else
+        info "未檢測到 GPU 資源，將部署 CPU 版本的 Federated Learning xApp"
+        export GPU_AVAILABLE=false
     fi
 }
 
@@ -369,8 +409,27 @@ deploy_xapps() {
         docker build -t localhost:5000/xapp-$xapp:latest .
         docker push localhost:5000/xapp-$xapp:latest
 
-        # 部署到 Kubernetes
-        kubectl apply -f deploy/ -n ricxapp
+        # 部署到 Kubernetes - 特別處理 Federated Learning
+        if [ "$xapp" = "federated-learning" ]; then
+            if [ "$GPU_AVAILABLE" = "true" ]; then
+                info "部署 GPU 版本的 Federated Learning..."
+                kubectl apply -f deploy/deployment-gpu.yaml -n ricxapp
+                kubectl apply -f deploy/service.yaml -n ricxapp 2>/dev/null || true
+                kubectl apply -f deploy/configmap.yaml -n ricxapp 2>/dev/null || true
+                kubectl apply -f deploy/serviceaccount.yaml -n ricxapp 2>/dev/null || true
+                kubectl apply -f deploy/pvc.yaml -n ricxapp 2>/dev/null || true
+            else
+                info "部署 CPU 版本的 Federated Learning..."
+                kubectl apply -f deploy/deployment.yaml -n ricxapp
+                kubectl apply -f deploy/service.yaml -n ricxapp 2>/dev/null || true
+                kubectl apply -f deploy/configmap.yaml -n ricxapp 2>/dev/null || true
+                kubectl apply -f deploy/serviceaccount.yaml -n ricxapp 2>/dev/null || true
+                kubectl apply -f deploy/pvc.yaml -n ricxapp 2>/dev/null || true
+            fi
+        else
+            # 其他 xApps 使用標準部署
+            kubectl apply -f deploy/ -n ricxapp
+        fi
 
         success "xApp $xapp 部署完成"
     done

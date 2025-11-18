@@ -31,10 +31,12 @@ spec:
       - key: nvidia.com/gpu
         operator: Exists
         effect: NoSchedule
+      # Use nvidia runtime for GPU access
+      runtimeClassName: nvidia
       containers:
       - name: federated-learning
-        image: localhost:5000/xapp-federated-learning:1.0.0-gpu
-        imagePullPolicy: IfNotPresent
+        image: localhost:5000/xapp-federated-learning:1.0.0
+        imagePullPolicy: Always
         ports:
         - name: rmr-data
           containerPort: 4590

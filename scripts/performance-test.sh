@@ -198,7 +198,8 @@ test_resource_utilization() {
 
     # This requires Prometheus to be running
     if kubectl get svc -n "$PLATFORM_NAMESPACE" | grep -q prometheus-server; then
-        PROM_POD=$(kubectl get pod -n "$PLATFORM_NAMESPACE" -l app.kubernetes.io/name=prometheus -o jsonpath='{.items[0].metadata.name}')
+        # 使用实际标签: app=prometheus, component=server
+        PROM_POD=$(kubectl get pod -n "$PLATFORM_NAMESPACE" -l app=prometheus,component=server -o jsonpath='{.items[0].metadata.name}')
         if [ -n "$PROM_POD" ]; then
             kubectl exec -n "$PLATFORM_NAMESPACE" "$PROM_POD" -- wget -q -O - 'http://localhost:9090/api/v1/query?query=rate(container_cpu_cfs_throttled_seconds_total{namespace=~"ricplt|ricxapp"}[5m])' | \
                 jq -r '.data.result[] | "\(.metric.pod): \(.value[1])"' >> "$REPORT_FILE" 2>/dev/null || echo "No throttling data available" >> "$REPORT_FILE"
@@ -381,7 +382,8 @@ test_prometheus_metrics() {
     } >> "$REPORT_FILE"
 
     # Find Prometheus pod
-    PROM_POD=$(kubectl get pod -n "$PLATFORM_NAMESPACE" -l app.kubernetes.io/name=prometheus -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+    # 使用实际标签: app=prometheus, component=server
+    PROM_POD=$(kubectl get pod -n "$PLATFORM_NAMESPACE" -l app=prometheus,component=server -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
 
     if [ -z "$PROM_POD" ]; then
         log_warning "Prometheus pod not found - skipping metrics validation"

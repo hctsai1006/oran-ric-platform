@@ -157,8 +157,11 @@ verify_deployment() {
 
     # 等待 Pod 就緒
     log_info "等待 Prometheus Server Pod 就緒..."
+
+    # 使用实际的标签选择器（修复标签不匹配问题）
+    # 实际标签: app=prometheus, component=server, release=r4-infrastructure-prometheus
     kubectl wait --for=condition=ready pod \
-        -l "app.kubernetes.io/name=prometheus,app.kubernetes.io/instance=$RELEASE_NAME" \
+        -l "app=prometheus,component=server,release=$RELEASE_NAME" \
         -n $NAMESPACE \
         --timeout=300s
 
@@ -172,12 +175,12 @@ verify_deployment() {
     # 顯示 Pod 狀態
     echo
     log_info "Prometheus Pods 狀態:"
-    kubectl get pods -n $NAMESPACE -l "app.kubernetes.io/instance=$RELEASE_NAME"
+    kubectl get pods -n $NAMESPACE -l "app=prometheus,release=$RELEASE_NAME"
     echo
 
     # 顯示 Service 狀態
     log_info "Prometheus Services 狀態:"
-    kubectl get svc -n $NAMESPACE -l "app.kubernetes.io/instance=$RELEASE_NAME"
+    kubectl get svc -n $NAMESPACE -l "app=prometheus,release=$RELEASE_NAME"
     echo
 }
 
@@ -186,7 +189,8 @@ test_prometheus_api() {
     log_step "測試 Prometheus API..."
 
     # 獲取 Prometheus Server Service
-    PROM_SERVICE=$(kubectl get svc -n $NAMESPACE -l "app.kubernetes.io/name=prometheus-server,app.kubernetes.io/instance=$RELEASE_NAME" -o jsonpath='{.items[0].metadata.name}')
+    # 使用实际标签: app=prometheus, component=server, release=r4-infrastructure-prometheus
+    PROM_SERVICE=$(kubectl get svc -n $NAMESPACE -l "app=prometheus,component=server,release=$RELEASE_NAME" -o jsonpath='{.items[0].metadata.name}')
     PROM_CLUSTER_IP=$(kubectl get svc -n $NAMESPACE $PROM_SERVICE -o jsonpath='{.spec.clusterIP}')
     PROM_PORT=$(kubectl get svc -n $NAMESPACE $PROM_SERVICE -o jsonpath='{.spec.ports[0].port}')
 
@@ -210,7 +214,8 @@ test_prometheus_api() {
 show_access_info() {
     log_step "Prometheus 訪問資訊"
 
-    PROM_SERVICE=$(kubectl get svc -n $NAMESPACE -l "app.kubernetes.io/name=prometheus-server,app.kubernetes.io/instance=$RELEASE_NAME" -o jsonpath='{.items[0].metadata.name}')
+    # 使用实际标签: app=prometheus, component=server
+    PROM_SERVICE=$(kubectl get svc -n $NAMESPACE -l "app=prometheus,component=server,release=$RELEASE_NAME" -o jsonpath='{.items[0].metadata.name}')
     PROM_CLUSTER_IP=$(kubectl get svc -n $NAMESPACE $PROM_SERVICE -o jsonpath='{.spec.clusterIP}')
     PROM_PORT=$(kubectl get svc -n $NAMESPACE $PROM_SERVICE -o jsonpath='{.spec.ports[0].port}')
 
