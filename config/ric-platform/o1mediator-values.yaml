@@ -1,0 +1,52 @@
+################################################################################
+# O1 Mediator Configuration
+# Deployment values for O-RAN O1 Mediator component
+# O1 Interface: Management operations and network monitoring interface
+################################################################################
+
+o1mediator:
+  # Image configuration
+  imagePullPolicy: IfNotPresent
+  image:
+    name: ric-plt-o1
+    tag: 0.3.1
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  # Replication
+  replicaCount: 1
+
+  # Prometheus Alert Manager URL for O1 notifications
+  prometheusAMUrl: "r4-infrastructure-prometheus-alertmanager:80"
+
+  # Logging configuration
+  loglevel: "INFO"
+
+  # Health check configuration
+  liveness:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 10
+
+  readiness:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+  # Resource allocation
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Service ports are defined in ric-common templates:
+# - HTTP API: 8080
+# - NETCONF: 830
+# - HTTPS: 8443
+#
+# Environment variables configured:
+# - DBAAS_SERVICE_HOST: Points to dbaas service
+# - DBAAS_SERVICE_PORT: 6379 (Redis port)
+#

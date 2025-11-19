@@ -1,0 +1,57 @@
+# Jaeger Adapter Configuration for O-RAN RIC Platform
+# Distributed Tracing System
+
+jaegeradapter:
+  replicaCount: 1
+
+  imagePullPolicy: IfNotPresent
+  image:
+    name: jaegertracing/all-in-one
+    tag: 1.12
+    registry: "docker.io"
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    ports:
+      jaeger-agent-zipkin-thrift:
+        containerPort: 6831
+        protocol: UDP
+      jaeger-agent-compact:
+        containerPort: 6832
+        protocol: UDP
+      jaeger-agent-grpc:
+        containerPort: 14250
+        protocol: TCP
+      jaeger-collector-grpc:
+        containerPort: 14250
+        protocol: TCP
+      jaeger-collector-http:
+        containerPort: 14268
+        protocol: TCP
+      jaeger-query:
+        containerPort: 16686
+        protocol: TCP
+
+  # Resource limits
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  # Ingress configuration
+  ingress:
+    enabled: false
+    annotations: {}
+    tls: []
+
+  # Environment configuration
+  env:
+    COLLECTOR_ZIPKIN_HOST_PORT: ":9411"
+    SPAN_STORAGE_TYPE: "memory"

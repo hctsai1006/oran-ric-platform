@@ -14,42 +14,40 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.vespamgr" -}}
+  {{- printf "vespamgr" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
+{{- define "common.fullname.vespamgr" -}}
+  {{- $name := ( include "common.name.vespamgr" . ) -}}
   {{- $namespace := ( include "common.namespace.platform" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.vespamgr" -}}
+  {{- $name := ( include "common.fullname.vespamgr" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.vespamgr" -}}
+  {{- $name := ( include "common.fullname.vespamgr" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.vespamgr" -}}
+  {{- $name := ( include "common.fullname.vespamgr" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.servicename.vespamgr.http" -}}
+  {{- $name := ( include "common.fullname.vespamgr" . ) -}}
   {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.servicename.vespamgr.alert" -}}
+  {{- $name := ( include "common.fullname.vespamgr" . ) -}}
+  {{- printf "service-%s-alert" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.serviceport.vespamgr.http" -}}8080{{- end -}}
+{{- define "common.serviceport.vespamgr.alert" -}}9095{{- end -}}

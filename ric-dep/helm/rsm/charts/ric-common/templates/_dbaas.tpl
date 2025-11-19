@@ -1,5 +1,5 @@
 ################################################################################
-#   Copyright (c) 2019 AT&T Intellectual Property.                             #
+#   Copyright (c) 2020 AT&T Intellectual Property.                             #
 #                                                                              #
 #   Licensed under the Apache License, Version 2.0 (the "License");            #
 #   you may not use this file except in compliance with the License.           #
@@ -14,42 +14,45 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.dbaas" -}}
+  {{- printf "dbaas" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
+{{- define "common.fullname.dbaas" -}}
+  {{- $name := ( include "common.name.dbaas" . ) -}}
   {{- $namespace := ( include "common.namespace.platform" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.dbaas" -}}
+  {{- $name := ( include "common.fullname.dbaas" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.dbaas" -}}
+  {{- $name := ( include "common.fullname.dbaas" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.statefulsetname.dbaas" -}}
+  {{- $name := ( include "common.fullname.dbaas" . ) -}}
+  {{- printf "statefulset-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.containername.dbaas" -}}
+  {{- $name := ( include "common.fullname.dbaas" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
+{{- define "common.serviceaccountname.dbaas" -}}
+  {{- $name := ( include "common.fullname.dbaas" . ) -}}
+  {{- printf "svcacct-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
+{{- define "common.servicename.dbaas.tcp" -}}
+  {{- $name := ( include "common.fullname.dbaas" . ) -}}
+  {{- printf "service-%s-tcp" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.serviceport.dbaas.redis" -}}6379{{- end -}}
+{{- define "common.serviceport.dbaas.sentinel" -}}26379{{- end -}}

@@ -40,7 +40,7 @@ global:
   releasePrefix: r4
   serviceport:
     submgr:
-      http: 8088
+      http: 8080
 
 # Change the overall image pull policy using the following option
 #  pullpolicy: IfNotPresent

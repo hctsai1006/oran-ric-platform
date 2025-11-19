@@ -14,42 +14,52 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.xapp-onboarder" -}}
+  {{- printf "xapp-onboarder" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
+{{- define "common.fullname.xapp-onboarder" -}}
+  {{- $name := ( include "common.name.xapp-onboarder" . ) -}}
   {{- $namespace := ( include "common.namespace.platform" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.xapp-onboarder" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.xapp-onboarder" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.xapp-onboarder" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
+{{- define "common.containername.xapp-onboarder.chartmuseum" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
+  {{- printf "container-%s-chartmuseum" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.serviceaccountname.xapp-onboarder" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
+  {{- printf "svcacct-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.ingressname.xapp-onboarder" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
+  {{- printf "ingress-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.servicename.xapp-onboarder.server" -}}
+  {{- $name := ( include "common.fullname.xapp-onboarder" . ) -}}
   {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.serviceport.xapp-onboarder.server" -}}8888{{- end -}}
+{{- define "common.serviceport.xapp-onboarder.chartmuseum" -}}8080{{- end -}}
+
+{{- define "common.kongpath.ric.xapp-onboarder" -}}/onboard{{- end -}}
+{{- define "common.kongpath.ric.chartmuseum" -}}/helmrepo{{- end -}}

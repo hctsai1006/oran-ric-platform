@@ -13,18 +13,8 @@
 #   See the License for the specific language governing permissions and        #
 #   limitations under the License.                                             #
 ################################################################################
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{ include "common.ingressname.rsm" . }}
-spec:
-  rules:
-  - http:
-      paths:
-      - path: {{ include "common.kongpath.ric.rsm" . }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ include "common.servicename.rsm.http" . }}
-            port:
-              number: {{ include "common.serviceport.rsm.http" . }}
+
+
+{{- define "common.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}

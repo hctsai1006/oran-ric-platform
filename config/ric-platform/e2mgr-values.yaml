@@ -1,0 +1,53 @@
+################################################################################
+# E2 Manager Configuration
+# Deployment values for O-RAN E2 Manager component
+################################################################################
+
+e2mgr:
+  # Image configuration
+  imagePullPolicy: IfNotPresent
+  image:
+    name: ric-plt-e2mgr
+    tag: 5.4.19
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  # Security and replication
+  privilegedmode: false
+  replicaCount: 1
+
+  # Global RIC Identifiers
+  globalRicId:
+    plmnId: 131014
+    ricNearRtId: 556670
+
+  # Health check configuration
+  liveness:
+    api: v1/health
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    enabled: true
+
+  readiness:
+    api: v1/health
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    enabled: true
+
+  # Environment variables
+  common_env_variables:
+    ServiceName: "RIC_E2_MGR"
+    ConfigMapName: "/etc/config/log-level.yaml"
+
+  # Resource allocation
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "400m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+
+# Service ports are defined in ric-common templates:
+# - HTTP API: 3800
+# - RMR Data: 3801
+# - RMR Route: 4561

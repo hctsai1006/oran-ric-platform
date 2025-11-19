@@ -1,0 +1,51 @@
+################################################################################
+# A1 Mediator Configuration
+# Deployment values for O-RAN A1 Mediator component
+# A1 Interface: Policy management interface between Near-RT RIC and Non-RT RIC
+################################################################################
+
+a1mediator:
+  # Image configuration
+  imagePullPolicy: IfNotPresent
+  image:
+    name: ric-plt-a1
+    tag: 2.5.0
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  # Replication
+  replicaCount: 1
+
+  # RMR timeout configuration
+  rmr_timeout_config:
+    a1_rcv_retry_times: 20
+    ins_del_no_resp_ttl: 5
+    ins_del_resp_ttl: 10
+
+  # Logging configuration
+  loglevel: "INFO"
+
+  # Health check configuration
+  # Temporarily disabled due to healthcheck endpoint returning 404 in v2.5.0
+  liveness:
+    enabled: false
+  readiness:
+    enabled: false
+
+  # Resource allocation
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Service ports are defined in ric-common templates:
+# - HTTP API: 10000
+# - RMR Data: 4562
+# - RMR Route: 4561
+#
+# Environment variables configured:
+# - RMR_RTG_SVC: Points to rtmgr routing service
+# - DBAAS_SERVICE_HOST: Points to dbaas service
+# - DBAAS_SERVICE_PORT: 6379 (Redis port)

@@ -1,0 +1,60 @@
+################################################################################
+# E2 Termination Configuration
+# Based on O-RAN SC RIC Platform E2 Term deployment
+################################################################################
+
+e2term:
+  alpha:
+    imagePullPolicy: IfNotPresent
+    image:
+      name: ric-plt-e2
+      tag: 5.5.0
+      registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+    privilegedmode: false
+    hostnetworkmode: false
+
+    replicaCount: 1
+
+    env:
+      print: "1"
+      messagecollectorfile: "/data/outgoing/"
+
+    # Storage configuration
+    dataVolSize: 100Mi
+    storageClassName: local-storage
+
+    # PIZ Publisher disabled by default
+    pizpub:
+      enabled: false
+
+# Health check configuration
+health:
+  liveness:
+    command: "ip=`hostname -i`;export RMR_SRC_ID=$ip;/opt/e2/rmr_probe -h $ip"
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    enabled: true
+
+  readiness:
+    command: "ip=`hostname -i`;export RMR_SRC_ID=$ip;/opt/e2/rmr_probe -h $ip"
+    initialDelaySeconds: 120
+    periodSeconds: 60
+    enabled: true
+
+# Log level configuration
+loglevel: 3
+
+# Common environment variables
+common_env_variables:
+  ConfigMapName: "/etc/config/log-level"
+  ServiceName: "RIC_E2_TERM"
+
+################################################################################
+# Service Configuration
+# Ports are defined in ric-common templates:
+# - SCTP: 36422 (NodePort for E2 interface)
+# - RMR Data: 38000 (ClusterIP for RMR messaging)
+# - RMR Route: 4561 (ClusterIP for RMR routing)
+# - Prometheus: 8088 (ClusterIP for metrics)
+################################################################################

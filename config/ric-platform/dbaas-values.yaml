@@ -1,0 +1,86 @@
+# DBaaS Configuration for O-RAN RIC Platform
+# Author: 蔡秀吉 (thc1006)
+# Date: 2025-11-19
+# Purpose: Shared Data Layer (SDL) frontend - Database as a Service
+
+dbaas:
+  image:
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+    name: ric-plt-dbaas
+    tag: 0.6.1
+
+  imagePullPolicy: IfNotPresent
+
+  # High Availability mode
+  # Set to false for single-node development
+  # Set to true for production with multiple nodes
+  enableHighAvailability: false
+
+  # Pod anti-affinity
+  # Set to true in production to distribute pods across nodes
+  enablePodAntiAffinity: false
+
+  terminationGracePeriodSeconds: 5
+
+  # Redis configuration for Standalone mode
+  redis:
+    masterGroupName: dbaasmaster
+
+    # Standalone (SA) configuration
+    sa_config:
+      ## Redis configuration for /data/conf/redis.conf
+      # AOF persistence disabled for development (no persistent disk)
+      appendonly: "no"
+      save: ""
+      protected-mode: "no"
+      loadmodule: "/usr/local/libexec/redismodule/libredismodule.so"
+      bind: 0.0.0.0
+
+      # Memory management
+      maxmemory: "512mb"
+      maxmemory-policy: "allkeys-lru"
+
+    # High Availability (HA) configuration (not used when enableHighAvailability=false)
+    ha_config:
+      appendonly: "no"
+      save: ""
+      min-slaves-to-write: 1
+      min-slaves-max-lag: 5
+      maxmemory: "512mb"
+      maxmemory-policy: "volatile-lru"
+      protected-mode: "no"
+      loadmodule: "/usr/local/libexec/redismodule/libredismodule.so"
+
+  # Sentinel configuration (used for HA mode)
+  sentinel:
+    quorum: 2
+    protected-mode: "no"
+    config:
+      down-after-milliseconds: 5000
+      failover-timeout: 60000
+      parallel-syncs: 1
+
+  # Number of replicas
+  # SA mode: 1 replica
+  # HA mode: 3 replicas for production
+  saReplicas: 1
+  haReplicas: 3
+
+  # Probe configuration
+  probeTimeoutCommand: "timeout"
+  probeTimeout: 10
+
+  # Resource limits
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Service configuration
+service:
+  tcp:
+    type: ClusterIP
+    port: 6379

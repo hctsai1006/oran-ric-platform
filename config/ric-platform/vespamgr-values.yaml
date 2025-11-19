@@ -1,5 +1,6 @@
 ################################################################################
 #   Copyright (c) 2019 AT&T Intellectual Property.                             #
+#   Copyright (c) 2019 Nokia.                                                  #
 #                                                                              #
 #   Licensed under the Apache License, Version 2.0 (the "License");            #
 #   you may not use this file except in compliance with the License.           #
@@ -13,18 +14,13 @@
 #   See the License for the specific language governing permissions and        #
 #   limitations under the License.                                             #
 ################################################################################
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{ include "common.ingressname.rsm" . }}
-spec:
-  rules:
-  - http:
-      paths:
-      - path: {{ include "common.kongpath.ric.rsm" . }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ include "common.servicename.rsm.http" . }}
-            port:
-              number: {{ include "common.serviceport.rsm.http" . }}
+
+vespamgr:
+  imagePullPolicy: IfNotPresent
+  replicaCount: 1
+  image:
+    name: ric-plt-vespamgr
+    tag: 0.4.0
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  prometheusurl: "http://r4-infrastructure-prometheus-server.ricplt"
