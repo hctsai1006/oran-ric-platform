@@ -60,24 +60,24 @@ kubectl get pods -A | grep -E 'ricplt|ricxapp'
 
 **wednesday-safe-deploy.sh** 自動執行以下操作：
 
- **安全增強**
+**安全增強**
 - 自動生成安全密碼（Grafana、Redis）
 - 建立 Kubernetes Secrets
 - 移除所有明文密碼配置
 
- **資料保護**
+**資料保護**
 - 啟用 Redis AOF 持久化（appendonly: yes）
 - 配置 RDB 快照（防止資料遺失）
 - 建立每日自動備份 CronJob
 - 設定 InfluxDB 7 天保留策略
 
- **完整部署**
+**完整部署**
 - RIC Platform 核心元件
 - Prometheus + Grafana 監控堆疊
 - 5 個生產級 xApps（KPIMON, TS, QP, RC, FL）
 - E2 Simulator（含 FL 配置修正）
 
- **智慧驗證**
+**智慧驗證**
 - 部署前系統檢查
 - 部署前自動備份
 - 部署後完整驗證（7 大類別）
@@ -227,9 +227,9 @@ curl -s http://localhost:5000/v2/_catalog
 - 教學與演示
 
 **優點**:
-- ⚡ 快速部署（~15 分鐘）
-- 💻 資源需求低（8 核 / 16GB RAM）
-- 🔄 獨立運行，不依賴外部 E2 節點
+- 快速部署（~15 分鐘）
+- 資源需求低（8 核 / 16GB RAM）
+- 獨立運行，不依賴外部 E2 節點
 - 完整監控與可視化
 - **這是當前推薦的標準部署方式**
 
@@ -241,7 +241,7 @@ bash scripts/deployment/deploy-all.sh
 
 ---
 
-### 🏭 模式 2: 完整 RIC Platform（實驗性）
+### 模式 2: 完整 RIC Platform（實驗性）
 
 **使用腳本**: `bash scripts/deployment/deploy-ric-platform.sh`
 
@@ -730,7 +730,7 @@ curl -s http://localhost:5000/v2/_catalog
 #### Build xApp Images
 
 ```bash
-cd /home/thc1006/oran-ric-platform
+cd /path/to/oran-ric-platform
 
 # Build KPIMON
 cd xapps/kpimon-go-xapp
@@ -1187,8 +1187,6 @@ oran-ric-platform/
 
 ## Credits
 
-**Author:** 蔡秀吉 (thc1006)
-
 **Related Projects:**
 - [oran-e2-node](https://github.com/thc1006/oran-e2-node) - E2 Node Simulator
 
@@ -1215,8 +1213,6 @@ Apache License 2.0 - See [LICENSE](LICENSE)
 ---
 
 <div align="center">
-
-**Made by 蔡秀吉 (thc1006)**
 
 *Production-ready O-RAN deployment with comprehensive observability*
 
