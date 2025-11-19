@@ -1,6 +1,5 @@
 # O-RAN RIC Platform - Performance Test Report
 
-**Author:** 蔡秀吉 (thc1006)
 **Date:** 2025-11-17 21:39:14
 **Test Duration:** 300 seconds
 

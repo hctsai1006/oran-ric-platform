@@ -75,6 +75,12 @@
 | **TEST_SUMMARY.txt** | 測試摘要 | 文字格式 |
 | **VERIFICATION_COMPLETE.txt** | 驗證完成報告 | 文字格式 |
 
+###   `reports/performance/` - 效能測試報告
+
+| 文檔 | 說明 | 日期 |
+|------|------|------|
+| **performance-test-20251117-213914.md** | 平台效能測試報告（300秒） | 2025-11-17 |
+
 ###   `reports/analysis/` - 分析報告
 
 | 文檔 | 說明 | 重要性 |
