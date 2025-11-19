@@ -1,0 +1,11 @@
+backup_date: 2025-11-18 22:13:20 UTC
+kubernetes_version: Unknown
+helm_version: v3.19.2+g8766e71
+backup_location: backups/20251119-061314
+components_backed_up:
+  - ricplt namespace
+  - ricxapp namespace
+  - ConfigMaps
+  - Helm releases
+  - Prometheus data
+  - Git status

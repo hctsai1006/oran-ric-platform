@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: submgr-stub-nginx-config
+  namespace: ricplt
+data:
+  nginx.conf: |
+    events {}
+    http {
+      server {
+        listen 8088;
+        location /ric/v1/subscriptions {
+          default_type application/json;
+          return 200 '[]';
+        }
+        location /ric/v1/restsubscriptions {
+          default_type application/json;
+          return 200 '[]';
+        }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: submgr-rest-stub
+  namespace: ricplt
+  labels:
+    app: submgr-rest-stub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: submgr-rest-stub
+  template:
+    metadata:
+      labels:
+        app: submgr-rest-stub
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 8088
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: submgr-stub-nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-ricplt-submgr-http-stub
+  namespace: ricplt
+spec:
+  type: ClusterIP
+  selector:
+    app: submgr-rest-stub
+  ports:
+  - name: http
+    port: 8088
+    targetPort: 8088

@@ -1,0 +1,108 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [withFooter]="false">
+    <div title>Device Manager</div>
+    <div content fxLayout="row">
+        <div id="resource-list" class="container box-center">
+            <table class="table table-dark table-striped center table-bordered">
+                <thead>
+                    <tr style="font-weight: bold;">
+                        <th scope="col">ID</th>
+                        <th scope="col">Deviece name</th>
+                        <th scope="col">Deviece IP</th>
+                        <th scope="col">Port</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Capability</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of deviceConfig">
+                        <th scope="row">{{data['id']}}</th>
+                        <th>{{data['name']}}</th>
+                        <th>{{data['host']}}</th>
+                        <th>{{data['port']}}</th>
+                        <ng-template [ngIf]="deviceHealth[data['id']] == ''" [ngIfElse]="elseBlock">
+                            <th>
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </th>
+                            <th></th>
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <th>{{deviceHealth[data['id']]}}</th>
+                            <ng-template [ngIf]="deviceHealth[data['id']]=='Alive'" [ngIfElse]="elseBlock">
+                                <th><button type="button" class="btn btn-info" (click)="showCapability(data['id'])">Show</button></th>
+                            </ng-template>
+                            <ng-template #elseBlock>
+                                <th></th>
+                            </ng-template>
+                        </ng-template>
+                        <th><button type="button" class="btn btn-danger" (click)="deleteConfig(data['id'])">Delete</button></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</kd-card>
+
+<ng-template [ngIf]="isDetailsShow">
+    <kd-card [withFooter]="false">
+        <div title>Capabilities</div>
+        <div content fxLayout="row">
+            <ul class="list-group">
+                <li *ngFor="let data of showingDetails;" class="list-group-item">
+                    {{data}}
+                </li>
+            </ul>
+        </div>
+    </kd-card>
+</ng-template>
+
+<kd-card [withFooter]="true">
+    <div title>Management</div>
+    <div content fxLayout="row">
+        <div class="mb-3">
+            <label for="device-name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="device-name" value="" placeholder="default">
+        </div>
+        <div class="mb-3">
+            <label for="device-ip" class="form-label">IP address</label>
+            <input type="text" class="form-control" id="device-ip" value="" placeholder="192.168.1.1">
+        </div>
+        <div class="mb-3">
+            <label for="device-port" class="form-label">Port</label>
+            <input type="text" class="form-control" id="device-port" value="" placeholder="830">
+        </div>
+        <div class="mb-3">
+            <label for="device-username" class="form-label">username</label>
+            <input type="text" class="form-control" id="device-username" value="" placeholder="username">
+        </div>
+        <div class="mb-3">
+            <label for="device-password" class="form-label">password</label>
+            <input type="password" class="form-control" id="device-password" value="" placeholder="">
+        </div>
+    </div>
+    <div content fxLayout="row">
+        <div class="mb-3">
+            <button type="button" class="btn btn-light" (click)="sendConfigRequest()">
+                Add
+            </button>
+        </div>
+    </div>
+</kd-card>

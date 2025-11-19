@@ -1,0 +1,104 @@
+{
+  "xapp_name": "hw-go",
+  "version": "1.1.2",
+  "description": "HelloWorld xApp for O-RAN Platform Validation",
+  "containers": [
+    {
+      "name": "hw-go",
+      "image": {
+        "registry": "nexus3.o-ran-sc.org:10002",
+        "name": "o-ran-sc/ric-app-hw-go",
+        "tag": "1.1.2"
+      },
+      "resources": {
+        "requests": {
+          "cpu": "100m",
+          "memory": "128Mi"
+        },
+        "limits": {
+          "cpu": "500m",
+          "memory": "512Mi"
+        }
+      }
+    }
+  ],
+  "messaging": {
+    "ports": [
+      {
+        "name": "rmr-data",
+        "container": "hw-go",
+        "port": 4560,
+        "protocol": "TCP",
+        "description": "RMR data port for HelloWorld"
+      },
+      {
+        "name": "rmr-route",
+        "container": "hw-go",
+        "port": 4561,
+        "protocol": "TCP",
+        "description": "RMR routing port"
+      },
+      {
+        "name": "http-api",
+        "container": "hw-go",
+        "port": 8080,
+        "protocol": "TCP",
+        "description": "REST API and metrics endpoint"
+      }
+    ]
+  },
+  "rmr": {
+    "protPort": "tcp:4560",
+    "maxSize": 2072,
+    "numWorkers": 1,
+    "rxMessages": [
+      "RIC_SUB_RESP:12011",
+      "RIC_SUB_DEL_RESP:12013",
+      "RIC_INDICATION:12050"
+    ],
+    "txMessages": [
+      "RIC_SUB_REQ:12010",
+      "RIC_SUB_DEL_REQ:12012"
+    ]
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/ric/v1/health/alive",
+      "port": 8080
+    },
+    "initialDelaySeconds": 10,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3
+  },
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/ric/v1/health/ready",
+      "port": 8080
+    },
+    "initialDelaySeconds": 15,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "successThreshold": 1,
+    "failureThreshold": 3
+  },
+  "metrics": [
+    {
+      "name": "Messages Received",
+      "objectName": "hw_go_xapp",
+      "objectInstance": "1",
+      "description": "Total number of messages received"
+    },
+    {
+      "name": "Messages Sent",
+      "objectName": "hw_go_xapp",
+      "objectInstance": "1",
+      "description": "Total number of messages sent"
+    }
+  ],
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "output": "stdout"
+  }
+}

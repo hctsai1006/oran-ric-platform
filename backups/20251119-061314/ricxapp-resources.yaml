@@ -1,0 +1,3205 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/path: /ric/v1/metrics
+      prometheus.io/port: "8080"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generateName: kpimon-54486974b6-
+    labels:
+      app: kpimon
+      pod-template-hash: 54486974b6
+      xapp: kpimon
+    name: kpimon-54486974b6-ft6jg
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: kpimon-54486974b6
+      uid: a1a68d08-c80d-4caa-bc4f-6ffc78a0c64b
+    resourceVersion: "29430"
+    uid: ad859a5a-ae12-4427-9024-f6fe761b5a20
+  spec:
+    containers:
+    - env:
+      - name: RMR_SEED_RT
+        value: /app/config/rmr-routes.txt
+      - name: RMR_SRC_ID
+        value: kpimon
+      - name: RMR_RTG_SVC
+        value: service-ricplt-rtmgr-rmr.ricplt:4561
+      - name: INFLUXDB_URL
+        value: http://r4-influxdb-influxdb2.ricplt:8086
+      - name: INFLUXDB_ORG
+        value: oran
+      - name: INFLUXDB_BUCKET
+        value: kpimon
+      image: localhost:5000/xapp-kpimon:1.0.1
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/alive
+          port: 8081
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: kpimon
+      ports:
+      - containerPort: 4560
+        name: rmr-data
+        protocol: TCP
+      - containerPort: 8080
+        name: http-metrics
+        protocol: TCP
+      - containerPort: 8081
+        name: http-health
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/ready
+          port: 8081
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vtkvg
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: kpimon-config
+      name: config-volume
+    - name: kube-api-access-vtkvg
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:29Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:29Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://951f4bb609f5ae01e2ec830c75dec3cd8dda2edcd144eab3b636b74617e52874
+      image: localhost:5000/xapp-kpimon:1.0.1
+      imageID: localhost:5000/xapp-kpimon@sha256:23baf6c7511e2b5e24b67f99c0c2c1cb25ee3cda3a60c332654075ef1520cc77
+      lastState: {}
+      name: kpimon
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:22Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.211
+    podIPs:
+    - ip: 10.42.0.211
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/path: /ric/v1/metrics
+      prometheus.io/port: "8081"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generateName: traffic-steering-664d55cdb5-
+    labels:
+      app: traffic-steering
+      pod-template-hash: 664d55cdb5
+      xapp: traffic-steering
+    name: traffic-steering-664d55cdb5-p5vnq
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: traffic-steering-664d55cdb5
+      uid: 24f17cfb-ecd8-4924-93f5-ce84eb740662
+    resourceVersion: "29435"
+    uid: 3a7a9fc8-e76b-49c4-8da9-4dd123077b1e
+  spec:
+    containers:
+    - env:
+      - name: RMR_SEED_RT
+        value: /app/config/rmr-routes.txt
+      - name: RMR_SRC_ID
+        value: traffic-steering
+      - name: RMR_RTG_SVC
+        value: service-ricplt-rtmgr-rmr.ricplt:4561
+      - name: SDL_NAMESPACE
+        value: traffic-steering
+      - name: LOG_LEVEL
+        value: INFO
+      image: localhost:5000/xapp-traffic-steering:1.0.2
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ric/v1/health/alive
+          port: 8081
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: traffic-steering
+      ports:
+      - containerPort: 4560
+        name: rmr-data
+        protocol: TCP
+      - containerPort: 4561
+        name: rmr-route
+        protocol: TCP
+      - containerPort: 8081
+        name: http-api
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ric/v1/health/ready
+          port: 8081
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-g5c6p
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: traffic-steering-config
+      name: config-volume
+    - name: kube-api-access-g5c6p
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:29Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:29Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://77c4b2d5a599da5a41541ceb30c08e2e1cf8a4a417ae4c74c9943e84539d80d4
+      image: localhost:5000/xapp-traffic-steering:1.0.2
+      imageID: localhost:5000/xapp-traffic-steering@sha256:42941aee32b5de7b14c704fe57ec277e79b736735ac3ebff1b5a336c3f31576a
+      lastState: {}
+      name: traffic-steering
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:23Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.25
+    podIPs:
+    - ip: 10.42.0.25
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-18T22:08:34Z"
+    generateName: e2-simulator-54f6cfd7b4-
+    labels:
+      app: e2-simulator
+      component: simulator
+      pod-template-hash: 54f6cfd7b4
+    name: e2-simulator-54f6cfd7b4-8fghz
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: e2-simulator-54f6cfd7b4
+      uid: bc3aece0-feb2-4b6a-abd8-f0582905a1ed
+    resourceVersion: "29466"
+    uid: 7fa18178-52ad-4622-a5a3-75a13ba4c659
+  spec:
+    containers:
+    - image: localhost:5000/e2-simulator:1.0.0
+      imagePullPolicy: Always
+      name: e2-simulator
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4vq4m
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-4vq4m
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:34Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:34Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://67add3270203a4caf1f179f70653d19e2ecf40f148b9efc05c5ccc7b235fafc9
+      image: localhost:5000/e2-simulator:1.0.0
+      imageID: localhost:5000/e2-simulator@sha256:9409264fe48b830ca1a8ff468b16396abb5efed4f65bce50a5b1f93325c88824
+      lastState: {}
+      name: e2-simulator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:35Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.29
+    podIPs:
+    - ip: 10.42.0.29
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:34Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/path: /ric/v1/metrics
+      prometheus.io/port: "8100"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generateName: ran-control-68dd98746d-
+    labels:
+      app: ran-control
+      pod-template-hash: 68dd98746d
+      xapp: ran-control
+    name: ran-control-68dd98746d-qjsk4
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: ran-control-68dd98746d
+      uid: 97733cd2-ef6d-4778-bbd6-03e4a5865dd9
+    resourceVersion: "29473"
+    uid: eaf534e0-7854-48bc-becc-58145fdeabd1
+  spec:
+    containers:
+    - env:
+      - name: RMR_SEED_RT
+        value: /app/config/rmr-routes.txt
+      - name: RMR_SRC_ID
+        value: ran-control
+      - name: RMR_RTG_SVC
+        value: service-ricplt-rtmgr-rmr.ricplt:4561
+      - name: LD_LIBRARY_PATH
+        value: /usr/local/lib:$LD_LIBRARY_PATH
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      image: localhost:5000/xapp-ran-control:1.0.1
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/alive
+          port: 8100
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: ran-control
+      ports:
+      - containerPort: 4580
+        name: rmr-data
+        protocol: TCP
+      - containerPort: 4581
+        name: rmr-route
+        protocol: TCP
+      - containerPort: 8100
+        name: http-api
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/ready
+          port: 8100
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 300m
+          memory: 512Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config/rmr-routes.txt
+        name: config-volume
+        subPath: rmr-routes.txt
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-chdjr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: ran-control-config
+      name: config-volume
+    - name: kube-api-access-chdjr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:45Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:45Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://a7fe2d43b4aa72cf235dfad30870f404007d501b2077c782f8a6507e99aae0cf
+      image: localhost:5000/xapp-ran-control:1.0.1
+      imageID: localhost:5000/xapp-ran-control@sha256:50bf96acf525a53fd72958a3324ce98d861c6d24a94636480d21a4ec010a555c
+      lastState: {}
+      name: ran-control
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:22Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.201
+    podIPs:
+    - ip: 10.42.0.201
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/path: /ric/v1/metrics
+      prometheus.io/port: "8090"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generateName: qoe-predictor-55b75b5f8c-
+    labels:
+      app: qoe-predictor
+      pod-template-hash: 55b75b5f8c
+      version: v1.0.0
+      xapp: qoe-predictor
+    name: qoe-predictor-55b75b5f8c-w4zvh
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: qoe-predictor-55b75b5f8c
+      uid: 7efd49e7-e9af-4ba8-85db-8387b456e153
+    resourceVersion: "29506"
+    uid: a5faec9f-fabd-4fb2-b878-20f6045c3b16
+  spec:
+    containers:
+    - env:
+      - name: RMR_SRC_ID
+        value: qoe-predictor
+      - name: RMR_SEED_RT
+        value: /app/config/rmr-routes.txt
+      - name: REDIS_HOST
+        value: redis-service.ricplt
+      - name: REDIS_PORT
+        value: "6379"
+      - name: REDIS_DB
+        value: "1"
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      image: localhost:5000/xapp-qoe-predictor:1.0.0
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/alive
+          port: 8090
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 10
+      name: qoe-predictor
+      ports:
+      - containerPort: 4570
+        name: rmr-data
+        protocol: TCP
+      - containerPort: 4571
+        name: rmr-route
+        protocol: TCP
+      - containerPort: 8090
+        name: http-api
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/ready
+          port: 8090
+          scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "2"
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: false
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config
+        name: config
+        readOnly: true
+      - mountPath: /app/models
+        name: models
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-2v2zr
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+    serviceAccount: qoe-predictor-sa
+    serviceAccountName: qoe-predictor-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: qoe-predictor-config
+      name: config
+    - emptyDir: {}
+      name: models
+    - name: kube-api-access-2v2zr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:09:15Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:09:15Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:14Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://c53df6404336a4d15c47362c62293fb01554a2b19273daeb060d7dcf2189fb3d
+      image: localhost:5000/xapp-qoe-predictor:1.0.0
+      imageID: localhost:5000/xapp-qoe-predictor@sha256:ac2f7a3b0e5f2768af3ff4a31c4c45b5197933bc54e10a39fb002020f6e8e021
+      lastState: {}
+      name: qoe-predictor
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:30Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.213
+    podIPs:
+    - ip: 10.42.0.213
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      prometheus.io/path: /ric/v1/metrics
+      prometheus.io/port: "8110"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    generateName: federated-learning-58fc88ffc6-
+    labels:
+      app: federated-learning
+      pod-template-hash: 58fc88ffc6
+      version: v1.0.0
+      xapp: federated-learning
+    name: federated-learning-58fc88ffc6-shlzs
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: federated-learning-58fc88ffc6
+      uid: 8fb79eb5-557d-4a3b-b34f-d250f911d281
+    resourceVersion: "29530"
+    uid: 3c85590a-7fbe-4806-9c15-23348b268a06
+  spec:
+    containers:
+    - env:
+      - name: RMR_SRC_ID
+        value: federated-learning
+      - name: RMR_SEED_RT
+        value: /app/config/rmr-routes.txt
+      - name: REDIS_HOST
+        value: redis-service.ricplt
+      - name: REDIS_PORT
+        value: "6379"
+      - name: REDIS_DB
+        value: "3"
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      - name: FL_MODE
+        value: production
+      image: localhost:5000/xapp-federated-learning:1.0.0
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/alive
+          port: 8110
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 10
+      name: federated-learning
+      ports:
+      - containerPort: 4590
+        name: rmr-data
+        protocol: TCP
+      - containerPort: 4591
+        name: rmr-route
+        protocol: TCP
+      - containerPort: 8110
+        name: http-api
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/ready
+          port: 8110
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "4"
+          memory: 4Gi
+        requests:
+          cpu: "1"
+          memory: 2Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: false
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config
+        name: config
+        readOnly: true
+      - mountPath: /app/models
+        name: models
+      - mountPath: /app/data
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-xbwjf
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+    serviceAccount: federated-learning-sa
+    serviceAccountName: federated-learning-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: federated-learning-config
+      name: config
+    - name: models
+      persistentVolumeClaim:
+        claimName: federated-learning-models-pvc
+    - emptyDir: {}
+      name: data
+    - name: kube-api-access-xbwjf
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:18Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:09:58Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:09:58Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:18Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://5aff91a5e7601bfde377d08689206b736612e2cdba3fa215ba0101bef342dd7f
+      image: localhost:5000/xapp-federated-learning:1.0.0
+      imageID: localhost:5000/xapp-federated-learning@sha256:41c3aa72d6de7aa46cfcbaaf1728d794b1ffd5c01a29d29ef31940983cabf641
+      lastState: {}
+      name: federated-learning
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:55Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.27
+    podIPs:
+    - ip: 10.42.0.27
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:18Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    generateName: federated-learning-gpu-7999d7858-
+    labels:
+      app: federated-learning
+      pod-template-hash: 7999d7858
+      version: v1.0.0-gpu
+      xapp: federated-learning
+    name: federated-learning-gpu-7999d7858-mrsfm
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: federated-learning-gpu-7999d7858
+      uid: d7efe853-a6c2-47a6-80b3-b46a2a5459c0
+    resourceVersion: "29554"
+    uid: a17a3325-1356-4e7e-8dae-78e1513adf56
+  spec:
+    containers:
+    - env:
+      - name: RMR_SRC_ID
+        value: federated-learning
+      - name: RMR_SEED_RT
+        value: /app/config/rmr-routes.txt
+      - name: REDIS_HOST
+        value: redis-service.ricplt
+      - name: REDIS_PORT
+        value: "6379"
+      - name: REDIS_DB
+        value: "3"
+      - name: PYTHONUNBUFFERED
+        value: "1"
+      - name: FL_MODE
+        value: production
+      - name: FL_GPU_ENABLED
+        value: "true"
+      - name: CUDA_VISIBLE_DEVICES
+        value: "0"
+      - name: NVIDIA_VISIBLE_DEVICES
+        value: all
+      - name: NVIDIA_DRIVER_CAPABILITIES
+        value: compute,utility
+      image: localhost:5000/xapp-federated-learning:1.0.0
+      imagePullPolicy: Always
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/alive
+          port: 8110
+          scheme: HTTP
+        initialDelaySeconds: 90
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 10
+      name: federated-learning
+      ports:
+      - containerPort: 4590
+        name: rmr-data
+        protocol: TCP
+      - containerPort: 4591
+        name: rmr-route
+        protocol: TCP
+      - containerPort: 8110
+        name: http-api
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health/ready
+          port: 8110
+          scheme: HTTP
+        initialDelaySeconds: 90
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 10
+      resources:
+        limits:
+          cpu: "8"
+          memory: 12Gi
+          nvidia.com/gpu: "1"
+        requests:
+          cpu: "2"
+          memory: 4Gi
+          nvidia.com/gpu: "1"
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: false
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/config
+        name: config
+        readOnly: true
+      - mountPath: /app/models
+        name: models
+      - mountPath: /app/data
+        name: data
+      - mountPath: /dev/shm
+        name: dshm
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zrftb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: mbwcl711-3060-system-product-name
+    nodeSelector:
+      nvidia.com/gpu: "true"
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    runtimeClassName: nvidia
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1000
+    serviceAccount: federated-learning-sa
+    serviceAccountName: federated-learning-sa
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: federated-learning-config
+      name: config
+    - name: models
+      persistentVolumeClaim:
+        claimName: federated-learning-models-pvc
+    - emptyDir: {}
+      name: data
+    - emptyDir:
+        medium: Memory
+        sizeLimit: 2Gi
+      name: dshm
+    - name: kube-api-access-zrftb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:19Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:10:39Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:10:39Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2025-11-18T22:08:19Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://5c206f3b78a6fee9a3d1607e648e93162d86fa593afa22b8de4ed29c9b7f059a
+      image: localhost:5000/xapp-federated-learning:1.0.0
+      imageID: localhost:5000/xapp-federated-learning@sha256:41c3aa72d6de7aa46cfcbaaf1728d794b1ffd5c01a29d29ef31940983cabf641
+      lastState: {}
+      name: federated-learning
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2025-11-18T22:08:55Z"
+    hostIP: 192.168.0.190
+    phase: Running
+    podIP: 10.42.0.220
+    podIPs:
+    - ip: 10.42.0.220
+    qosClass: Burstable
+    startTime: "2025-11-18T22:08:19Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"kpimon","xapp":"kpimon"},"name":"kpimon","namespace":"ricxapp"},"spec":{"ports":[{"name":"rmr-data","port":4560,"protocol":"TCP","targetPort":4560},{"name":"http-metrics","port":8080,"protocol":"TCP","targetPort":8080},{"name":"http-api","port":8081,"protocol":"TCP","targetPort":8081}],"selector":{"app":"kpimon"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: kpimon
+      xapp: kpimon
+    name: kpimon
+    namespace: ricxapp
+    resourceVersion: "29247"
+    uid: 8e43fe46-4446-4a5d-a63d-5d15c2afa58c
+  spec:
+    clusterIP: 10.43.166.219
+    clusterIPs:
+    - 10.43.166.219
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rmr-data
+      port: 4560
+      protocol: TCP
+      targetPort: 4560
+    - name: http-metrics
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: http-api
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      app: kpimon
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"traffic-steering","xapp":"traffic-steering"},"name":"traffic-steering","namespace":"ricxapp"},"spec":{"ports":[{"name":"rmr-data","port":4560,"protocol":"TCP","targetPort":4560},{"name":"rmr-route","port":4561,"protocol":"TCP","targetPort":4561},{"name":"http-metrics","port":8080,"protocol":"TCP","targetPort":8080},{"name":"http-api","port":8081,"protocol":"TCP","targetPort":8081}],"selector":{"app":"traffic-steering"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: traffic-steering
+      xapp: traffic-steering
+    name: traffic-steering
+    namespace: ricxapp
+    resourceVersion: "29269"
+    uid: 769729f2-ad31-4678-a537-f95433feb5f5
+  spec:
+    clusterIP: 10.43.180.13
+    clusterIPs:
+    - 10.43.180.13
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rmr-data
+      port: 4560
+      protocol: TCP
+      targetPort: 4560
+    - name: rmr-route
+      port: 4561
+      protocol: TCP
+      targetPort: 4561
+    - name: http-metrics
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: http-api
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+    selector:
+      app: traffic-steering
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"ran-control","xapp":"ran-control"},"name":"ran-control","namespace":"ricxapp"},"spec":{"ports":[{"name":"rmr-data","port":4580,"protocol":"TCP","targetPort":4580},{"name":"rmr-route","port":4581,"protocol":"TCP","targetPort":4581},{"name":"http-api","port":8100,"protocol":"TCP","targetPort":8100}],"selector":{"app":"ran-control"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: ran-control
+      xapp: ran-control
+    name: ran-control
+    namespace: ricxapp
+    resourceVersion: "29285"
+    uid: 50a08371-2140-4a99-bad2-e53e9c7865e3
+  spec:
+    clusterIP: 10.43.211.160
+    clusterIPs:
+    - 10.43.211.160
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rmr-data
+      port: 4580
+      protocol: TCP
+      targetPort: 4580
+    - name: rmr-route
+      port: 4581
+      protocol: TCP
+      targetPort: 4581
+    - name: http-api
+      port: 8100
+      protocol: TCP
+      targetPort: 8100
+    selector:
+      app: ran-control
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"qoe-predictor","xapp":"qoe-predictor"},"name":"qoe-predictor","namespace":"ricxapp"},"spec":{"ports":[{"name":"rmr-data","port":4570,"protocol":"TCP","targetPort":4570},{"name":"rmr-route","port":4571,"protocol":"TCP","targetPort":4571},{"name":"http-api","port":8090,"protocol":"TCP","targetPort":8090}],"selector":{"app":"qoe-predictor"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: qoe-predictor
+      xapp: qoe-predictor
+    name: qoe-predictor
+    namespace: ricxapp
+    resourceVersion: "29306"
+    uid: 8db3054f-6ee1-4732-9b99-cb7e6ac09ce4
+  spec:
+    clusterIP: 10.43.122.212
+    clusterIPs:
+    - 10.43.122.212
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rmr-data
+      port: 4570
+      protocol: TCP
+      targetPort: 4570
+    - name: rmr-route
+      port: 4571
+      protocol: TCP
+      targetPort: 4571
+    - name: http-api
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      app: qoe-predictor
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"federated-learning","xapp":"federated-learning"},"name":"federated-learning","namespace":"ricxapp"},"spec":{"ports":[{"name":"rmr-data","port":4590,"protocol":"TCP","targetPort":4590},{"name":"rmr-route","port":4591,"protocol":"TCP","targetPort":4591},{"name":"http-api","port":8110,"protocol":"TCP","targetPort":8110}],"selector":{"app":"federated-learning"},"type":"ClusterIP"}}
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    labels:
+      app: federated-learning
+      xapp: federated-learning
+    name: federated-learning
+    namespace: ricxapp
+    resourceVersion: "29349"
+    uid: c4e469ae-e249-40a2-a518-3f2525717181
+  spec:
+    clusterIP: 10.43.17.1
+    clusterIPs:
+    - 10.43.17.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: rmr-data
+      port: 4590
+      protocol: TCP
+      targetPort: 4590
+    - name: rmr-route
+      port: 4591
+      protocol: TCP
+      targetPort: 4591
+    - name: http-api
+      port: 8110
+      protocol: TCP
+      targetPort: 8110
+    selector:
+      app: federated-learning
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"kpimon","xapp":"kpimon"},"name":"kpimon","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"kpimon"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/ric/v1/metrics","prometheus.io/port":"8080","prometheus.io/scrape":"true"},"labels":{"app":"kpimon","xapp":"kpimon"}},"spec":{"containers":[{"env":[{"name":"RMR_SEED_RT","value":"/app/config/rmr-routes.txt"},{"name":"RMR_SRC_ID","value":"kpimon"},{"name":"RMR_RTG_SVC","value":"service-ricplt-rtmgr-rmr.ricplt:4561"},{"name":"INFLUXDB_URL","value":"http://r4-influxdb-influxdb2.ricplt:8086"},{"name":"INFLUXDB_ORG","value":"oran"},{"name":"INFLUXDB_BUCKET","value":"kpimon"}],"image":"localhost:5000/xapp-kpimon:1.0.1","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/alive","port":8081},"initialDelaySeconds":10,"periodSeconds":15,"timeoutSeconds":5},"name":"kpimon","ports":[{"containerPort":4560,"name":"rmr-data","protocol":"TCP"},{"containerPort":8080,"name":"http-metrics","protocol":"TCP"},{"containerPort":8081,"name":"http-health","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/ready","port":8081},"initialDelaySeconds":5,"periodSeconds":15,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"200m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/app/config","name":"config-volume"}]}],"volumes":[{"configMap":{"name":"kpimon-config"},"name":"config-volume"}]}}}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: kpimon
+      xapp: kpimon
+    name: kpimon
+    namespace: ricxapp
+    resourceVersion: "29434"
+    uid: 0cf561e8-b979-4fe7-8cfc-7d6ea6677bda
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: kpimon
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8080"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: kpimon
+          xapp: kpimon
+      spec:
+        containers:
+        - env:
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: RMR_SRC_ID
+            value: kpimon
+          - name: RMR_RTG_SVC
+            value: service-ricplt-rtmgr-rmr.ricplt:4561
+          - name: INFLUXDB_URL
+            value: http://r4-influxdb-influxdb2.ricplt:8086
+          - name: INFLUXDB_ORG
+            value: oran
+          - name: INFLUXDB_BUCKET
+            value: kpimon
+          image: localhost:5000/xapp-kpimon:1.0.1
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: kpimon
+          ports:
+          - containerPort: 4560
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 8080
+            name: http-metrics
+            protocol: TCP
+          - containerPort: 8081
+            name: http-health
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kpimon-config
+          name: config-volume
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:08:29Z"
+      lastUpdateTime: "2025-11-18T22:08:29Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:14Z"
+      lastUpdateTime: "2025-11-18T22:08:29Z"
+      message: ReplicaSet "kpimon-54486974b6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"traffic-steering","xapp":"traffic-steering"},"name":"traffic-steering","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"traffic-steering"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/ric/v1/metrics","prometheus.io/port":"8081","prometheus.io/scrape":"true"},"labels":{"app":"traffic-steering","xapp":"traffic-steering"}},"spec":{"containers":[{"env":[{"name":"RMR_SEED_RT","value":"/app/config/rmr-routes.txt"},{"name":"RMR_SRC_ID","value":"traffic-steering"},{"name":"RMR_RTG_SVC","value":"service-ricplt-rtmgr-rmr.ricplt:4561"},{"name":"SDL_NAMESPACE","value":"traffic-steering"},{"name":"LOG_LEVEL","value":"INFO"}],"image":"localhost:5000/xapp-traffic-steering:1.0.2","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/ric/v1/health/alive","port":8081},"initialDelaySeconds":10,"periodSeconds":15,"timeoutSeconds":5},"name":"traffic-steering","ports":[{"containerPort":4560,"name":"rmr-data","protocol":"TCP"},{"containerPort":4561,"name":"rmr-route","protocol":"TCP"},{"containerPort":8081,"name":"http-api","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/ric/v1/health/ready","port":8081},"initialDelaySeconds":5,"periodSeconds":15,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"200m","memory":"256Mi"}},"volumeMounts":[{"mountPath":"/app/config","name":"config-volume"}]}],"volumes":[{"configMap":{"name":"traffic-steering-config"},"name":"config-volume"}]}}}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: traffic-steering
+      xapp: traffic-steering
+    name: traffic-steering
+    namespace: ricxapp
+    resourceVersion: "29439"
+    uid: ce2ab5cf-397f-4bdc-96a6-4f68fe515785
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: traffic-steering
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8081"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: traffic-steering
+          xapp: traffic-steering
+      spec:
+        containers:
+        - env:
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: RMR_SRC_ID
+            value: traffic-steering
+          - name: RMR_RTG_SVC
+            value: service-ricplt-rtmgr-rmr.ricplt:4561
+          - name: SDL_NAMESPACE
+            value: traffic-steering
+          - name: LOG_LEVEL
+            value: INFO
+          image: localhost:5000/xapp-traffic-steering:1.0.2
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ric/v1/health/alive
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: traffic-steering
+          ports:
+          - containerPort: 4560
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4561
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8081
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ric/v1/health/ready
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: traffic-steering-config
+          name: config-volume
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:08:29Z"
+      lastUpdateTime: "2025-11-18T22:08:29Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:14Z"
+      lastUpdateTime: "2025-11-18T22:08:29Z"
+      message: ReplicaSet "traffic-steering-664d55cdb5" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"e2-simulator","component":"simulator"},"name":"e2-simulator","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"e2-simulator"}},"template":{"metadata":{"labels":{"app":"e2-simulator","component":"simulator"}},"spec":{"containers":[{"image":"localhost:5000/e2-simulator:1.0.0","imagePullPolicy":"Always","name":"e2-simulator","resources":{"limits":{"cpu":"200m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true,"runAsUser":1000}}],"restartPolicy":"Always"}}}}
+    creationTimestamp: "2025-11-18T22:08:34Z"
+    generation: 1
+    labels:
+      app: e2-simulator
+      component: simulator
+    name: e2-simulator
+    namespace: ricxapp
+    resourceVersion: "29468"
+    uid: 5b7c0fcd-7f73-4b09-b4d2-2b9f1d2dcdb4
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: e2-simulator
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: e2-simulator
+          component: simulator
+      spec:
+        containers:
+        - image: localhost:5000/e2-simulator:1.0.0
+          imagePullPolicy: Always
+          name: e2-simulator
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:08:35Z"
+      lastUpdateTime: "2025-11-18T22:08:35Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:34Z"
+      lastUpdateTime: "2025-11-18T22:08:35Z"
+      message: ReplicaSet "e2-simulator-54f6cfd7b4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"ran-control","xapp":"ran-control"},"name":"ran-control","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"ran-control"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/ric/v1/metrics","prometheus.io/port":"8100","prometheus.io/scrape":"true"},"labels":{"app":"ran-control","xapp":"ran-control"}},"spec":{"containers":[{"env":[{"name":"RMR_SEED_RT","value":"/app/config/rmr-routes.txt"},{"name":"RMR_SRC_ID","value":"ran-control"},{"name":"RMR_RTG_SVC","value":"service-ricplt-rtmgr-rmr.ricplt:4561"},{"name":"LD_LIBRARY_PATH","value":"/usr/local/lib:$LD_LIBRARY_PATH"},{"name":"PYTHONUNBUFFERED","value":"1"}],"image":"localhost:5000/xapp-ran-control:1.0.1","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/alive","port":8100},"initialDelaySeconds":10,"periodSeconds":15,"timeoutSeconds":5},"name":"ran-control","ports":[{"containerPort":4580,"name":"rmr-data","protocol":"TCP"},{"containerPort":4581,"name":"rmr-route","protocol":"TCP"},{"containerPort":8100,"name":"http-api","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/ready","port":8100},"initialDelaySeconds":15,"periodSeconds":15,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"300m","memory":"512Mi"}},"volumeMounts":[{"mountPath":"/app/config/rmr-routes.txt","name":"config-volume","subPath":"rmr-routes.txt"}]}],"securityContext":{"fsGroup":1000,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000},"volumes":[{"configMap":{"name":"ran-control-config"},"name":"config-volume"}]}}}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: ran-control
+      xapp: ran-control
+    name: ran-control
+    namespace: ricxapp
+    resourceVersion: "29477"
+    uid: 83889b05-f00d-439f-add3-1edc5dc80892
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: ran-control
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8100"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: ran-control
+          xapp: ran-control
+      spec:
+        containers:
+        - env:
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: RMR_SRC_ID
+            value: ran-control
+          - name: RMR_RTG_SVC
+            value: service-ricplt-rtmgr-rmr.ricplt:4561
+          - name: LD_LIBRARY_PATH
+            value: /usr/local/lib:$LD_LIBRARY_PATH
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          image: localhost:5000/xapp-ran-control:1.0.1
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8100
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: ran-control
+          ports:
+          - containerPort: 4580
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4581
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8100
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8100
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config/rmr-routes.txt
+            name: config-volume
+            subPath: rmr-routes.txt
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: ran-control-config
+          name: config-volume
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:08:45Z"
+      lastUpdateTime: "2025-11-18T22:08:45Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:14Z"
+      lastUpdateTime: "2025-11-18T22:08:45Z"
+      message: ReplicaSet "ran-control-68dd98746d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"qoe-predictor","version":"v1.0.0","xapp":"qoe-predictor"},"name":"qoe-predictor","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"qoe-predictor"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/ric/v1/metrics","prometheus.io/port":"8090","prometheus.io/scrape":"true"},"labels":{"app":"qoe-predictor","version":"v1.0.0","xapp":"qoe-predictor"}},"spec":{"containers":[{"env":[{"name":"RMR_SRC_ID","value":"qoe-predictor"},{"name":"RMR_SEED_RT","value":"/app/config/rmr-routes.txt"},{"name":"REDIS_HOST","value":"redis-service.ricplt"},{"name":"REDIS_PORT","value":"6379"},{"name":"REDIS_DB","value":"1"},{"name":"PYTHONUNBUFFERED","value":"1"}],"image":"localhost:5000/xapp-qoe-predictor:1.0.0","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/alive","port":8090},"initialDelaySeconds":30,"periodSeconds":30,"timeoutSeconds":10},"name":"qoe-predictor","ports":[{"containerPort":4570,"name":"rmr-data","protocol":"TCP"},{"containerPort":4571,"name":"rmr-route","protocol":"TCP"},{"containerPort":8090,"name":"http-api","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/ready","port":8090},"initialDelaySeconds":30,"periodSeconds":20,"successThreshold":1,"timeoutSeconds":10},"resources":{"limits":{"cpu":"2000m","memory":"2Gi"},"requests":{"cpu":"500m","memory":"1Gi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":1000},"volumeMounts":[{"mountPath":"/app/config","name":"config","readOnly":true},{"mountPath":"/app/models","name":"models"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","securityContext":{"fsGroup":1000},"serviceAccountName":"qoe-predictor-sa","volumes":[{"configMap":{"name":"qoe-predictor-config"},"name":"config"},{"emptyDir":{},"name":"models"}]}}}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: qoe-predictor
+      version: v1.0.0
+      xapp: qoe-predictor
+    name: qoe-predictor
+    namespace: ricxapp
+    resourceVersion: "29510"
+    uid: 3fa5e6ed-d46e-43c0-95a1-d427b70831a6
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: qoe-predictor
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8090"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: qoe-predictor
+          version: v1.0.0
+          xapp: qoe-predictor
+      spec:
+        containers:
+        - env:
+          - name: RMR_SRC_ID
+            value: qoe-predictor
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: REDIS_HOST
+            value: redis-service.ricplt
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "1"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          image: localhost:5000/xapp-qoe-predictor:1.0.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8090
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: qoe-predictor
+          ports:
+          - containerPort: 4570
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4571
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8090
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8090
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+            readOnly: true
+          - mountPath: /app/models
+            name: models
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        serviceAccount: qoe-predictor-sa
+        serviceAccountName: qoe-predictor-sa
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: qoe-predictor-config
+          name: config
+        - emptyDir: {}
+          name: models
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:09:15Z"
+      lastUpdateTime: "2025-11-18T22:09:15Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:14Z"
+      lastUpdateTime: "2025-11-18T22:09:15Z"
+      message: ReplicaSet "qoe-predictor-55b75b5f8c" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"federated-learning","version":"v1.0.0","xapp":"federated-learning"},"name":"federated-learning","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"federated-learning"}},"template":{"metadata":{"annotations":{"prometheus.io/path":"/ric/v1/metrics","prometheus.io/port":"8110","prometheus.io/scrape":"true"},"labels":{"app":"federated-learning","version":"v1.0.0","xapp":"federated-learning"}},"spec":{"containers":[{"env":[{"name":"RMR_SRC_ID","value":"federated-learning"},{"name":"RMR_SEED_RT","value":"/app/config/rmr-routes.txt"},{"name":"REDIS_HOST","value":"redis-service.ricplt"},{"name":"REDIS_PORT","value":"6379"},{"name":"REDIS_DB","value":"3"},{"name":"PYTHONUNBUFFERED","value":"1"},{"name":"FL_MODE","value":"production"}],"image":"localhost:5000/xapp-federated-learning:1.0.0","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/alive","port":8110},"initialDelaySeconds":60,"periodSeconds":30,"timeoutSeconds":10},"name":"federated-learning","ports":[{"containerPort":4590,"name":"rmr-data","protocol":"TCP"},{"containerPort":4591,"name":"rmr-route","protocol":"TCP"},{"containerPort":8110,"name":"http-api","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/ready","port":8110},"initialDelaySeconds":60,"periodSeconds":20,"successThreshold":1,"timeoutSeconds":10},"resources":{"limits":{"cpu":"4000m","memory":"4Gi"},"requests":{"cpu":"1000m","memory":"2Gi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":1000},"volumeMounts":[{"mountPath":"/app/config","name":"config","readOnly":true},{"mountPath":"/app/models","name":"models"},{"mountPath":"/app/data","name":"data"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","securityContext":{"fsGroup":1000},"serviceAccountName":"federated-learning-sa","volumes":[{"configMap":{"name":"federated-learning-config"},"name":"config"},{"name":"models","persistentVolumeClaim":{"claimName":"federated-learning-models-pvc"}},{"emptyDir":{},"name":"data"}]}}}}
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    generation: 1
+    labels:
+      app: federated-learning
+      version: v1.0.0
+      xapp: federated-learning
+    name: federated-learning
+    namespace: ricxapp
+    resourceVersion: "29534"
+    uid: 8861c541-d4f0-4e0d-b81e-aa0a1e326a2d
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: federated-learning
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8110"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: federated-learning
+          version: v1.0.0
+          xapp: federated-learning
+      spec:
+        containers:
+        - env:
+          - name: RMR_SRC_ID
+            value: federated-learning
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: REDIS_HOST
+            value: redis-service.ricplt
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "3"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          - name: FL_MODE
+            value: production
+          image: localhost:5000/xapp-federated-learning:1.0.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: federated-learning
+          ports:
+          - containerPort: 4590
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4591
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8110
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "4"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 2Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+            readOnly: true
+          - mountPath: /app/models
+            name: models
+          - mountPath: /app/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        serviceAccount: federated-learning-sa
+        serviceAccountName: federated-learning-sa
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: federated-learning-config
+          name: config
+        - name: models
+          persistentVolumeClaim:
+            claimName: federated-learning-models-pvc
+        - emptyDir: {}
+          name: data
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:09:58Z"
+      lastUpdateTime: "2025-11-18T22:09:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:15Z"
+      lastUpdateTime: "2025-11-18T22:09:58Z"
+      message: ReplicaSet "federated-learning-58fc88ffc6" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"federated-learning","version":"v1.0.0-gpu","xapp":"federated-learning"},"name":"federated-learning-gpu","namespace":"ricxapp"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"federated-learning","version":"v1.0.0-gpu"}},"template":{"metadata":{"labels":{"app":"federated-learning","version":"v1.0.0-gpu","xapp":"federated-learning"}},"spec":{"containers":[{"env":[{"name":"RMR_SRC_ID","value":"federated-learning"},{"name":"RMR_SEED_RT","value":"/app/config/rmr-routes.txt"},{"name":"REDIS_HOST","value":"redis-service.ricplt"},{"name":"REDIS_PORT","value":"6379"},{"name":"REDIS_DB","value":"3"},{"name":"PYTHONUNBUFFERED","value":"1"},{"name":"FL_MODE","value":"production"},{"name":"FL_GPU_ENABLED","value":"true"},{"name":"CUDA_VISIBLE_DEVICES","value":"0"},{"name":"NVIDIA_VISIBLE_DEVICES","value":"all"},{"name":"NVIDIA_DRIVER_CAPABILITIES","value":"compute,utility"}],"image":"localhost:5000/xapp-federated-learning:1.0.0","imagePullPolicy":"Always","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/alive","port":8110},"initialDelaySeconds":90,"periodSeconds":30,"timeoutSeconds":10},"name":"federated-learning","ports":[{"containerPort":4590,"name":"rmr-data","protocol":"TCP"},{"containerPort":4591,"name":"rmr-route","protocol":"TCP"},{"containerPort":8110,"name":"http-api","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/health/ready","port":8110},"initialDelaySeconds":90,"periodSeconds":20,"successThreshold":1,"timeoutSeconds":10},"resources":{"limits":{"cpu":"8000m","memory":"12Gi","nvidia.com/gpu":"1"},"requests":{"cpu":"2000m","memory":"4Gi","nvidia.com/gpu":"1"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":1000},"volumeMounts":[{"mountPath":"/app/config","name":"config","readOnly":true},{"mountPath":"/app/models","name":"models"},{"mountPath":"/app/data","name":"data"},{"mountPath":"/dev/shm","name":"dshm"}]}],"dnsPolicy":"ClusterFirst","nodeSelector":{"nvidia.com/gpu":"true"},"restartPolicy":"Always","runtimeClassName":"nvidia","securityContext":{"fsGroup":1000},"serviceAccountName":"federated-learning-sa","tolerations":[{"effect":"NoSchedule","key":"nvidia.com/gpu","operator":"Exists"}],"volumes":[{"configMap":{"name":"federated-learning-config"},"name":"config"},{"name":"models","persistentVolumeClaim":{"claimName":"federated-learning-models-pvc"}},{"emptyDir":{},"name":"data"},{"emptyDir":{"medium":"Memory","sizeLimit":"2Gi"},"name":"dshm"}]}}}}
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    generation: 1
+    labels:
+      app: federated-learning
+      version: v1.0.0-gpu
+      xapp: federated-learning
+    name: federated-learning-gpu
+    namespace: ricxapp
+    resourceVersion: "29558"
+    uid: cc20d190-d038-4cdd-8728-d12097cb0cab
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: federated-learning
+        version: v1.0.0-gpu
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: federated-learning
+          version: v1.0.0-gpu
+          xapp: federated-learning
+      spec:
+        containers:
+        - env:
+          - name: RMR_SRC_ID
+            value: federated-learning
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: REDIS_HOST
+            value: redis-service.ricplt
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "3"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          - name: FL_MODE
+            value: production
+          - name: FL_GPU_ENABLED
+            value: "true"
+          - name: CUDA_VISIBLE_DEVICES
+            value: "0"
+          - name: NVIDIA_VISIBLE_DEVICES
+            value: all
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: compute,utility
+          image: localhost:5000/xapp-federated-learning:1.0.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: federated-learning
+          ports:
+          - containerPort: 4590
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4591
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8110
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "8"
+              memory: 12Gi
+              nvidia.com/gpu: "1"
+            requests:
+              cpu: "2"
+              memory: 4Gi
+              nvidia.com/gpu: "1"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+            readOnly: true
+          - mountPath: /app/models
+            name: models
+          - mountPath: /app/data
+            name: data
+          - mountPath: /dev/shm
+            name: dshm
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          nvidia.com/gpu: "true"
+        restartPolicy: Always
+        runtimeClassName: nvidia
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        serviceAccount: federated-learning-sa
+        serviceAccountName: federated-learning-sa
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: nvidia.com/gpu
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: federated-learning-config
+          name: config
+        - name: models
+          persistentVolumeClaim:
+            claimName: federated-learning-models-pvc
+        - emptyDir: {}
+          name: data
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+          name: dshm
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2025-11-18T22:10:39Z"
+      lastUpdateTime: "2025-11-18T22:10:39Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-11-18T22:08:15Z"
+      lastUpdateTime: "2025-11-18T22:10:39Z"
+      message: ReplicaSet "federated-learning-gpu-7999d7858" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: kpimon
+      pod-template-hash: 54486974b6
+      xapp: kpimon
+    name: kpimon-54486974b6
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: kpimon
+      uid: 0cf561e8-b979-4fe7-8cfc-7d6ea6677bda
+    resourceVersion: "29433"
+    uid: a1a68d08-c80d-4caa-bc4f-6ffc78a0c64b
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: kpimon
+        pod-template-hash: 54486974b6
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8080"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: kpimon
+          pod-template-hash: 54486974b6
+          xapp: kpimon
+      spec:
+        containers:
+        - env:
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: RMR_SRC_ID
+            value: kpimon
+          - name: RMR_RTG_SVC
+            value: service-ricplt-rtmgr-rmr.ricplt:4561
+          - name: INFLUXDB_URL
+            value: http://r4-influxdb-influxdb2.ricplt:8086
+          - name: INFLUXDB_ORG
+            value: oran
+          - name: INFLUXDB_BUCKET
+            value: kpimon
+          image: localhost:5000/xapp-kpimon:1.0.1
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: kpimon
+          ports:
+          - containerPort: 4560
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 8080
+            name: http-metrics
+            protocol: TCP
+          - containerPort: 8081
+            name: http-health
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: kpimon-config
+          name: config-volume
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: traffic-steering
+      pod-template-hash: 664d55cdb5
+      xapp: traffic-steering
+    name: traffic-steering-664d55cdb5
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: traffic-steering
+      uid: ce2ab5cf-397f-4bdc-96a6-4f68fe515785
+    resourceVersion: "29438"
+    uid: 24f17cfb-ecd8-4924-93f5-ce84eb740662
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: traffic-steering
+        pod-template-hash: 664d55cdb5
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8081"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: traffic-steering
+          pod-template-hash: 664d55cdb5
+          xapp: traffic-steering
+      spec:
+        containers:
+        - env:
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: RMR_SRC_ID
+            value: traffic-steering
+          - name: RMR_RTG_SVC
+            value: service-ricplt-rtmgr-rmr.ricplt:4561
+          - name: SDL_NAMESPACE
+            value: traffic-steering
+          - name: LOG_LEVEL
+            value: INFO
+          image: localhost:5000/xapp-traffic-steering:1.0.2
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ric/v1/health/alive
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: traffic-steering
+          ports:
+          - containerPort: 4560
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4561
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8081
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ric/v1/health/ready
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: traffic-steering-config
+          name: config-volume
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:34Z"
+    generation: 1
+    labels:
+      app: e2-simulator
+      component: simulator
+      pod-template-hash: 54f6cfd7b4
+    name: e2-simulator-54f6cfd7b4
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: e2-simulator
+      uid: 5b7c0fcd-7f73-4b09-b4d2-2b9f1d2dcdb4
+    resourceVersion: "29467"
+    uid: bc3aece0-feb2-4b6a-abd8-f0582905a1ed
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: e2-simulator
+        pod-template-hash: 54f6cfd7b4
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: e2-simulator
+          component: simulator
+          pod-template-hash: 54f6cfd7b4
+      spec:
+        containers:
+        - image: localhost:5000/e2-simulator:1.0.0
+          imagePullPolicy: Always
+          name: e2-simulator
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: ran-control
+      pod-template-hash: 68dd98746d
+      xapp: ran-control
+    name: ran-control-68dd98746d
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: ran-control
+      uid: 83889b05-f00d-439f-add3-1edc5dc80892
+    resourceVersion: "29476"
+    uid: 97733cd2-ef6d-4778-bbd6-03e4a5865dd9
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: ran-control
+        pod-template-hash: 68dd98746d
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8100"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: ran-control
+          pod-template-hash: 68dd98746d
+          xapp: ran-control
+      spec:
+        containers:
+        - env:
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: RMR_SRC_ID
+            value: ran-control
+          - name: RMR_RTG_SVC
+            value: service-ricplt-rtmgr-rmr.ricplt:4561
+          - name: LD_LIBRARY_PATH
+            value: /usr/local/lib:$LD_LIBRARY_PATH
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          image: localhost:5000/xapp-ran-control:1.0.1
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8100
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: ran-control
+          ports:
+          - containerPort: 4580
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4581
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8100
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8100
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config/rmr-routes.txt
+            name: config-volume
+            subPath: rmr-routes.txt
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: ran-control-config
+          name: config-volume
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    generation: 1
+    labels:
+      app: qoe-predictor
+      pod-template-hash: 55b75b5f8c
+      version: v1.0.0
+      xapp: qoe-predictor
+    name: qoe-predictor-55b75b5f8c
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: qoe-predictor
+      uid: 3fa5e6ed-d46e-43c0-95a1-d427b70831a6
+    resourceVersion: "29508"
+    uid: 7efd49e7-e9af-4ba8-85db-8387b456e153
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: qoe-predictor
+        pod-template-hash: 55b75b5f8c
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8090"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: qoe-predictor
+          pod-template-hash: 55b75b5f8c
+          version: v1.0.0
+          xapp: qoe-predictor
+      spec:
+        containers:
+        - env:
+          - name: RMR_SRC_ID
+            value: qoe-predictor
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: REDIS_HOST
+            value: redis-service.ricplt
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "1"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          image: localhost:5000/xapp-qoe-predictor:1.0.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8090
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: qoe-predictor
+          ports:
+          - containerPort: 4570
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4571
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8090
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8090
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+            readOnly: true
+          - mountPath: /app/models
+            name: models
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        serviceAccount: qoe-predictor-sa
+        serviceAccountName: qoe-predictor-sa
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: qoe-predictor-config
+          name: config
+        - emptyDir: {}
+          name: models
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    generation: 1
+    labels:
+      app: federated-learning
+      pod-template-hash: 58fc88ffc6
+      version: v1.0.0
+      xapp: federated-learning
+    name: federated-learning-58fc88ffc6
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: federated-learning
+      uid: 8861c541-d4f0-4e0d-b81e-aa0a1e326a2d
+    resourceVersion: "29533"
+    uid: 8fb79eb5-557d-4a3b-b34f-d250f911d281
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: federated-learning
+        pod-template-hash: 58fc88ffc6
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /ric/v1/metrics
+          prometheus.io/port: "8110"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: federated-learning
+          pod-template-hash: 58fc88ffc6
+          version: v1.0.0
+          xapp: federated-learning
+      spec:
+        containers:
+        - env:
+          - name: RMR_SRC_ID
+            value: federated-learning
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: REDIS_HOST
+            value: redis-service.ricplt
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "3"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          - name: FL_MODE
+            value: production
+          image: localhost:5000/xapp-federated-learning:1.0.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: federated-learning
+          ports:
+          - containerPort: 4590
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4591
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8110
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "4"
+              memory: 4Gi
+            requests:
+              cpu: "1"
+              memory: 2Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+            readOnly: true
+          - mountPath: /app/models
+            name: models
+          - mountPath: /app/data
+            name: data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        serviceAccount: federated-learning-sa
+        serviceAccountName: federated-learning-sa
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: federated-learning-config
+          name: config
+        - name: models
+          persistentVolumeClaim:
+            claimName: federated-learning-models-pvc
+        - emptyDir: {}
+          name: data
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "1"
+      deployment.kubernetes.io/max-replicas: "2"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    generation: 1
+    labels:
+      app: federated-learning
+      pod-template-hash: 7999d7858
+      version: v1.0.0-gpu
+      xapp: federated-learning
+    name: federated-learning-gpu-7999d7858
+    namespace: ricxapp
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: federated-learning-gpu
+      uid: cc20d190-d038-4cdd-8728-d12097cb0cab
+    resourceVersion: "29557"
+    uid: d7efe853-a6c2-47a6-80b3-b46a2a5459c0
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: federated-learning
+        pod-template-hash: 7999d7858
+        version: v1.0.0-gpu
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: federated-learning
+          pod-template-hash: 7999d7858
+          version: v1.0.0-gpu
+          xapp: federated-learning
+      spec:
+        containers:
+        - env:
+          - name: RMR_SRC_ID
+            value: federated-learning
+          - name: RMR_SEED_RT
+            value: /app/config/rmr-routes.txt
+          - name: REDIS_HOST
+            value: redis-service.ricplt
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_DB
+            value: "3"
+          - name: PYTHONUNBUFFERED
+            value: "1"
+          - name: FL_MODE
+            value: production
+          - name: FL_GPU_ENABLED
+            value: "true"
+          - name: CUDA_VISIBLE_DEVICES
+            value: "0"
+          - name: NVIDIA_VISIBLE_DEVICES
+            value: all
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: compute,utility
+          image: localhost:5000/xapp-federated-learning:1.0.0
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/alive
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: federated-learning
+          ports:
+          - containerPort: 4590
+            name: rmr-data
+            protocol: TCP
+          - containerPort: 4591
+            name: rmr-route
+            protocol: TCP
+          - containerPort: 8110
+            name: http-api
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health/ready
+              port: 8110
+              scheme: HTTP
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: "8"
+              memory: 12Gi
+              nvidia.com/gpu: "1"
+            requests:
+              cpu: "2"
+              memory: 4Gi
+              nvidia.com/gpu: "1"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1000
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+            readOnly: true
+          - mountPath: /app/models
+            name: models
+          - mountPath: /app/data
+            name: data
+          - mountPath: /dev/shm
+            name: dshm
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          nvidia.com/gpu: "true"
+        restartPolicy: Always
+        runtimeClassName: nvidia
+        schedulerName: default-scheduler
+        securityContext:
+          fsGroup: 1000
+        serviceAccount: federated-learning-sa
+        serviceAccountName: federated-learning-sa
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: nvidia.com/gpu
+          operator: Exists
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: federated-learning-config
+          name: config
+        - name: models
+          persistentVolumeClaim:
+            claimName: federated-learning-models-pvc
+        - emptyDir: {}
+          name: data
+        - emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+          name: dshm
+  status:
+    availableReplicas: 1
+    fullyLabeledReplicas: 1
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,14 @@
+- app_version: 12.2.1
+  chart: grafana-10.1.4
+  name: oran-grafana
+  namespace: ricplt
+  revision: "1"
+  status: deployed
+  updated: 2025-11-19 06:07:53.780926305 +0800 CST
+- app_version: 2.18.1
+  chart: prometheus-11.3.0
+  name: r4-infrastructure-prometheus
+  namespace: ricplt
+  revision: "1"
+  status: deployed
+  updated: 2025-11-19 06:07:31.638419867 +0800 CST

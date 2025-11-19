@@ -1,0 +1,76 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [withFooter]="false">
+    <div title>
+        <div>子計畫二 B5G/6G 三維網路之無人機無線資源分配技術</div>
+        <div class="kd-muted"
+            footer>
+            <div i18n>
+                國立陽明交通大學 方凱田教授
+            </div>
+        </div>
+    </div>
+
+    <div content
+        fxLayout="row">
+        <div fxFlexAlign="center">
+            <div class="kd-h1">
+                <span>技術介紹</span>
+            </div>
+            <div class="kd-h3">
+                在考慮無人機架構下之波束訓練系統，
+                設計演算法來解出基地台與無人機波束寬度以及找出無人機位置，
+                考慮多無人機之場景，且於無人機上搭載毫米波指向天線來提供大量數據需求。
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page7.png'" />
+            </div>
+            <hr>
+            <div class="kd-h3">
+                首先利用無人機位置解出波寬及其對應之回程速率，
+                再引入微粒群演算法解出下一組無人機位置，直至收斂，
+                則輸出基站與無人機之波寬及無人機位置。
+
+            </div>
+            <div class="kd-h3">
+                左圖為波束概念模型圖，右圖為比較不同波寬選擇演算法之回程通道容量，
+                其中黃線為本計劃所提出之正交波寬演算法。
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page8.png'" />
+            </div>
+            <hr>
+            <div class="kd-h3">
+                左圖為系統總速率之不同無人機選擇演算法比較
+            </div>
+            <div class="kd-h3">
+                右圖為不同無人機數量與用戶之組合，當固定用戶數量時，
+                可以觀察到無人機數量有最佳的解，原因是當無人機數量增加時，
+                通道容量雖然提高，但用戶的干擾也上升，以至於可以看到無人機數量漸多時，
+                系統傳輸速率會先上升後下降。
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page9.png'" />
+            </div>
+        </div>
+    </div>
+
+
+</kd-card>

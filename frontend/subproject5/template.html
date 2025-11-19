@@ -1,0 +1,57 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [withFooter]="false">
+    <div title>
+        <div>子計畫五 基於感知之快取與通訊聯合最佳化技術</div>
+        <div class="kd-muted"
+            footer>
+            <div i18n>
+                國立陽明交通大學 李明峻教授
+            </div>
+        </div>
+    </div>
+
+    <div content
+        fxLayout="row">
+        <div fxFlexAlign="center">
+            <div class="kd-h3, center">
+                將聯合最佳化問題分為四個子問題，分別是無人機軌跡、無人機傳遞能量、用戶通訊以及系統頻寬的最佳化，
+                再利用 BCD（Block Coordinate Descent）演算法搭配最佳化工具包 CVX 利用疊代方式求解
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page14.png'" />
+            </div>
+            <hr>
+            <div class="kd-h3">
+                B5G/6G 三維網路中基於感知之快取與通訊聯合最佳化技術
+            </div>
+            <div class="kd-h3">
+                最後可以得到最佳無人機軌跡、無人機傳遞能量、用戶通訊以及系統頻寬之分配
+            </div>
+            <div class="kd-h3">
+                無人機軌跡最佳化結果與用戶分布示意圖 (兩台無人機與兩座基站之 case)
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page15.png'" />
+            </div>
+        </div>
+    </div>
+
+
+</kd-card>

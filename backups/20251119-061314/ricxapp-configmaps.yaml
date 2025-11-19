@@ -1,0 +1,267 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdjCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NjM0NDM0MzIwHhcNMjUxMTE4MDUyMzUyWhcNMzUxMTE2MDUyMzUy
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NjM0NDM0MzIwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAATt0Td0q8aypMaBgBVkw7WqUiZG/9ltNLyZcVCKraAb
+      XAwSl/V+aBaWFqEH6YZ0N4+JsYKbGLu5Il0N9bs6GxUeo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQU6cIlfZr969gzT0/TE+lr
+      GBMH5/cwCgYIKoZIzj0EAwIDRwAwRAIgC3k4pxUiE+Zqa/cYpnolj4D8aW+X+1Ew
+      W6IygizIraICIBzBgzaT0iqmJsaTZKD9VchvUJy7QnaGzAjv9BCcrc5P
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2025-11-18T21:53:07Z"
+    name: kube-root-ca.crt
+    namespace: ricxapp
+    resourceVersion: "28720"
+    uid: 29f37bed-3fbc-42b2-a129-544496ad2b1e
+- apiVersion: v1
+  data:
+    config.json: |
+      {
+        "xapp_name": "kpimon",
+        "version": "1.0.0",
+        "rmr_port": 4560,
+        "http_port": 8080,
+        "redis": {
+          "host": "service-ricplt-dbaas-tcp.ricplt",
+          "port": 6379,
+          "db": 0
+        },
+        "influxdb": {
+          "url": "http://r4-influxdb-influxdb2.ricplt:8086",
+          "org": "oran",
+          "bucket": "kpimon",
+          "token": ""
+        },
+        "subscription": {
+          "report_period": 1000,
+          "granularity_period": 1000,
+          "max_measurements": 20
+        }
+      }
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"config.json":"{\n  \"xapp_name\": \"kpimon\",\n  \"version\": \"1.0.0\",\n  \"rmr_port\": 4560,\n  \"http_port\": 8080,\n  \"redis\": {\n    \"host\": \"service-ricplt-dbaas-tcp.ricplt\",\n    \"port\": 6379,\n    \"db\": 0\n  },\n  \"influxdb\": {\n    \"url\": \"http://r4-influxdb-influxdb2.ricplt:8086\",\n    \"org\": \"oran\",\n    \"bucket\": \"kpimon\",\n    \"token\": \"\"\n  },\n  \"subscription\": {\n    \"report_period\": 1000,\n    \"granularity_period\": 1000,\n    \"max_measurements\": 20\n  }\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"kpimon","xapp":"kpimon"},"name":"kpimon-config","namespace":"ricxapp"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: kpimon
+      xapp: kpimon
+    name: kpimon-config
+    namespace: ricxapp
+    resourceVersion: "29241"
+    uid: 647eead1-9b23-4c64-9f95-b2a0f47f208e
+- apiVersion: v1
+  data:
+    config.json: |
+      {
+        "xapp_name": "traffic-steering",
+        "version": "1.0.0",
+        "handover": {
+          "rsrp_threshold": -100.0,
+          "rsrq_threshold": -15.0,
+          "throughput_threshold": 10.0,
+          "load_threshold": 0.8
+        },
+        "logging": {
+          "level": "INFO"
+        }
+      }
+    rmr-routes.txt: |
+      # RMR Routing Table for Traffic Steering xApp
+      newrt|start
+      # RIC Subscription Messages
+      rte|12010|service-ricplt-e2term-rmr-alpha.ricplt:4560
+      rte|12011|traffic-steering.ricxapp:4560
+      rte|12012|service-ricplt-e2term-rmr-alpha.ricplt:4560
+      rte|12013|traffic-steering.ricxapp:4560
+      # RIC Indication Messages
+      rte|12050|traffic-steering.ricxapp:4560
+      # RIC Control Messages
+      rte|12040|service-ricplt-e2term-rmr-alpha.ricplt:4560
+      rte|12041|traffic-steering.ricxapp:4560
+      # A1 Policy Messages
+      rte|20010|traffic-steering.ricxapp:4560
+      rte|20011|service-ricplt-a1mediator-rmr.ricplt:4562
+      newrt|end
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"config.json":"{\n  \"xapp_name\": \"traffic-steering\",\n  \"version\": \"1.0.0\",\n  \"handover\": {\n    \"rsrp_threshold\": -100.0,\n    \"rsrq_threshold\": -15.0,\n    \"throughput_threshold\": 10.0,\n    \"load_threshold\": 0.8\n  },\n  \"logging\": {\n    \"level\": \"INFO\"\n  }\n}\n","rmr-routes.txt":"# RMR Routing Table for Traffic Steering xApp\nnewrt|start\n# RIC Subscription Messages\nrte|12010|service-ricplt-e2term-rmr-alpha.ricplt:4560\nrte|12011|traffic-steering.ricxapp:4560\nrte|12012|service-ricplt-e2term-rmr-alpha.ricplt:4560\nrte|12013|traffic-steering.ricxapp:4560\n# RIC Indication Messages\nrte|12050|traffic-steering.ricxapp:4560\n# RIC Control Messages\nrte|12040|service-ricplt-e2term-rmr-alpha.ricplt:4560\nrte|12041|traffic-steering.ricxapp:4560\n# A1 Policy Messages\nrte|20010|traffic-steering.ricxapp:4560\nrte|20011|service-ricplt-a1mediator-rmr.ricplt:4562\nnewrt|end\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"traffic-steering-config","namespace":"ricxapp"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    name: traffic-steering-config
+    namespace: ricxapp
+    resourceVersion: "29260"
+    uid: 21d81e7c-24e5-4073-ae61-3ad89866b5de
+- apiVersion: v1
+  data:
+    rmr-routes.txt: |
+      newrt|start
+      # RIC_CONTROL_REQ (12040) -> E2Term
+      mse|12040|1|service-ricplt-e2term-rmr-alpha.ricplt:38000
+      # RIC_SUB_REQ (12010) -> E2Term
+      mse|12010|1|service-ricplt-e2term-rmr-alpha.ricplt:38000
+      # RIC_SUB_DEL_REQ (12012) -> E2Term
+      mse|12012|1|service-ricplt-e2term-rmr-alpha.ricplt:38000
+      # RIC_CONTROL_ACK (12041) -> RAN Control xApp
+      mse|12041|1|ran-control:4580
+      # RIC_CONTROL_FAILURE (12042) -> RAN Control xApp
+      mse|12042|1|ran-control:4580
+      # RIC_INDICATION (12050) -> RAN Control xApp
+      mse|12050|1|ran-control:4580
+      # RIC_SUB_RESP (12011) -> RAN Control xApp
+      mse|12011|1|ran-control:4580
+      # RIC_SUB_DEL_RESP (12013) -> RAN Control xApp
+      mse|12013|1|ran-control:4580
+      # A1_POLICY_REQ (20010) -> RAN Control xApp
+      mse|20010|1|ran-control:4580
+      # A1_POLICY_RESP (20011) -> A1 Mediator
+      mse|20011|1|service-ricplt-a1mediator-rmr.ricplt:4562
+      newrt|end
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"rmr-routes.txt":"newrt|start\n# RIC_CONTROL_REQ (12040) -\u003e E2Term\nmse|12040|1|service-ricplt-e2term-rmr-alpha.ricplt:38000\n# RIC_SUB_REQ (12010) -\u003e E2Term\nmse|12010|1|service-ricplt-e2term-rmr-alpha.ricplt:38000\n# RIC_SUB_DEL_REQ (12012) -\u003e E2Term\nmse|12012|1|service-ricplt-e2term-rmr-alpha.ricplt:38000\n# RIC_CONTROL_ACK (12041) -\u003e RAN Control xApp\nmse|12041|1|ran-control:4580\n# RIC_CONTROL_FAILURE (12042) -\u003e RAN Control xApp\nmse|12042|1|ran-control:4580\n# RIC_INDICATION (12050) -\u003e RAN Control xApp\nmse|12050|1|ran-control:4580\n# RIC_SUB_RESP (12011) -\u003e RAN Control xApp\nmse|12011|1|ran-control:4580\n# RIC_SUB_DEL_RESP (12013) -\u003e RAN Control xApp\nmse|12013|1|ran-control:4580\n# A1_POLICY_REQ (20010) -\u003e RAN Control xApp\nmse|20010|1|ran-control:4580\n# A1_POLICY_RESP (20011) -\u003e A1 Mediator\nmse|20011|1|service-ricplt-a1mediator-rmr.ricplt:4562\nnewrt|end\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"ran-control","xapp":"ran-control"},"name":"ran-control-config","namespace":"ricxapp"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: ran-control
+      xapp: ran-control
+    name: ran-control-config
+    namespace: ricxapp
+    resourceVersion: "29278"
+    uid: c1b5edbe-107f-4482-811c-5c0e56f287a6
+- apiVersion: v1
+  data:
+    config.json: |
+      {
+        "xapp_name": "qoe-predictor",
+        "version": "1.0.0",
+        "rmr_port": 4570,
+        "http_port": 8090,
+        "redis": {
+          "host": "redis-service.ricplt",
+          "port": 6379,
+          "db": 1
+        },
+        "models": {
+          "update_interval": 3600,
+          "batch_size": 32,
+          "prediction_window": 10,
+          "confidence_threshold": 0.8
+        },
+        "features": {
+          "window_size": 100,
+          "aggregation": ["mean", "std", "min", "max", "percentile_95"]
+        }
+      }
+    rmr-routes.txt: |
+      newrt|start
+      mse|12050|1|qoe-predictor:4570
+      mse|20010|1|qoe-predictor:4570
+      mse|20011|1|a1mediator-rmr.ricplt:4562
+      newrt|end
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"config.json":"{\n  \"xapp_name\": \"qoe-predictor\",\n  \"version\": \"1.0.0\",\n  \"rmr_port\": 4570,\n  \"http_port\": 8090,\n  \"redis\": {\n    \"host\": \"redis-service.ricplt\",\n    \"port\": 6379,\n    \"db\": 1\n  },\n  \"models\": {\n    \"update_interval\": 3600,\n    \"batch_size\": 32,\n    \"prediction_window\": 10,\n    \"confidence_threshold\": 0.8\n  },\n  \"features\": {\n    \"window_size\": 100,\n    \"aggregation\": [\"mean\", \"std\", \"min\", \"max\", \"percentile_95\"]\n  }\n}\n","rmr-routes.txt":"newrt|start\nmse|12050|1|qoe-predictor:4570\nmse|20010|1|qoe-predictor:4570\nmse|20011|1|a1mediator-rmr.ricplt:4562\nnewrt|end\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"qoe-predictor"},"name":"qoe-predictor-config","namespace":"ricxapp"}}
+    creationTimestamp: "2025-11-18T22:08:14Z"
+    labels:
+      app: qoe-predictor
+    name: qoe-predictor-config
+    namespace: ricxapp
+    resourceVersion: "29299"
+    uid: a5a28da0-217a-4034-b10f-db0f4ba8bfbc
+- apiVersion: v1
+  data:
+    config.json: |
+      {
+        "xapp_name": "federated-learning",
+        "version": "1.0.0",
+        "rmr_port": 4590,
+        "http_port": 8110,
+        "redis": {
+          "host": "redis-service.ricplt",
+          "port": 6379,
+          "db": 3,
+          "ttl": 86400,
+          "model_storage": true,
+          "gradient_cache": true
+        },
+        "fl_config": {
+          "min_clients": 3,
+          "max_clients": 100,
+          "rounds": 100,
+          "local_epochs": 5,
+          "batch_size": 32,
+          "learning_rate": 0.01,
+          "aggregation_method": "fedavg",
+          "differential_privacy": {
+            "enabled": true,
+            "epsilon": 1.0,
+            "delta": 1e-5,
+            "clip_norm": 1.0
+          },
+          "secure_aggregation": true,
+          "model_compression": {
+            "enabled": true,
+            "method": "quantization",
+            "bits": 8
+          }
+        },
+        "models": {
+          "network_optimization": {
+            "type": "tensorflow",
+            "architecture": "cnn",
+            "input_shape": [100, 20],
+            "output_classes": 5
+          }
+        },
+        "security": {
+          "encryption": true,
+          "authentication": true,
+          "key_size": 2048
+        }
+      }
+    rmr-routes.txt: |
+      newrt|start
+      mse|30001|1|e2term-rmr.ricplt:4560
+      mse|30003|1|e2term-rmr.ricplt:4560
+      mse|30006|1|e2term-rmr.ricplt:4560
+      mse|30007|1|e2term-rmr.ricplt:4560
+      mse|30002|1|federated-learning:4590
+      mse|30004|1|federated-learning:4590
+      mse|30005|1|federated-learning:4590
+      mse|30008|1|federated-learning:4590
+      mse|30009|1|federated-learning:4590
+      mse|12050|1|federated-learning:4590
+      newrt|end
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"config.json":"{\n  \"xapp_name\": \"federated-learning\",\n  \"version\": \"1.0.0\",\n  \"rmr_port\": 4590,\n  \"http_port\": 8110,\n  \"redis\": {\n    \"host\": \"redis-service.ricplt\",\n    \"port\": 6379,\n    \"db\": 3,\n    \"ttl\": 86400,\n    \"model_storage\": true,\n    \"gradient_cache\": true\n  },\n  \"fl_config\": {\n    \"min_clients\": 3,\n    \"max_clients\": 100,\n    \"rounds\": 100,\n    \"local_epochs\": 5,\n    \"batch_size\": 32,\n    \"learning_rate\": 0.01,\n    \"aggregation_method\": \"fedavg\",\n    \"differential_privacy\": {\n      \"enabled\": true,\n      \"epsilon\": 1.0,\n      \"delta\": 1e-5,\n      \"clip_norm\": 1.0\n    },\n    \"secure_aggregation\": true,\n    \"model_compression\": {\n      \"enabled\": true,\n      \"method\": \"quantization\",\n      \"bits\": 8\n    }\n  },\n  \"models\": {\n    \"network_optimization\": {\n      \"type\": \"tensorflow\",\n      \"architecture\": \"cnn\",\n      \"input_shape\": [100, 20],\n      \"output_classes\": 5\n    }\n  },\n  \"security\": {\n    \"encryption\": true,\n    \"authentication\": true,\n    \"key_size\": 2048\n  }\n}\n","rmr-routes.txt":"newrt|start\nmse|30001|1|e2term-rmr.ricplt:4560\nmse|30003|1|e2term-rmr.ricplt:4560\nmse|30006|1|e2term-rmr.ricplt:4560\nmse|30007|1|e2term-rmr.ricplt:4560\nmse|30002|1|federated-learning:4590\nmse|30004|1|federated-learning:4590\nmse|30005|1|federated-learning:4590\nmse|30008|1|federated-learning:4590\nmse|30009|1|federated-learning:4590\nmse|12050|1|federated-learning:4590\nnewrt|end\n"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"federated-learning"},"name":"federated-learning-config","namespace":"ricxapp"}}
+    creationTimestamp: "2025-11-18T22:08:15Z"
+    labels:
+      app: federated-learning
+    name: federated-learning-config
+    namespace: ricxapp
+    resourceVersion: "29331"
+    uid: cf50a3c8-b460-4a78-bd3a-d791a62f197b
+kind: List
+metadata:
+  resourceVersion: ""

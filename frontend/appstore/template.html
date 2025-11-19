@@ -1,0 +1,57 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [withFooter]="false">
+    <div title>App Store</div>
+
+    <div content fxLayout="row">
+        <div id="resource-list" class="box-center">
+            <table class="table table-dark table-striped center table-bordered">
+                <thead>
+                    <tr style="font-weight: bold;">
+                        <th scope="col">Resources</th>
+                        <th scope="col">Resources File</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let r of resourcesInfo | keyvalue">
+                        <th scope="row">{{ r.key }}</th>
+                        <td>{{ r.value }}</td>
+                        <td><button type="button" class="btn btn-secondary" (click)="viewDetails(r.key)">View details</button></td>
+                        <td><button type="button" class="btn btn-secondary" (click)="pullReasource(r.key)">Install this
+                                resource</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</kd-card>
+
+<div id="details">
+    <ng-template [ngIf]="isDetailShow">
+        <kd-card [withFooter]="true">
+            <div title>Details {{resourceDetails.resourceName}}</div>
+            <div content fxLayout="row">
+                <div class="container">
+                    <pre style="white-space: pre-wrap; margin-left: 30px; font-size: 14px;">{{resourceDetails.resourceDetails}}</pre>
+                </div>
+            </div>
+        </kd-card>
+    </ng-template>
+</div>

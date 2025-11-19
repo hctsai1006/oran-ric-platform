@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hw-go-config
+  namespace: ricxapp
+  labels:
+    app: hw-go
+    xapp: hw-go
+data:
+  config.json: |
+    {
+      "xapp_name": "hw-go",
+      "version": "1.1.2",
+      "log_level": "INFO"
+    }
+  rmr-routes.txt: |
+    newrt|start
+    rte|12010|service-ricplt-e2term-rmr.ricplt:4560
+    rte|12020|service-ricplt-e2term-rmr.ricplt:4560
+    rte|12011|hw-go-rmr.ricxapp:4560
+    rte|12012|service-ricplt-e2term-rmr.ricplt:4560
+    rte|12013|hw-go-rmr.ricxapp:4560
+    rte|12014|service-ricplt-e2term-rmr.ricplt:4560
+    rte|12050|hw-go-rmr.ricxapp:4560
+    newrt|end

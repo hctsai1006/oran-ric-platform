@@ -1,0 +1,60 @@
+# O-RAN RIC Platform Component Versions
+# Pinned on: 2025-11-19
+# Release: J-Release
+# Author: 蔡秀吉 (thc1006)
+
+components:
+  redis:
+    chart_version: "3.0.0"
+    image_tag: "7.0-alpine"
+    description: "Redis Cluster for Shared Data Layer (SDL) backend"
+
+  dbaas:
+    chart_version: "2.0.0"
+    image_tag: "0.5.3"
+    description: "Database as a Service - SDL frontend"
+
+  e2term:
+    chart_version: "3.0.0"
+    image_tag: "5.5.0"
+    description: "E2 Termination - E2AP protocol termination"
+
+  e2mgr:
+    chart_version: "3.0.0"
+    image_tag: "5.4.19"
+    description: "E2 Manager - E2 node management"
+
+  submgr:
+    chart_version: "3.0.0"
+    image_tag: "0.9.0"
+    description: "Subscription Manager - E2 subscription handling"
+
+  rtmgr:
+    chart_version: "3.0.0"
+    image_tag: "0.8.2"
+    description: "Routing Manager - RMR routing table management"
+
+  appmgr:
+    chart_version: "3.0.0"
+    image_tag: "0.5.4"
+    description: "Application Manager - xApp lifecycle management"
+
+  a1mediator:
+    chart_version: "3.0.0"
+    image_tag: "2.6.0"
+    description: "A1 Mediator - A1 interface support"
+
+  jaegeradapter:
+    chart_version: "3.0.0"
+    image_tag: "0.7.0"
+    description: "Jaeger Adapter - Distributed tracing"
+
+migration:
+  strategy: "Parallel Change (Expand-Contract)"
+  start_date: "2025-11-19"
+  target_completion: "~45 hours (6 working days)"
+  principles:
+    - "TDD (Test-Driven Development)"
+    - "Boy Scout Rule"
+    - "Small CLs (< 400 lines)"
+    - "Zero Downtime"

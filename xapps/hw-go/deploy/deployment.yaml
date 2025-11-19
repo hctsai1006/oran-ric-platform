@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hw-go
+  namespace: ricxapp
+  labels:
+    app: hw-go
+    xapp: hw-go
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hw-go
+  template:
+    metadata:
+      labels:
+        app: hw-go
+        xapp: hw-go
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/ric/v1/metrics"
+    spec:
+      containers:
+      - name: hw-go
+        image: nexus3.o-ran-sc.org:10002/o-ran-sc/ric-app-hw-go:1.1.2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: RMR_SEED_RT
+          value: "/app/config/rmr-routes.txt"
+        - name: RMR_SRC_ID
+          value: "hw-go"
+        - name: RMR_RTG_SVC
+          value: "service-ricplt-rtmgr-rmr.ricplt:4561"
+        - name: DBAAS_SERVICE_HOST
+          value: "service-ricplt-dbaas-tcp.ricplt"
+        - name: DBAAS_SERVICE_PORT
+          value: "6379"
+        - name: LOG_LEVEL
+          value: "INFO"
+        ports:
+        - name: rmr-data
+          containerPort: 4560
+          protocol: TCP
+        - name: rmr-route
+          containerPort: 4561
+          protocol: TCP
+        - name: http-api
+          containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /ric/v1/health/alive
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ric/v1/health/ready
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 15
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: hw-go-config

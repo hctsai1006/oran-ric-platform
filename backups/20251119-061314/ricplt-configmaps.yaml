@@ -1,0 +1,241 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIBdjCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+      dmVyLWNhQDE3NjM0NDM0MzIwHhcNMjUxMTE4MDUyMzUyWhcNMzUxMTE2MDUyMzUy
+      WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE3NjM0NDM0MzIwWTATBgcqhkjO
+      PQIBBggqhkjOPQMBBwNCAATt0Td0q8aypMaBgBVkw7WqUiZG/9ltNLyZcVCKraAb
+      XAwSl/V+aBaWFqEH6YZ0N4+JsYKbGLu5Il0N9bs6GxUeo0IwQDAOBgNVHQ8BAf8E
+      BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQU6cIlfZr969gzT0/TE+lr
+      GBMH5/cwCgYIKoZIzj0EAwIDRwAwRAIgC3k4pxUiE+Zqa/cYpnolj4D8aW+X+1Ew
+      W6IygizIraICIBzBgzaT0iqmJsaTZKD9VchvUJy7QnaGzAjv9BCcrc5P
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2025-11-18T21:53:06Z"
+    name: kube-root-ca.crt
+    namespace: ricplt
+    resourceVersion: "28717"
+    uid: 72f687a4-bec0-4b94-8e0b-4e2ebf872152
+- apiVersion: v1
+  data:
+    alerting_rules.yml: |
+      {}
+    alerts: |
+      {}
+    prometheus.yml: |
+      global:
+        evaluation_interval: 15s
+        scrape_interval: 15s
+        scrape_timeout: 10s
+      rule_files:
+      - /etc/config/recording_rules.yml
+      - /etc/config/alerting_rules.yml
+      scrape_configs:
+      - job_name: prometheus
+        static_configs:
+        - targets:
+          - localhost:9090
+      - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        job_name: kubernetes-apiservers
+        kubernetes_sd_configs:
+        - role: endpoints
+        relabel_configs:
+        - action: keep
+          regex: default;kubernetes;https
+          source_labels:
+          - __meta_kubernetes_namespace
+          - __meta_kubernetes_service_name
+          - __meta_kubernetes_endpoint_port_name
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        job_name: kubernetes-nodes
+        kubernetes_sd_configs:
+        - role: node
+        relabel_configs:
+        - action: labelmap
+          regex: __meta_kubernetes_node_label_(.+)
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      - job_name: kubernetes-pods
+        kubernetes_sd_configs:
+        - role: pod
+        relabel_configs:
+        - action: keep
+          regex: true
+          source_labels:
+          - __meta_kubernetes_pod_annotation_prometheus_io_scrape
+        - action: replace
+          regex: (.+)
+          source_labels:
+          - __meta_kubernetes_pod_annotation_prometheus_io_path
+          target_label: __metrics_path__
+        - action: replace
+          regex: ([^:]+)(?::\d+)?;(\d+)
+          replacement: $1:$2
+          source_labels:
+          - __address__
+          - __meta_kubernetes_pod_annotation_prometheus_io_port
+          target_label: __address__
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(.+)
+        - action: replace
+          source_labels:
+          - __meta_kubernetes_namespace
+          target_label: kubernetes_namespace
+        - action: replace
+          source_labels:
+          - __meta_kubernetes_pod_name
+          target_label: kubernetes_pod_name
+      alerting:
+        alertmanagers:
+        - kubernetes_sd_configs:
+            - role: pod
+          tls_config:
+            ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+          relabel_configs:
+          - source_labels: [__meta_kubernetes_namespace]
+            regex: ricplt
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            regex: prometheus
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_label_component]
+            regex: alertmanager
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_probe]
+            regex: .*
+            action: keep
+          - source_labels: [__meta_kubernetes_pod_container_port_number]
+            regex:
+            action: drop
+    recording_rules.yml: |
+      {}
+    rules: |
+      {}
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: r4-infrastructure-prometheus
+      meta.helm.sh/release-namespace: ricplt
+    creationTimestamp: "2025-11-18T22:07:31Z"
+    labels:
+      app: prometheus
+      app.kubernetes.io/managed-by: Helm
+      chart: prometheus-11.3.0
+      component: server
+      heritage: Helm
+      release: r4-infrastructure-prometheus
+    name: r4-infrastructure-prometheus-server
+    namespace: ricplt
+    resourceVersion: "29111"
+    uid: ae7cd68a-30b1-48fe-88d3-d2903fcb242f
+- apiVersion: v1
+  data:
+    alertmanager.yml: |
+      global:
+        resolve_timeout: 5m
+      receivers:
+      - name: vespa
+        webhook_configs:
+        - url: http://service-ricplt-vespamgr-http:9095/alerts
+      route:
+        group_by:
+        - alertname
+        - severity
+        - instance
+        - job
+        group_interval: 3m
+        group_wait: 5s
+        receiver: vespa
+        repeat_interval: 1h
+        routes:
+        - continue: true
+          receiver: vespa
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: r4-infrastructure-prometheus
+      meta.helm.sh/release-namespace: ricplt
+    creationTimestamp: "2025-11-18T22:07:31Z"
+    labels:
+      app: prometheus
+      app.kubernetes.io/managed-by: Helm
+      chart: prometheus-11.3.0
+      component: alertmanager
+      heritage: Helm
+      release: r4-infrastructure-prometheus
+    name: r4-infrastructure-prometheus-alertmanager
+    namespace: ricplt
+    resourceVersion: "29112"
+    uid: 2234cd2c-437e-444f-8781-de737ac162b5
+- apiVersion: v1
+  data:
+    dashboardproviders.yaml: |
+      apiVersion: 1
+      providers:
+      - disableDeletion: false
+        editable: true
+        folder: O-RAN RIC
+        name: oran-ric-dashboards
+        options:
+          path: /var/lib/grafana/dashboards/oran-ric
+        orgId: 1
+        type: file
+    datasources.yaml: |
+      apiVersion: 1
+      datasources:
+      - access: proxy
+        editable: true
+        isDefault: true
+        jsonData:
+          timeInterval: 15s
+        name: Prometheus
+        type: prometheus
+        url: http://r4-infrastructure-prometheus-server.ricplt:80
+    grafana.ini: |
+      [analytics]
+      check_for_updates = false
+      [grafana_net]
+      url = https://grafana.net
+      [log]
+      mode = console
+      [paths]
+      data = /var/lib/grafana/
+      logs = /var/log/grafana
+      plugins = /var/lib/grafana/plugins
+      provisioning = /etc/grafana/provisioning
+      [server]
+      domain = ''
+      root_url = http://localhost:3000
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: oran-grafana
+      meta.helm.sh/release-namespace: ricplt
+    creationTimestamp: "2025-11-18T22:07:53Z"
+    labels:
+      app.kubernetes.io/instance: oran-grafana
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: grafana
+      app.kubernetes.io/version: 12.2.1
+      helm.sh/chart: grafana-10.1.4
+    name: oran-grafana
+    namespace: ricplt
+    resourceVersion: "29183"
+    uid: cae84a37-09f7-4973-a83c-9d7fa24e566f
+kind: List
+metadata:
+  resourceVersion: ""

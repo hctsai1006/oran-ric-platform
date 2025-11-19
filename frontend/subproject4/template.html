@@ -1,0 +1,75 @@
+<!--
+Copyright 2017 The Kubernetes Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<kd-card [withFooter]="false">
+    <div title>
+        <div>子計畫四 無人機通道估測與全雙工波束成型技術</div>
+        <div class="kd-muted"
+            footer>
+            <div i18n>
+                國立陽明交通大學 余俊宏教授
+            </div>
+        </div>
+    </div>
+    <div content
+        fxLayout="row">
+        <div fxFlexAlign="center">
+            <div class="kd-h1">
+                <span>技術介紹</span>
+            </div>
+            <div class="kd-h3">
+                設計演算法在傳送端之預編碼器與接收端之結合器最小化自干擾影響及同時維持傳輸品質，
+                兩者以迭代方式得到全數位解後以正交匹配追蹤產生對應混合式波束成形之解。
+            </div>
+            <div class="kd-h3">
+                透過傳遞與接收訓練序列(training sequence)來得到取樣過的通道，
+                輔以無人機部署的位置資訊進行通道估測。先透過波束掃描演算法修正位置資訊誤差，
+                然後透過該資訊估計出直視路徑之通道，再透過交替方向乘子算法將完成剩餘部分之通道估測。
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page12.png'" />
+            </div>
+            <hr>
+            <div class="kd-h3">
+                上圖顯示正交匹配追蹤可以產生對應射頻鏈路數量之波束指向投影量最大之方向
+            </div>
+            <div class="kd-h3">
+                讀取平台之通道後進行演算法的運算模擬，再將其結果圖匯出展示
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page13.gif'" />
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page13.png'" />
+            </div>
+            <div class="kd-h1">
+                <span>技術比較</span>
+            </div>
+            <div class="kd-h3, center">
+                佈建的最後結果與無人機和地面基站所服務的用戶 Association result 示意圖
+            </div>
+            <div>
+                <img class="box-center"
+                    [src]="'/assets/images/page6.png'" />
+            </div>
+        </div>
+    </div>
+
+
+</kd-card>
