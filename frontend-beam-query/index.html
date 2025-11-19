@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O-RAN RIC - Beam KPI Query Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📡%3C/text%3E%3C/svg%3E">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <style>
+        :root {
+            /* Material Design Colors - Deep Purple & Amber (matching Kubernetes Dashboard) */
+            --primary-color: #673ab7;
+            --primary-dark: #512da8;
+            --primary-light: #9575cd;
+            --accent-color: #ffc107;
+            --accent-dark: #ffa000;
+            --accent-light: #ffecb3;
+
+            /* Grayscale */
+            --text-primary: rgba(0, 0, 0, 0.87);
+            --text-secondary: rgba(0, 0, 0, 0.54);
+            --divider: rgba(0, 0, 0, 0.12);
+            --background: #fafafa;
+            --surface: #ffffff;
+
+            /* Semantic Colors */
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --info: #2196f3;
+
+            /* Spacing */
+            --baseline-grid: 8px;
+            --content-padding: calc(var(--baseline-grid) * 3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: calc(var(--baseline-grid) * 2) var(--content-padding);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-weight: 300;
+            font-size: 28px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: calc(var(--baseline-grid) * 2);
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: var(--baseline-grid);
+        }
+
+        /* Main Container */
+        .container-fluid {
+            padding: var(--content-padding);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            margin-bottom: var(--content-padding);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid var(--divider);
+            padding: calc(var(--baseline-grid) * 2);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: var(--baseline-grid);
+        }
+
+        .card-body {
+            padding: var(--content-padding);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: calc(var(--baseline-grid) * 1.5) calc(var(--baseline-grid) * 3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        /* Form Controls */
+        .form-select, .form-control {
+            border-radius: 4px;
+            border: 1px solid var(--divider);
+            padding: calc(var(--baseline-grid) * 1.5);
+        }
+
+        .form-select:focus, .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(103, 58, 183, 0.25);
+        }
+
+        /* Labels */
+        .form-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: var(--baseline-grid);
+        }
+
+        /* Badges */
+        .badge {
+            padding: 6px 12px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .badge-success { background-color: var(--success); }
+        .badge-warning { background-color: var(--warning); }
+        .badge-error { background-color: var(--error); }
+        .badge-info { background-color: var(--info); }
+
+        /* Table */
+        .table {
+            font-size: 14px;
+        }
+
+        .table thead {
+            background-color: var(--background);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(103, 58, 183, 0.04);
+        }
+
+        /* Loading Spinner */
+        .spinner-border {
+            color: var(--primary-color);
+        }
+
+        /* Alert */
+        .alert {
+            border-radius: 4px;
+            border-left: 4px solid;
+            padding: calc(var(--baseline-grid) * 2);
+        }
+
+        .alert-success { border-left-color: var(--success); }
+        .alert-danger { border-left-color: var(--error); }
+        .alert-warning { border-left-color: var(--warning); }
+        .alert-info { border-left-color: var(--info); }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: calc(var(--baseline-grid) * 2);
+        }
+
+        /* Quick Stats */
+        .stat-card {
+            text-align: center;
+            padding: calc(var(--baseline-grid) * 3);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin: var(--baseline-grid) 0;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-unit {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Material Icons */
+        .material-icons {
+            vertical-align: middle;
+            font-size: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: calc(var(--baseline-grid) * 2);
+            }
+
+            .card-body {
+                padding: calc(var(--baseline-grid) * 2);
+            }
+        }
+
+        /* Loading State */
+        #loadingState {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: calc(var(--baseline-grid) * 4);
+            gap: calc(var(--baseline-grid) * 2);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: calc(var(--baseline-grid) * 6);
+            color: var(--text-secondary);
+        }
+
+        .empty-state .material-icons {
+            font-size: 64px;
+            opacity: 0.3;
+            margin-bottom: calc(var(--baseline-grid) * 2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>
+            <span class="material-icons">cell_tower</span>
+            O-RAN RIC - Beam KPI Query Dashboard
+        </h1>
+        <div class="subtitle">
+            Real-time Beam Performance Monitoring & Analysis | 5G NR SSB Index 0-7
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <!-- Query Panel -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="material-icons">search</span>
+                        Query Beam KPI
+                    </div>
+                    <div class="card-body">
+                        <form id="queryForm">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label for="beamSelect" class="form-label">Beam ID (SSB Index)</label>
+                                    <select class="form-select" id="beamSelect">
+                                        <option value="1">Beam 1</option>
+                                        <option value="2">Beam 2</option>
+                                        <option value="3">Beam 3</option>
+                                        <option value="4">Beam 4</option>
+                                        <option value="5" selected>Beam 5</option>
+                                        <option value="6">Beam 6</option>
+                                        <option value="7">Beam 7</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="kpiTypeSelect" class="form-label">KPI Type</label>
+                                    <select class="form-select" id="kpiTypeSelect">
+                                        <option value="all">All KPIs</option>
+                                        <option value="signal_quality">Signal Quality</option>
+                                        <option value="throughput">Throughput</option>
+                                        <option value="packet_loss">Packet Loss</option>
+                                        <option value="resource_utilization">Resource Utilization</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="timeRange" class="form-label">Time Range</label>
+                                    <select class="form-select" id="timeRange">
+                                        <option value="current" selected>Current</option>
+                                        <option value="last_5min">Last 5 Minutes</option>
+                                        <option value="last_hour">Last Hour</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <span class="material-icons" style="font-size: 18px;">play_arrow</span>
+                                        Query
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="card" style="display: none;">
+            <div class="spinner-border" role="status"></div>
+            <span>Loading Beam KPI data...</span>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="alert alert-danger" style="display: none;" role="alert">
+            <span class="material-icons" style="vertical-align: middle;">error_outline</span>
+            <span id="errorMessage"></span>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsContainer" style="display: none;">
+            <!-- Quick Stats -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-label">RSRP</div>
+                        <div class="stat-value" id="statRSRP">--</div>
+                        <div class="stat-unit">dBm</div>
+                        <span class="badge" id="badgeRSRP">--</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-label">SINR</div>
+                        <div class="stat-value" id="statSINR">--</div>
+                        <div class="stat-unit">dB</div>
+                        <span class="badge" id="badgeSINR">--</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-label">Downlink Throughput</div>
+                        <div class="stat-value" id="statDL">--</div>
+                        <div class="stat-unit">Mbps</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-label">Uplink Throughput</div>
+                        <div class="stat-value" id="statUL">--</div>
+                        <div class="stat-unit">Mbps</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed KPI Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="material-icons">assessment</span>
+                            Detailed KPI Metrics
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>KPI Category</th>
+                                            <th>Metric</th>
+                                            <th>Value</th>
+                                            <th>Unit</th>
+                                            <th>Quality</th>
+                                            <th>Timestamp</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="kpiTableBody">
+                                        <!-- Populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metadata -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="material-icons">info</span>
+                            Beam Metadata
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <strong>Beam ID:</strong> <span id="metaBeamID">--</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Cell ID:</strong> <span id="metaCellID">--</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>UE Count:</strong> <span id="metaUECount">--</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Query Time:</strong> <span id="metaQueryTime">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
