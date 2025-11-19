@@ -1,7 +1,5 @@
 #!/bin/bash
 # O-RAN RIC Platform Backup Script
-# Author: 蔡秀吉 (thc1006)
-# Date: 2025-11-19
 
 set -e
 

@@ -1,7 +1,5 @@
 #!/bin/bash
 # Quick Platform Health Check
-# Author: Claude Code
-# Date: 2025-11-19
 # Updated: 2025-11-19 - Fixed label selectors and added comprehensive checks
 
 echo "=========================================="

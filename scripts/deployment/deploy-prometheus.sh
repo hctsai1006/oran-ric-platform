@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # O-RAN RIC Prometheus 監控部署腳本
-# 作者: 蔡秀吉 (thc1006)
-# 日期: 2025-11-15
 #
 # 用途: 部署 Prometheus Server 到 RIC Platform 用於 xApp 監控
 #
@@ -32,7 +30,6 @@ fi
 
 echo "=================================================="
 echo "   O-RAN RIC Prometheus 監控部署"
-echo "   作者: 蔡秀吉 (thc1006)"
 echo "   日期: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "=================================================="
 echo

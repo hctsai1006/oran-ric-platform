@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # O-RAN RIC Grafana Dashboard 匯入腳本
-# 作者: 蔡秀吉 (thc1006)
-# 日期: 2025-11-15
 #
 # Small CL #8: 匯入 Grafana Dashboard
 #
@@ -33,7 +31,6 @@ DASHBOARD_DIR="${PROJECT_ROOT}/config/dashboards"
 
 echo "======================================"
 echo "   Grafana Dashboard 匯入"
-echo "   作者: 蔡秀吉 (thc1006)"
 echo "   日期: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================"
 echo

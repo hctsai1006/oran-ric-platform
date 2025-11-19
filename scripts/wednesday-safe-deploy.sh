@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # O-RAN RIC Platform 週三安全部署腳本
-# 作者: 蔡秀吉 (thc1006)
-# 日期: 2025-11-17
 #
 # 功能：
 # - 整合 Phase 0 緊急修復（Redis 持久化、密碼安全、備份機制）
@@ -127,7 +125,6 @@ print_welcome() {
     log "${PURPLE}║                                                           ║${NC}"
     log "${PURPLE}║   整合 Phase 0 緊急修復 + 完整平台部署                    ║${NC}"
     log "${PURPLE}║                                                           ║${NC}"
-    log "${PURPLE}║   作者: 蔡秀吉 (thc1006)                                  ║${NC}"
     log "${PURPLE}║   日期: $(date '+%Y-%m-%d %H:%M:%S')                              ║${NC}"
     log "${PURPLE}║                                                           ║${NC}"
     log "${PURPLE}╚═══════════════════════════════════════════════════════════╝${NC}"

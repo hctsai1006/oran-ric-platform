@@ -2,8 +2,6 @@
 
 ################################################################################
 # O-RAN RIC Platform - Performance Testing Script
-# Author: 蔡秀吉 (thc1006)
-# Date: 2025-11-17
 #
 # This script performs comprehensive performance testing of the RIC platform:
 # - Resource utilization analysis
@@ -98,7 +96,7 @@ setup_test_environment() {
     cat > "$REPORT_FILE" <<EOF
 # O-RAN RIC Platform - Performance Test Report
 
-**Author:** 蔡秀吉 (thc1006)
+**
 **Date:** $(date '+%Y-%m-%d %H:%M:%S')
 **Test Duration:** ${TEST_DURATION} seconds
 
@@ -583,7 +581,7 @@ main() {
     echo ""
     log_info "================================================"
     log_info "O-RAN RIC Platform - Performance Testing"
-    log_info "Author: 蔡秀吉 (thc1006)"
+    log_info ""
     log_info "================================================"
     echo ""
 

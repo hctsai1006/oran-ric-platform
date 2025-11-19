@@ -10,7 +10,6 @@
 # - RMR routing configuration
 # - Network policies
 #
-# Author: 蔡秀吉 (thc1006)
 
 set -e
 

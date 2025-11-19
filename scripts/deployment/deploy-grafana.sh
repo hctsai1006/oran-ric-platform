@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # O-RAN RIC Grafana 部署腳本
-# 作者: 蔡秀吉 (thc1006)
-# 日期: 2025-11-15
 #
 # Small CL #7: 部署 Grafana 到 Kubernetes
 #
@@ -30,7 +28,6 @@ fi
 
 echo "======================================"
 echo "   O-RAN RIC Grafana 部署"
-echo "   作者: 蔡秀吉 (thc1006)"
 echo "   日期: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================"
 echo

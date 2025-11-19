@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # GPU Support Setup for O-RAN RIC Platform
-# Author: 蔡秀吉 (thc1006)
-# Date: 2025-11-18
 #
 # Purpose: Complete GPU support setup including:
 #   - NVIDIA Container Toolkit installation
@@ -37,7 +35,6 @@ fi
 
 echo "=========================================================================="
 echo -e "${CYAN}   NVIDIA GPU Support Setup for O-RAN RIC Platform${NC}"
-echo "   Author: 蔡秀吉 (thc1006)"
 echo "   Date: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "=========================================================================="
 echo

@@ -3,7 +3,7 @@
 Beam Data Flow Verification Script
 Demonstrates beam-specific data flowing from E2 Simulator through KPIMON
 
-Author: Agent 5
+
 Date: 2025-11-19
 """
 import json

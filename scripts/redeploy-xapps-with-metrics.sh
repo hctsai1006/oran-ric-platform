@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # O-RAN RIC xApps Prometheus Metrics 更新部署腳本
-# 作者: 蔡秀吉 (thc1006)
-# 日期: 2025-11-15
 #
 # 用途: 重新構建並部署所有修改了 Prometheus metrics 端點的 xApps
 #
@@ -30,7 +28,6 @@ fi
 
 echo "=================================================="
 echo "   O-RAN RIC xApps Prometheus Metrics 更新部署"
-echo "   作者: 蔡秀吉 (thc1006)"
 echo "   日期: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "=================================================="
 echo

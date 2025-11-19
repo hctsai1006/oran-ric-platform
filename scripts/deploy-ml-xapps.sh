@@ -1,7 +1,5 @@
 #!/bin/bash
 # Deploy ML xApps (QoE Predictor + Federated Learning) to Kubernetes
-# Author: 蔡秀吉 (thc1006)
-# Date: 2025-11-15
 
 set -e  # Exit on error
 set -u  # Exit on undefined variable

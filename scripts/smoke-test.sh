@@ -1,8 +1,6 @@
 #!/bin/bash
 #
 # O-RAN RIC Platform Smoke Test
-# 作者: 蔡秀吉 (thc1006)
-# 日期: 2025-11-17
 #
 # 用途: 快速驗證部署後的系統健康狀態
 # 使用方式: sudo bash scripts/smoke-test.sh
@@ -62,7 +60,6 @@ check() {
 echo ""
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}  O-RAN RIC Platform Smoke Test${NC}"
-echo -e "${BLUE}  作者: 蔡秀吉 (thc1006)${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 
