@@ -1,6 +1,5 @@
 # Phase 4: ML xApps 部署指南
 
-**作者：蔡秀吉 (thc1006)**
 **日期：2025-11-14**
 **Phase：4 - ML xApps (QoE Predictor + Federated Learning)**
 
@@ -468,4 +467,3 @@ tf.config.list_physical_devices('GPU')  # []
 ---
 
 **Phase 4 完成日期：2025-11-14**
-**作者：蔡秀吉 (thc1006)**

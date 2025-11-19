@@ -1,6 +1,5 @@
 # Phase 4 本地測試報告
 
-**作者：蔡秀吉 (thc1006)**
 **日期：2025-11-15**
 **測試環境：Windows 11 + WSL2 + Docker Desktop**
 

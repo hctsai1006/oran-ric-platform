@@ -29,17 +29,17 @@
 
 ---
 
-## 🚀 Wednesday 一鍵部署（生產就緒版）
+## Wednesday 一鍵部署（生產就緒版）
 
-> **⭐ 新功能**: 整合 Phase 0 緊急修復的安全部署腳本，包含 Redis 持久化、密碼加密、自動備份機制。
+> ** 新功能**: 整合 Phase 0 緊急修復的安全部署腳本，包含 Redis 持久化、密碼加密、自動備份機制。
 
 ### 快速開始（5 步驟，45 分鐘）
 
 ```bash
 # 1. 前置檢查（2 分鐘）
-kubectl get nodes                    # 確認 k3s 運行
-free -h                              # 確認至少 16GB RAM
-df -h                                # 確認至少 50GB 磁碟空間
+kubectl get nodes # 確認 k3s 運行
+free -h # 確認至少 16GB RAM
+df -h # 確認至少 50GB 磁碟空間
 
 # 2. 確認映像已構建（如果是首次部署，參考下方"建置映像"）
 curl -s http://localhost:5000/v2/_catalog | python3 -m json.tool
@@ -60,24 +60,24 @@ kubectl get pods -A | grep -E 'ricplt|ricxapp'
 
 **wednesday-safe-deploy.sh** 自動執行以下操作：
 
-✅ **安全增強**
+ **安全增強**
 - 自動生成安全密碼（Grafana、Redis）
 - 建立 Kubernetes Secrets
 - 移除所有明文密碼配置
 
-✅ **資料保護**
+ **資料保護**
 - 啟用 Redis AOF 持久化（appendonly: yes）
 - 配置 RDB 快照（防止資料遺失）
 - 建立每日自動備份 CronJob
 - 設定 InfluxDB 7 天保留策略
 
-✅ **完整部署**
+ **完整部署**
 - RIC Platform 核心元件
 - Prometheus + Grafana 監控堆疊
 - 5 個生產級 xApps（KPIMON, TS, QP, RC, FL）
 - E2 Simulator（含 FL 配置修正）
 
-✅ **智慧驗證**
+ **智慧驗證**
 - 部署前系統檢查
 - 部署前自動備份
 - 部署後完整驗證（7 大類別）
@@ -90,7 +90,7 @@ kubectl get pods -A | grep -E 'ricplt|ricxapp'
 ```bash
 # 啟動本地 Docker Registry
 docker run -d --restart=always --name registry -p 5000:5000 \
-  -v /var/lib/registry:/var/lib/registry registry:2
+ -v /var/lib/registry:/var/lib/registry registry:2
 
 # 建置所有映像（一行命令）
 cd xapps/kpimon-go-xapp && docker build -t localhost:5000/xapp-kpimon:1.0.1 . && docker push localhost:5000/xapp-kpimon:1.0.1 && cd ../.. && \
@@ -157,7 +157,7 @@ export KUBECONFIG=$HOME/.kube/config
 **問題 2: Pod 卡在 Pending**
 ```bash
 kubectl describe pod <pod-name> -n <namespace>
-kubectl top nodes  # 檢查資源使用
+kubectl top nodes # 檢查資源使用
 ```
 
 **問題 3: 映像拉取失敗**
@@ -173,18 +173,19 @@ curl -s http://localhost:5000/v2/_catalog
 
 完整的系統分析與 90 天行動計畫，請參考：
 
-- 📊 [主執行摘要](docs/MASTER_EXECUTIVE_SUMMARY.md) - 5 分鐘了解系統狀況
-- 🗺️ [90 天行動計畫](docs/90_DAY_ACTION_PLAN.md) - 完整執行計畫
-- 🔒 [安全審查報告](docs/SECURITY_AUDIT_REPORT.md) - 28 個安全漏洞分析
-- 📈 [效能分析](docs/technical-debt/PERFORMANCE_ANALYSIS.md) - 效能優化建議
-- 📑 [所有報告索引](docs/ANALYSIS_REPORTS_INDEX.md) - 15 份報告導覽
+- [主執行摘要](docs/reports/project-summary/MASTER_EXECUTIVE_SUMMARY.md) - 5 分鐘了解系統狀況
+- [90 天行動計畫](docs/technical-debt/90_DAY_ACTION_PLAN.md) - 完整執行計畫
+- [安全審查報告](docs/security/SECURITY_AUDIT_REPORT.md) - 28 個安全漏洞分析
+- [效能分析](docs/technical-debt/PERFORMANCE_ANALYSIS.md) - 效能優化建議
+- [所有報告索引](docs/reports/project-summary/ANALYSIS_REPORTS_INDEX.md) - 15 份報告導覽
+- [完整文檔索引](docs/INDEX.md) - 所有文檔導覽
 
 ---
 
 ## Table of Contents
 
 **Wednesday 部署（推薦）**
-- [🚀 Wednesday 一鍵部署](#-wednesday-一鍵部署生產就緒版) - **生產就緒的安全部署** ⭐⭐⭐
+- [ Wednesday 一鍵部署](#-wednesday-一鍵部署生產就緒版) - **生產就緒的安全部署** 
 
 **Getting Started**
 - [部署模式選擇](#部署模式選擇) - 選擇適合的部署方式
@@ -208,15 +209,15 @@ curl -s http://localhost:5000/v2/_catalog
 
 本專案提供兩種部署模式，請根據使用場景選擇：
 
-### 🚀 模式 1: 輕量級部署（推薦）⭐
+### 模式 1: 輕量級部署（推薦）
 
 **使用腳本**: `bash scripts/deployment/deploy-all.sh`
 
 **部署組件**:
-- ✅ Prometheus（監控系統）
-- ✅ Grafana（可視化儀表板）
-- ✅ 5 個生產級 xApps（KPIMON, Traffic Steering, RAN Control, QoE Predictor, Federated Learning）
-- ✅ E2 Simulator（測試流量產生器）
+- Prometheus（監控系統）
+- Grafana（可視化儀表板）
+- 5 個生產級 xApps（KPIMON, Traffic Steering, RAN Control, QoE Predictor, Federated Learning）
+- E2 Simulator（測試流量產生器）
 
 **適用場景**:
 - 開發與測試環境
@@ -229,8 +230,8 @@ curl -s http://localhost:5000/v2/_catalog
 - ⚡ 快速部署（~15 分鐘）
 - 💻 資源需求低（8 核 / 16GB RAM）
 - 🔄 獨立運行，不依賴外部 E2 節點
-- 📊 完整監控與可視化
-- ✅ **這是當前推薦的標準部署方式**
+- 完整監控與可視化
+- **這是當前推薦的標準部署方式**
 
 **執行方式**:
 ```bash
@@ -264,7 +265,7 @@ bash scripts/deployment/deploy-all.sh
 - RAM: 32GB+
 - 磁碟: 100GB+
 
-**⚠️ 重要提示**:
+** 重要提示**:
 - 此模式標記為 **EXPERIMENTAL**
 - 需要額外配置與調整
 - 未包含在標準部署流程中
@@ -295,38 +296,38 @@ bash scripts/deployment/deploy-ric-platform.sh
 
 ### Fast Track Deployment
 
-> **⚠️ IMPORTANT**: This assumes Docker images are already built. First-time users should follow the [Installation Guide](#installation-guide) instead.
+> ** IMPORTANT**: This assumes Docker images are already built. First-time users should follow the [Installation Guide](#installation-guide) instead.
 
-> **📋 Critical Setup Requirements** (必读！Read First!)
+> ** Critical Setup Requirements** (必读！Read First!)
 >
 > Before starting deployment, ensure these steps are completed:
 >
 > 1. **KUBECONFIG Configuration** (必须/Required)
->    - All `kubectl` and `helm` commands require proper KUBECONFIG setup
->    - After k3s installation, configure kubectl access:
->      ```bash
->      mkdir -p $HOME/.kube
->      sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
->      sudo chown $USER:$USER $HOME/.kube/config
->      export KUBECONFIG=$HOME/.kube/config
->      echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
->      source ~/.bashrc
->      ```
->    - **Verify**: `kubectl get nodes` should show your node
+> - All `kubectl` and `helm` commands require proper KUBECONFIG setup
+> - After k3s installation, configure kubectl access:
+> ```bash
+> mkdir -p $HOME/.kube
+> sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+> sudo chown $USER:$USER $HOME/.kube/config
+> export KUBECONFIG=$HOME/.kube/config
+> echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
+> source ~/.bashrc
+> ```
+> - **Verify**: `kubectl get nodes` should show your node
 >
 > 2. **E2 Simulator Submodule** (必须/Required)
->    - E2 Simulator is a git submodule (separate repository)
->    - **Must initialize before building images**:
->      ```bash
->      cd oran-ric-platform
->      git submodule update --init --recursive
->      ```
->    - **Verify**: `ls simulator/e2-simulator/` should show Dockerfile and src/
+> - E2 Simulator is a git submodule (separate repository)
+> - **Must initialize before building images**:
+> ```bash
+> cd oran-ric-platform
+> git submodule update --init --recursive
+> ```
+> - **Verify**: `ls simulator/e2-simulator/` should show Dockerfile and src/
 >
 > 3. **GPU Support** (可选/Optional - for Federated Learning GPU)
->    - Required only if you want to use GPU-accelerated Federated Learning
->    - See [GPU Support Setup](#gpu-support-optional) below
->    - CPU version works without GPU setup
+> - Required only if you want to use GPU-accelerated Federated Learning
+> - See [GPU Support Setup](#gpu-support-optional) below
+> - CPU version works without GPU setup
 
 #### Step 1: Install Prerequisites (~5 min)
 
@@ -354,15 +355,15 @@ kubectl create namespace ricobs
 
 # Start local Docker registry
 docker run -d --restart=always --name registry -p 5000:5000 \
-  -v /var/lib/registry:/var/lib/registry registry:2
+ -v /var/lib/registry:/var/lib/registry registry:2
 ```
 
 **Verify installation:**
 ```bash
-kubectl get nodes              # Should show: Ready
-helm version                   # Should show version without errors
-kubectl get namespaces | grep -E 'ricplt|ricxapp|ricobs'  # Should show all 3 namespaces
-docker ps | grep registry      # Should show: localhost:5000 running
+kubectl get nodes # Should show: Ready
+helm version # Should show version without errors
+kubectl get namespaces | grep -E 'ricplt|ricxapp|ricobs' # Should show all 3 namespaces
+docker ps | grep registry # Should show: localhost:5000 running
 ```
 
 #### Step 2: Initialize E2 Simulator Submodule (~1 min, first-time only)
@@ -373,7 +374,7 @@ cd oran-ric-platform
 git submodule update --init --recursive
 
 # Verify submodule is initialized
-ls simulator/e2-simulator/  # Should show: Dockerfile, src/, deploy/, etc.
+ls simulator/e2-simulator/ # Should show: Dockerfile, src/, deploy/, etc.
 ```
 
 #### Step 3: Build Images (~10 min, first-time only)
@@ -437,15 +438,15 @@ kubectl get pods -n ricplt | grep -E 'grafana|prometheus'
 
 **Expected output:**
 ```
-NAME                              READY   STATUS
-kpimon-xxxxx                      1/1     Running
-traffic-steering-xxxxx            1/1     Running
-ran-control-xxxxx                 1/1     Running
-qoe-predictor-xxxxx               1/1     Running
-federated-learning-xxxxx          1/1     Running
-e2-simulator-xxxxx                1/1     Running
-oran-grafana-xxxxx                1/1     Running
-r4-infrastructure-prometheus-xxx  1/1     Running
+NAME READY STATUS
+kpimon-xxxxx 1/1 Running
+traffic-steering-xxxxx 1/1 Running
+ran-control-xxxxx 1/1 Running
+qoe-predictor-xxxxx 1/1 Running
+federated-learning-xxxxx 1/1 Running
+e2-simulator-xxxxx 1/1 Running
+oran-grafana-xxxxx 1/1 Running
+r4-infrastructure-prometheus-xxx 1/1 Running
 ```
 
 ### GPU Support (Optional)
@@ -499,19 +500,19 @@ kubectl exec -n ricxapp $GPU_POD -- nvidia-smi
 
 ```
 ┌─────────────────┐
-│  E2 Simulator   │ ← Generates realistic E2 traffic
+│ E2 Simulator │ ← Generates realistic E2 traffic
 └────────┬────────┘
-         │ HTTP POST /e2/indication
-         ├──────────────────┬──────────────┬─────────────┬─────────────┐
-         ↓                  ↓              ↓             ↓             ↓
-     KPIMON          Traffic Steering   QoE Predictor   RAN Control   Fed Learning
-     :8081/:8080     :8081/:8080        :8090/:8080     :8100/:8080   :8110/:8080
-         │                  │                │             │             │
-         └──────────────────┴────────────────┴─────────────┴─────────────┘
-                            │
-                     Prometheus :9090  ← Scrapes metrics every 30s
-                            │
-                      Grafana :3000    ← Visualizes metrics
+ │ HTTP POST /e2/indication
+ ├──────────────────┬──────────────┬─────────────┬─────────────┐
+ ↓ ↓ ↓ ↓ ↓
+ KPIMON Traffic Steering QoE Predictor RAN Control Fed Learning
+ :8081/:8080 :8081/:8080 :8090/:8080 :8100/:8080 :8110/:8080
+ │ │ │ │ │
+ └──────────────────┴────────────────┴─────────────┴─────────────┘
+ │
+ Prometheus :9090 ← Scrapes metrics every 30s
+ │
+ Grafana :3000 ← Visualizes metrics
 ```
 
 **Port Convention:**
@@ -561,7 +562,7 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 ```bash
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-helm version  # Verify installation
+helm version # Verify installation
 ```
 
 #### 3. Install and Configure k3s
@@ -596,9 +597,9 @@ kubectl get namespaces | grep -E 'ricplt|ricxapp|ricobs'
 ```bash
 # Install k3s
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.5+k3s1 sh -s - server \
-  --write-kubeconfig-mode 644 \
-  --disable traefik \
-  --disable servicelb
+ --write-kubeconfig-mode 644 \
+ --disable traefik \
+ --disable servicelb
 
 # Configure kubectl access (OPTIONAL - for immediate effect in current shell)
 # NOTE: All deployment scripts (v2.0.1+) automatically detect KUBECONFIG
@@ -612,7 +613,7 @@ source ~/.bashrc
 
 # Verify cluster access
 kubectl cluster-info
-helm version  # Both should work without errors
+helm version # Both should work without errors
 
 # Create RIC namespaces
 kubectl create namespace ricplt
@@ -656,11 +657,11 @@ bash scripts/deployment/deploy-grafana.sh
 export KUBECONFIG=/path/to/cluster-a/kubeconfig
 
 # All scripts will use cluster-a
-bash scripts/deployment/deploy-prometheus.sh  # Deploys to cluster-a
+bash scripts/deployment/deploy-prometheus.sh # Deploys to cluster-a
 
 # Switch to another cluster
 export KUBECONFIG=/path/to/cluster-b/kubeconfig
-bash scripts/deployment/deploy-grafana.sh     # Deploys to cluster-b
+bash scripts/deployment/deploy-grafana.sh # Deploys to cluster-b
 ```
 
 **Scenario 3: Manual configuration (if needed)**
@@ -719,8 +720,8 @@ export KUBECONFIG=$HOME/.kube/config
 ```bash
 # Start local registry (if not already running)
 docker run -d --restart=always --name registry -p 5000:5000 \
-  -v /var/lib/registry:/var/lib/registry \
-  registry:2
+ -v /var/lib/registry:/var/lib/registry \
+ registry:2
 
 # Verify registry is running
 curl -s http://localhost:5000/v2/_catalog
@@ -883,15 +884,15 @@ kubectl get pods -A | grep -E 'ricplt|ricxapp'
 The Federated Learning xApp has two deployment variants:
 
 1. **CPU Version** (`federated-learning`) - Default, always deployed
-   - Works on any Kubernetes cluster
-   - Suitable for development and testing
-   - Uses TensorFlow CPU backend
+ - Works on any Kubernetes cluster
+ - Suitable for development and testing
+ - Uses TensorFlow CPU backend
 
 2. **GPU Version** (`federated-learning-gpu`) - Optional, requires GPU setup
-   - Requires NVIDIA GPU and Device Plugin
-   - Significantly faster training (5-10x speedup)
-   - Recommended for production with large models
-   - See [GPU Support](#gpu-support-optional) for setup
+ - Requires NVIDIA GPU and Device Plugin
+ - Significantly faster training (5-10x speedup)
+ - Recommended for production with large models
+ - See [GPU Support](#gpu-support-optional) for setup
 
 **Future Consideration**: Due to its unique GPU dependencies and specialized ML infrastructure requirements, the Federated Learning xApp is a candidate for extraction into a separate repository (similar to E2 Simulator). This would enable:
 - Independent development cycle for ML features
@@ -1046,9 +1047,9 @@ POD=$(kubectl get pod -n ricxapp -l app=e2-simulator -o jsonpath='{.items[0].met
 
 # Send test indication to KPIMON
 kubectl exec -n ricxapp $POD -- curl -X POST \
-  http://kpimon.ricxapp.svc.cluster.local:8081/e2/indication \
-  -H "Content-Type: application/json" \
-  -d '{"cell_id": 1234567, "prb_usage_dl": 45.5, "prb_usage_ul": 32.1}'
+ http://kpimon.ricxapp.svc.cluster.local:8081/e2/indication \
+ -H "Content-Type: application/json" \
+ -d '{"cell_id": 1234567, "prb_usage_dl": 45.5, "prb_usage_ul": 32.1}'
 ```
 
 ### Performance Benchmarks
@@ -1134,24 +1135,24 @@ kubectl exec -n ricxapp $POD -- curl -X POST \
 
 ```
 oran-ric-platform/
-├── xapps/                    # 5 production xApps
-│   ├── kpimon-go-xapp/       # v1.0.1
-│   ├── traffic-steering/     # v1.0.2
-│   ├── qoe-predictor/        # v1.0.1
-│   ├── ran-control/          # v1.0.1
-│   └── federated-learning/   # v1.0.0
-├── monitoring/               # Prometheus + Grafana configs
-│   ├── prometheus/
-│   │   ├── alerts/xapp-alerts.yml
-│   │   └── prometheus.yml
-│   └── grafana/dashboards/
-├── simulator/e2-simulator/   # Git submodule → oran-e2-node
+├── xapps/ # 5 production xApps
+│ ├── kpimon-go-xapp/ # v1.0.1
+│ ├── traffic-steering/ # v1.0.2
+│ ├── qoe-predictor/ # v1.0.1
+│ ├── ran-control/ # v1.0.1
+│ └── federated-learning/ # v1.0.0
+├── monitoring/ # Prometheus + Grafana configs
+│ ├── prometheus/
+│ │ ├── alerts/xapp-alerts.yml
+│ │ └── prometheus.yml
+│ └── grafana/dashboards/
+├── simulator/e2-simulator/ # Git submodule → oran-e2-node
 ├── scripts/
-│   ├── redeploy-xapps-with-metrics.sh
-│   └── deployment/deploy-e2-simulator.sh
-├── tests/grafana/            # Playwright E2E tests
-├── docs/deployment/          # Comprehensive guides
-└── ric-dep/                  # RIC Platform Helm charts
+│ ├── redeploy-xapps-with-metrics.sh
+│ └── deployment/deploy-e2-simulator.sh
+├── tests/grafana/ # Playwright E2E tests
+├── docs/deployment/ # Comprehensive guides
+└── ric-dep/ # RIC Platform Helm charts
 ```
 
 ---

@@ -1,10 +1,10 @@
-#   O-RAN RIC Platform 文檔索引
+# O-RAN RIC Platform 文檔索引
 
 **最後更新**: 2025-11-19
 
 ---
 
-##   快速導航
+## 快速導航
 
 | 分類 | 說明 | 位置 |
 |------|------|------|
@@ -14,46 +14,48 @@
 | **技術文檔** | 架構、數據流、API | [`technical/`](#技術文檔) |
 | **開發者文檔** | 開發規範、AI 指引 | [`developer/`](#開發者文檔) |
 | **UI 文檔** | 前端介面、Proxy | [`ui/`](#ui-文檔) |
+| **安全文檔** | 安全審計、檢查清單 | [`security/`](#安全文檔) |
+| **技術債務** | 技術債分析與行動計畫 | [`technical-debt/`](#技術債務) |
 | **歸檔** | 歷史文檔 | [`archived/`](#歸檔文檔) |
 
 ---
 
-##   快速開始指南
+## 快速開始指南
 
-###   `guides/quick-start/`
+### `guides/quick-start/`
 
 | 文檔 | 說明 | 適合對象 |
 |------|------|---------|
-| **QUICK_START_BEAM_QUERY.md** | Beam KPI 查詢快速開始（3 種方式） | 所有人  |
+| **QUICK_START_BEAM_QUERY.md** | Beam KPI 查詢快速開始（3 種方式） | 所有人 |
 | **BEAM_API_QUICKSTART.md** | Beam Query API 快速使用 | 開發者 |
 | **QUICK_TEST_REFERENCE.md** | 快速測試指令參考 | 運維人員 |
 
 **使用情境**:
--   我想**快速查詢 Beam KPI** → `QUICK_START_BEAM_QUERY.md`
--   我想**測試 API** → `BEAM_API_QUICKSTART.md`
+- 我想**快速查詢 Beam KPI** → `QUICK_START_BEAM_QUERY.md`
+- 我想**測試 API** → `BEAM_API_QUICKSTART.md`
 
 ---
 
-## 📖 部署指南
+## 部署指南
 
-###   `guides/`
+### `guides/`
 
 | 文檔 | 說明 | 詳細程度 |
 |------|------|---------|
-| **COMPLETE_DEPLOYMENT_GUIDE.md** | 完整 RIC Platform 部署指南（17 組件） |  |
-| **MIGRATION_HANDOVER_GUIDE.md** | RIC Platform 遷移接手指南 |  |
-| **GRAFANA_PROMETHEUS_SETUP_GUIDE.md** | 監控系統部署指南 |  |
+| **COMPLETE_DEPLOYMENT_GUIDE.md** | 完整 RIC Platform 部署指南（17 組件） | |
+| **MIGRATION_HANDOVER_GUIDE.md** | RIC Platform 遷移接手指南 | |
+| **GRAFANA_PROMETHEUS_SETUP_GUIDE.md** | 監控系統部署指南 | |
 
 **使用情境**:
--   我想**從零部署整個 RIC Platform** → `COMPLETE_DEPLOYMENT_GUIDE.md`
--   我想**接手現有專案** → `MIGRATION_HANDOVER_GUIDE.md`
--   我想**設定監控** → `GRAFANA_PROMETHEUS_SETUP_GUIDE.md`
+- 我想**從零部署整個 RIC Platform** → `COMPLETE_DEPLOYMENT_GUIDE.md`
+- 我想**接手現有專案** → `MIGRATION_HANDOVER_GUIDE.md`
+- 我想**設定監控** → `GRAFANA_PROMETHEUS_SETUP_GUIDE.md`
 
 ---
 
-##   報告
+## 報告
 
-###   `reports/deployment/` - 部署報告
+### `reports/deployment/` - 部署報告
 
 | 文檔 | 說明 | 日期 |
 |------|------|------|
@@ -64,58 +66,69 @@
 | **DEPLOYMENT_ISSUES_LOG.md** | 部署問題日誌 | 持續更新 |
 | **RTMGR_STUB_DEPLOYMENT.md** | RTMgr Stub 部署記錄 | 2025-11-XX |
 | **O1_MEDIATOR_DEPLOYMENT_REPORT.txt** | O1 Mediator 部署報告 | 文字格式 |
+| **traffic-steering-deployment.md** | Traffic Steering xApp 部署報告 | 2025-11-XX |
 
-###   `reports/testing/` - 測試報告
+### `reports/testing/` - 測試報告
 
 | 文檔 | 說明 | 覆蓋範圍 |
 |------|------|---------|
-| **TEST_RESULTS_FINAL.md** | 最終測試結果（完整） |  |
-| **TEST_RESULTS_REPORT.md** | 測試結果報告 |  |
+| **TEST_RESULTS_FINAL.md** | 最終測試結果（完整） | |
+| **TEST_RESULTS_REPORT.md** | 測試結果報告 | |
+| **E2E_TESTING_REPORT.md** | E2E 測試完整報告 | |
 | **TEST_EXECUTION_SUMMARY.txt** | 測試執行總結 | 文字格式 |
 | **TEST_SUMMARY.txt** | 測試摘要 | 文字格式 |
 | **VERIFICATION_COMPLETE.txt** | 驗證完成報告 | 文字格式 |
 
-###   `reports/performance/` - 效能測試報告
+### `reports/performance/` - 效能測試報告
 
 | 文檔 | 說明 | 日期 |
 |------|------|------|
 | **performance-test-20251117-213914.md** | 平台效能測試報告（300秒） | 2025-11-17 |
 
-###   `reports/analysis/` - 分析報告
+### `reports/project-summary/` - 專案總結報告
+
+| 文檔 | 說明 | 類型 |
+|------|------|------|
+| **MASTER_EXECUTIVE_SUMMARY.md** | 主管層級執行摘要 | 總結 |
+| **ANALYSIS_REPORTS_INDEX.md** | 分析報告索引 | 索引 |
+| **DOCUMENTATION_CONSOLIDATION_REPORT.md** | 文檔整合報告 | 報告 |
+| **BEAM_ID_INTEGRATION_SUMMARY.md** | Beam ID 整合總結 | 總結 |
+
+### `reports/analysis/` - 分析報告
 
 | 文檔 | 說明 | 重要性 |
 |------|------|--------|
-| **SYSTEM_HEALTH_REPORT.md** | 系統健康分析（28 pods） |  |
-| **RMR_ERROR_ANALYSIS.md** | RMR 錯誤完整分析與修復 |  |
-| **XAPP_INTEGRATION_REPORT.md** | xApp 整合分析報告 |  |
-| **COMPONENT_COMPARISON_REPORT.md** | 組件比較報告 |  |
-| **BEAM_QUERY_API_IMPLEMENTATION_REPORT.md** | Beam Query API 實作報告 |  |
+| **SYSTEM_HEALTH_REPORT.md** | 系統健康分析（28 pods） | |
+| **RMR_ERROR_ANALYSIS.md** | RMR 錯誤完整分析與修復 | |
+| **XAPP_INTEGRATION_REPORT.md** | xApp 整合分析報告 | |
+| **COMPONENT_COMPARISON_REPORT.md** | 組件比較報告 | |
+| **BEAM_QUERY_API_IMPLEMENTATION_REPORT.md** | Beam Query API 實作報告 | |
 | **BEAM_API_FILES_SUMMARY.txt** | Beam API 檔案摘要 | 文字格式 |
 
 **使用情境**:
--   我想**檢查系統健康狀態** → `SYSTEM_HEALTH_REPORT.md`
--   我遇到**RMR 錯誤** → `RMR_ERROR_ANALYSIS.md`
--   我想**了解各組件差異** → `COMPONENT_COMPARISON_REPORT.md`
+- 我想**檢查系統健康狀態** → `SYSTEM_HEALTH_REPORT.md`
+- 我遇到**RMR 錯誤** → `RMR_ERROR_ANALYSIS.md`
+- 我想**了解各組件差異** → `COMPONENT_COMPARISON_REPORT.md`
 
 ---
 
-##   技術文檔
+## 技術文檔
 
-###   `technical/data-flow/` - 數據流
+### `technical/data-flow/` - 數據流
 
 | 文檔 | 說明 | 詳細程度 |
 |------|------|---------|
-| **DATA_FLOW_EXPLANATION.md** | 完整數據流程解析（E2 Sim → KPIMON → Query） |  |
-| **BEAM_ID_DATA_TRANSMISSION.md** | Beam ID 資料傳輸完整流程（6 階段） |  |
+| **DATA_FLOW_EXPLANATION.md** | 完整數據流程解析（E2 Sim → KPIMON → Query） | |
+| **BEAM_ID_DATA_TRANSMISSION.md** | Beam ID 資料傳輸完整流程（6 階段） | |
 
-###   `technical/` - 技術總結
+### `technical/` - 技術總結
 
 | 文檔 | 說明 | 類型 |
 |------|------|------|
 | **FINAL_SUMMARY_BEAM_QUERY.md** | Beam Query 系統完成總結 | 總結 |
-| **KPIMON_DATA_FLOW_AND_XAPP_INTERACTION.md** | KPIMON 數據流與 xApp 互動 | 技術深度  |
+| **KPIMON_DATA_FLOW_AND_XAPP_INTERACTION.md** | KPIMON 數據流與 xApp 互動 | 技術深度 |
 | **Rel-J-spec.md** | O-RAN Release J 規格 | 規格 |
-| **BEAM_KPI_COMPLETE_GUIDE.md** | Beam KPI 完整使用指南 | 指南  |
+| **BEAM_KPI_COMPLETE_GUIDE.md** | Beam KPI 完整使用指南 | 指南 |
 | **BEAM_ID_INTEGRATION_SUMMARY.md** | Beam ID 整合總結 | 總結 |
 | **BEAM_KPI_QUERY_API.md** | Beam KPI Query API 文檔 | API |
 | **BEAM_QUERY_USAGE_GUIDE.md** | Beam 查詢使用指南 | 指南 |
@@ -123,29 +136,29 @@
 | **DOCUMENTATION_CONSOLIDATION_REPORT.md** | 文檔整合報告 | 報告 |
 
 **使用情境**:
--   我想**了解完整數據流** → `DATA_FLOW_EXPLANATION.md`
--   我想**了解 Beam ID 怎麼傳輸** → `BEAM_ID_DATA_TRANSMISSION.md`
--   我想**了解 KPIMON 與其他 xApp 的互動** → `KPIMON_DATA_FLOW_AND_XAPP_INTERACTION.md`
--   我想**使用 Beam KPI API** → `BEAM_KPI_COMPLETE_GUIDE.md`
+- 我想**了解完整數據流** → `DATA_FLOW_EXPLANATION.md`
+- 我想**了解 Beam ID 怎麼傳輸** → `BEAM_ID_DATA_TRANSMISSION.md`
+- 我想**了解 KPIMON 與其他 xApp 的互動** → `KPIMON_DATA_FLOW_AND_XAPP_INTERACTION.md`
+- 我想**使用 Beam KPI API** → `BEAM_KPI_COMPLETE_GUIDE.md`
 
 ---
 
-##   開發者文檔
+## 開發者文檔
 
-###   `developer/` - 開發規範
+### `developer/` - 開發規範
 
 | 文檔 | 說明 | 類型 |
 |------|------|------|
-| **AI-DEVELOPMENT-GUIDELINES.md** | AI 開發規範與補丁防護 | 規範  |
+| **AI-DEVELOPMENT-GUIDELINES.md** | AI 開發規範與補丁防護 | 規範 |
 
 **使用情境**:
--   我想**了解 AI 開發規範** → `AI-DEVELOPMENT-GUIDELINES.md`
+- 我想**了解 AI 開發規範** → `AI-DEVELOPMENT-GUIDELINES.md`
 
 ---
 
-##   UI 文檔
+## UI 文檔
 
-###   `ui/` - 前端介面與工具
+### `ui/` - 前端介面與工具
 
 | 文檔 | 說明 | 類型 |
 |------|------|------|
@@ -153,14 +166,74 @@
 | **beam-ui-proxy.py** | CORS Proxy 服務器 | Python |
 
 **使用情境**:
--   我想**使用 Web UI 查詢 Beam KPI** → `beam-query-interface.html`
--   我想**解決 CORS 問題** → `beam-ui-proxy.py`
+- 我想**使用 Web UI 查詢 Beam KPI** → `beam-query-interface.html`
+- 我想**解決 CORS 問題** → `beam-ui-proxy.py`
 
 ---
 
-## 📦 歸檔文檔
+## 安全文檔
 
-###   `archived/` - 歷史文檔
+### `security/` - 安全分析與指南
+
+| 文檔 | 說明 | 類型 |
+|------|------|------|
+| **README.md** | 安全文檔總覽 | 索引 |
+| **SECURITY_AUDIT_REPORT.md** | 安全審計報告（969行） | 審計報告 |
+| **SECURITY_CHECKLIST.md** | 安全檢查清單（415行） | 檢查清單 |
+| **SECURITY_QUICK_FIX_GUIDE.md** | 安全快速修復指南（707行） | 修復指南 |
+
+**使用情境**:
+- 我想**了解安全狀況** → `README.md` → `SECURITY_AUDIT_REPORT.md`
+- 我想**快速修復安全問題** → `SECURITY_QUICK_FIX_GUIDE.md`
+- 我想**執行安全檢查** → `SECURITY_CHECKLIST.md`
+
+---
+
+## 技術債務
+
+### `technical-debt/` - 技術債務分析與行動計畫
+
+| 文檔 | 說明 | 行數 |
+|------|------|------|
+| **TECHNICAL_DEBT_ANALYSIS.md** | 技術債務完整分析 | 1241行 |
+| **TECHNICAL_DEBT_EXECUTIVE_SUMMARY.md** | 技術債務執行摘要 | 328行 |
+| **90_DAY_ACTION_PLAN.md** | 90天行動計畫 | 2530行 |
+| **PRIORITY_MATRIX.md** | 優先級矩陣 | 446行 |
+| **TECHNICAL_DEBT_ACTION_CHECKLIST.md** | 技術債務行動檢查清單 | 635行 |
+
+**使用情境**:
+- 我想**了解技術債務狀況** → `TECHNICAL_DEBT_ANALYSIS.md`
+- 我想**規劃技術債務處理** → `90_DAY_ACTION_PLAN.md`
+- 我想**快速檢視優先級** → `PRIORITY_MATRIX.md`
+
+---
+
+## 歸檔文檔
+
+### `archived/project-phases/` - 專案階段文檔
+
+| 文檔 | 說明 | 階段 |
+|------|------|------|
+| **PHASE4-DEPLOYMENT-COMPLETE.md** | Phase 4 完整部署指南（537行） | Phase 4 |
+| **PHASE4-LOCAL-TEST-REPORT.md** | Phase 4 本地測試報告（512行） | Phase 4 |
+| **phase4-ml-xapps-deployment.md** | Phase 4 ML xApps 部署指南（471行） | Phase 4 |
+| **PHASE4-SUMMARY.md** | Phase 4 完成總結（479行） | Phase 4 |
+
+### `archived/completed-projects/` - 已完成專案
+
+| 文檔 | 說明 | 狀態 |
+|------|------|------|
+| **GPU-WORKSTATION-HANDOFF.md** | GPU 工作站交接文檔 | 已完成 |
+| **PROJECT-REORGANIZATION-PLAN.md** | 專案重組計畫 | 已完成 |
+| **RFC-MVP-FIXES.md** | MVP 修復 RFC | 已完成 |
+
+### `archived/old-versions/` - 舊版本文檔
+
+| 文檔 | 說明 | 版本 |
+|------|------|------|
+| **deployment-guide-complete.md** | 完整部署指南（舊版，1953行） | 2025-11-14 |
+
+### `archived/` - 其他歷史文檔
 
 | 文檔 | 說明 | 狀態 |
 |------|------|------|
@@ -171,7 +244,7 @@
 
 ---
 
-##   其他資料夾
+## 其他資料夾
 
 | 資料夾 | 說明 | 內容 |
 |--------|------|------|
@@ -186,7 +259,7 @@
 
 ---
 
-##   快速查找表
+## 快速查找表
 
 ### 按角色查找
 
@@ -222,7 +295,7 @@
 
 ---
 
-##   必讀文檔（Top 5）
+## 必讀文檔（Top 5）
 
 1. **QUICK_START_BEAM_QUERY.md** - 快速開始（5 分鐘上手）
 2. **DATA_FLOW_EXPLANATION.md** - 完整數據流（理解系統架構）
@@ -232,7 +305,7 @@
 
 ---
 
-##   文檔更新記錄
+## 文檔更新記錄
 
 | 日期 | 更新內容 | 影響文檔 |
 |------|---------|---------|
@@ -244,11 +317,11 @@
 
 ---
 
-##   聯絡資訊
+## 聯絡資訊
 
 **專案**: O-RAN RIC Platform
 **GitHub**: [hctsai1006/oran-ric-platform](https://github.com/hctsai1006/oran-ric-platform)
 
 ---
 
-**  提示**: 使用 Ctrl+F 搜尋關鍵字快速找到相關文檔！
+** 提示**: 使用 Ctrl+F 搜尋關鍵字快速找到相關文檔！

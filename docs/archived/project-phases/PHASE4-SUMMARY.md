@@ -1,6 +1,5 @@
 # Phase 4: ML xApps 完成總結
 
-**作者：蔡秀吉 (thc1006)**
 **完成日期：2025-11-14**
 **Git Branch：`phase4-ml-xapps`**
 **Git Commit：`d4c1868`**
@@ -469,7 +468,6 @@ Phase 4 成功完成了 ML xApps 的代碼重構，解決了關鍵的依賴版�
 - ⏳ 部署：等待解決網絡配置問題
 - ⏳ 驗證：等待部署完成
 
-**作者：蔡秀吉 (thc1006)**
 **完成日期：2025-11-14**
 **Git Branch：`phase4-ml-xapps`**
 **Git Commit：`d4c1868`**
