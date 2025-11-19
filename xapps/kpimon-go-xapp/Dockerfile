@@ -72,7 +72,7 @@ RUN useradd -m -u 1000 xapp && \
 USER xapp
 
 # Expose ports
-EXPOSE 4560 4561 8080
+EXPOSE 4560 4561 8080 8081
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
