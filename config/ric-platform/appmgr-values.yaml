@@ -1,0 +1,73 @@
+# Application Manager Configuration for O-RAN RIC Platform
+
+# Common configuration for Tiller (Helm 2 support for xApps)
+common:
+  k8sAPIHost: https://kubernetes.default.svc.cluster.local/
+  tillers:
+    ricxapp:
+      name: ricxapp
+      nameSpace: ricxapp
+      deployNameSpace: ricinfra
+      imagePullPolicy: IfNotPresent
+      image:
+        tillerTLSSecrets:
+          registry: nexus3.o-ran-sc.org:10002/o-ran-sc
+          name: it-dep-secret
+          tag: 0.0.2
+        tiller:
+          registry: ghcr.io
+          name: helm/tiller
+          tag: v2.16.12
+      secret:
+        create: true
+        tillerSecretName: ricxapp-tiller-secret
+        helmSecretName: ricxapp-helm-secret
+      tls:
+        authenticate: true
+        verify: true
+      serviceAccount:
+        name: tiller
+        role:
+        - apiGroups: [""]
+          resources: ["pods", "configmaps", "services"]
+          verbs: ["get", "list", "create", "delete"]
+        - apiGroups: ["extensions", "apps"]
+          resources: ["deployments"]
+          verbs: ["get", "list", "create", "delete"]
+
+# Application Manager configuration
+appmgr:
+  imagePullPolicy: IfNotPresent
+
+  # Updated image version
+  image:
+    init:
+      registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+      name: it-dep-init
+      tag: 0.0.1
+    appmgr:
+      registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+      name: ric-plt-appmgr
+      tag: 0.5.4  # Updated to newer stable version
+
+  replicaCount: 1
+
+  # Helm repository configuration
+  reponame: "helm-repo"
+
+  # Configuration paths
+  appconfigpath: /opt/ric/config
+  appsecretpath: /opt/ric/secret
+  appcertpath: /opt/ric/certificates
+
+  # Tiller configuration
+  tillerkey: "ricxapp"
+
+  # Resource limits for stability
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"

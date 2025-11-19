@@ -1,0 +1,672 @@
+openapi: 3.0.3
+info:
+  title: O-RAN Beam KPI Query API
+  description: |
+    RESTful API for querying beam-specific KPI measurements from the O-RAN KPIMON xApp.
+
+    This API provides pull-on-demand access to beam measurements including RSRP, RSRQ,
+    SINR, throughput, and other radio performance indicators.
+
+    **Architecture**: The API extends the KPIMON xApp to support interactive queries
+    alongside the existing push-based E2 indication model.
+  version: 1.0.0
+  contact:
+    name: O-RAN RIC Platform Team
+    email: support@oran-ric.local
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://kpimon.ricxapp.svc.cluster.local:8081/api
+    description: Kubernetes cluster internal
+  - url: http://localhost:8081/api
+    description: Local development
+
+tags:
+  - name: Beam KPI
+    description: Beam-specific KPI measurement queries
+  - name: Health
+    description: Service health and readiness checks
+
+paths:
+  /beam/{beam_id}/kpi:
+    get:
+      tags:
+        - Beam KPI
+      summary: Query KPI measurements for a specific beam
+      description: |
+        Retrieve current or historical KPI measurements for a specific beam ID.
+
+        **Data Sources**:
+        - Real-time: Latest measurements from Redis cache (300s TTL)
+        - Historical: Time-series data from InfluxDB (7 day retention)
+
+        **Performance**: Typical response time < 100ms for cached data
+      operationId: getBeamKPI
+      parameters:
+        - name: beam_id
+          in: path
+          required: true
+          description: Beam identifier (1, 2, 3, etc.)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 64
+            example: 1
+
+        - name: kpi_type
+          in: query
+          required: false
+          description: Filter by specific KPI type(s). Comma-separated for multiple types.
+          schema:
+            type: string
+            enum:
+              - rsrp
+              - rsrq
+              - sinr
+              - throughput_dl
+              - throughput_ul
+              - prb_usage_dl
+              - prb_usage_ul
+              - packet_loss_dl
+              - packet_loss_ul
+              - all
+            default: all
+          example: "rsrp,rsrq,sinr"
+
+        - name: time_range
+          in: query
+          required: false
+          description: Time range for historical data query
+          schema:
+            type: string
+            enum:
+              - current
+              - last_5m
+              - last_15m
+              - last_1h
+              - last_24h
+            default: current
+          example: last_15m
+
+        - name: aggregation
+          in: query
+          required: false
+          description: Aggregation method for time-series data
+          schema:
+            type: string
+            enum:
+              - raw
+              - mean
+              - min
+              - max
+              - p95
+            default: raw
+          example: mean
+
+        - name: cell_id
+          in: query
+          required: false
+          description: Filter by specific cell ID
+          schema:
+            type: string
+            pattern: '^cell_\d{3}$'
+          example: cell_001
+
+        - name: ue_id
+          in: query
+          required: false
+          description: Filter by specific UE ID
+          schema:
+            type: string
+            pattern: '^ue_\d{3}$'
+          example: ue_005
+
+      responses:
+        '200':
+          description: Successful query - returns beam KPI measurements
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeamKPIResponse'
+              examples:
+                current_beam_1:
+                  summary: Current measurements for Beam 1
+                  value:
+                    status: success
+                    beam_id: 1
+                    timestamp: "2025-11-19T08:15:30.123Z"
+                    query_params:
+                      kpi_type: all
+                      time_range: current
+                      aggregation: raw
+                    data:
+                      signal_quality:
+                        rsrp:
+                          value: -95.5
+                          unit: dBm
+                          quality: good
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                        rsrq:
+                          value: -10.2
+                          unit: dB
+                          quality: good
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                        sinr:
+                          value: 18.5
+                          unit: dB
+                          quality: excellent
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                      throughput:
+                        downlink:
+                          value: 85.3
+                          unit: Mbps
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                        uplink:
+                          value: 42.7
+                          unit: Mbps
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                      resource_utilization:
+                        prb_usage_dl:
+                          value: 72.5
+                          unit: percentage
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                        prb_usage_ul:
+                          value: 58.3
+                          unit: percentage
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                      packet_loss:
+                        downlink:
+                          value: 1.2
+                          unit: percentage
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                        uplink:
+                          value: 0.8
+                          unit: percentage
+                          timestamp: "2025-11-19T08:15:30.123Z"
+                      metadata:
+                        cell_id: cell_001
+                        ue_count: 15
+                        beam_width: 65
+                        azimuth: 120
+                    count: 8
+                    source: redis
+
+                historical_beam_2:
+                  summary: Historical averaged data for Beam 2
+                  value:
+                    status: success
+                    beam_id: 2
+                    timestamp: "2025-11-19T08:15:30.123Z"
+                    query_params:
+                      kpi_type: rsrp,rsrq,sinr
+                      time_range: last_15m
+                      aggregation: mean
+                    data:
+                      signal_quality:
+                        rsrp:
+                          value: -92.3
+                          unit: dBm
+                          quality: excellent
+                          min: -98.5
+                          max: -88.1
+                          std_dev: 2.4
+                          sample_count: 180
+                        rsrq:
+                          value: -9.5
+                          unit: dB
+                          quality: excellent
+                          min: -12.3
+                          max: -7.8
+                          std_dev: 1.1
+                          sample_count: 180
+                        sinr:
+                          value: 20.1
+                          unit: dB
+                          quality: excellent
+                          min: 15.2
+                          max: 24.8
+                          std_dev: 2.3
+                          sample_count: 180
+                    count: 3
+                    source: influxdb
+
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: error
+                error_code: INVALID_PARAMETER
+                message: "beam_id must be between 1 and 64"
+                timestamp: "2025-11-19T08:15:30.123Z"
+
+        '404':
+          description: Not found - beam has no data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: error
+                error_code: BEAM_NOT_FOUND
+                message: "No KPI data found for beam_id=5 in the requested time range"
+                timestamp: "2025-11-19T08:15:30.123Z"
+                suggestion: "Check if beam_id is correct or try a different time_range"
+
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: error
+                error_code: INTERNAL_ERROR
+                message: "Failed to query Redis: connection timeout"
+                timestamp: "2025-11-19T08:15:30.123Z"
+
+  /beam/{beam_id}/kpi/timeseries:
+    get:
+      tags:
+        - Beam KPI
+      summary: Get time-series KPI data for a beam
+      description: |
+        Retrieve detailed time-series KPI measurements suitable for graphing and trend analysis.
+
+        **Use Cases**:
+        - Real-time monitoring dashboards
+        - Historical trend analysis
+        - Performance baseline comparison
+      operationId: getBeamKPITimeseries
+      parameters:
+        - name: beam_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 64
+          example: 1
+
+        - name: kpi_type
+          in: query
+          required: true
+          description: Specific KPI to retrieve time-series for
+          schema:
+            type: string
+            enum:
+              - rsrp
+              - rsrq
+              - sinr
+              - throughput_dl
+              - throughput_ul
+          example: rsrp
+
+        - name: start_time
+          in: query
+          required: false
+          description: Start timestamp (ISO 8601 format)
+          schema:
+            type: string
+            format: date-time
+          example: "2025-11-19T08:00:00Z"
+
+        - name: end_time
+          in: query
+          required: false
+          description: End timestamp (ISO 8601 format)
+          schema:
+            type: string
+            format: date-time
+          example: "2025-11-19T09:00:00Z"
+
+        - name: interval
+          in: query
+          required: false
+          description: Data point interval for downsampling
+          schema:
+            type: string
+            enum:
+              - 1s
+              - 5s
+              - 30s
+              - 1m
+              - 5m
+              - 15m
+            default: 5s
+          example: 30s
+
+      responses:
+        '200':
+          description: Time-series data returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeseriesResponse'
+
+  /beam/list:
+    get:
+      tags:
+        - Beam KPI
+      summary: List all active beams with basic KPI summary
+      description: |
+        Get a list of all beams currently reporting KPI data, with basic statistics.
+
+        Useful for:
+        - Discovering available beams
+        - Network topology overview
+        - Quick health check across all beams
+      operationId: listBeams
+      parameters:
+        - name: cell_id
+          in: query
+          required: false
+          description: Filter beams by cell ID
+          schema:
+            type: string
+
+        - name: min_rsrp
+          in: query
+          required: false
+          description: Filter beams with RSRP above threshold
+          schema:
+            type: number
+          example: -100
+
+      responses:
+        '200':
+          description: List of active beams
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeamListResponse'
+
+  /health/alive:
+    get:
+      tags:
+        - Health
+      summary: Liveness probe
+      description: Check if the service is alive
+      operationId: healthAlive
+      responses:
+        '200':
+          description: Service is alive
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: alive
+
+  /health/ready:
+    get:
+      tags:
+        - Health
+      summary: Readiness probe
+      description: Check if the service is ready to accept requests
+      operationId: healthReady
+      responses:
+        '200':
+          description: Service is ready
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ready
+                  checks:
+                    type: object
+                    properties:
+                      redis:
+                        type: string
+                        example: connected
+                      influxdb:
+                        type: string
+                        example: connected
+
+components:
+  schemas:
+    BeamKPIResponse:
+      type: object
+      required:
+        - status
+        - beam_id
+        - timestamp
+        - data
+      properties:
+        status:
+          type: string
+          enum: [success]
+          example: success
+        beam_id:
+          type: integer
+          example: 1
+        timestamp:
+          type: string
+          format: date-time
+          description: Query execution timestamp
+        query_params:
+          type: object
+          description: Echo of query parameters used
+        data:
+          type: object
+          description: KPI measurements organized by category
+          properties:
+            signal_quality:
+              $ref: '#/components/schemas/SignalQualityMetrics'
+            throughput:
+              $ref: '#/components/schemas/ThroughputMetrics'
+            resource_utilization:
+              $ref: '#/components/schemas/ResourceMetrics'
+            packet_loss:
+              $ref: '#/components/schemas/PacketLossMetrics'
+            metadata:
+              $ref: '#/components/schemas/BeamMetadata'
+        count:
+          type: integer
+          description: Number of KPI measurements returned
+        source:
+          type: string
+          enum: [redis, influxdb, cache]
+          description: Data source used for this query
+
+    SignalQualityMetrics:
+      type: object
+      properties:
+        rsrp:
+          $ref: '#/components/schemas/KPIMeasurement'
+        rsrq:
+          $ref: '#/components/schemas/KPIMeasurement'
+        sinr:
+          $ref: '#/components/schemas/KPIMeasurement'
+
+    ThroughputMetrics:
+      type: object
+      properties:
+        downlink:
+          $ref: '#/components/schemas/KPIMeasurement'
+        uplink:
+          $ref: '#/components/schemas/KPIMeasurement'
+
+    ResourceMetrics:
+      type: object
+      properties:
+        prb_usage_dl:
+          $ref: '#/components/schemas/KPIMeasurement'
+        prb_usage_ul:
+          $ref: '#/components/schemas/KPIMeasurement'
+
+    PacketLossMetrics:
+      type: object
+      properties:
+        downlink:
+          $ref: '#/components/schemas/KPIMeasurement'
+        uplink:
+          $ref: '#/components/schemas/KPIMeasurement'
+
+    KPIMeasurement:
+      type: object
+      required:
+        - value
+        - unit
+        - timestamp
+      properties:
+        value:
+          type: number
+          description: Measurement value
+        unit:
+          type: string
+          description: Unit of measurement (dBm, dB, Mbps, percentage, etc.)
+        quality:
+          type: string
+          enum: [excellent, good, fair, poor]
+          description: Quality assessment based on thresholds
+        timestamp:
+          type: string
+          format: date-time
+        min:
+          type: number
+          description: Minimum value (for aggregated data)
+        max:
+          type: number
+          description: Maximum value (for aggregated data)
+        std_dev:
+          type: number
+          description: Standard deviation (for aggregated data)
+        sample_count:
+          type: integer
+          description: Number of samples aggregated
+
+    BeamMetadata:
+      type: object
+      properties:
+        cell_id:
+          type: string
+          example: cell_001
+        ue_count:
+          type: integer
+          description: Number of UEs served by this beam
+        beam_width:
+          type: number
+          description: Beam width in degrees
+        azimuth:
+          type: number
+          description: Beam azimuth angle in degrees
+        elevation:
+          type: number
+          description: Beam elevation angle in degrees
+
+    TimeseriesResponse:
+      type: object
+      required:
+        - status
+        - beam_id
+        - kpi_type
+        - datapoints
+      properties:
+        status:
+          type: string
+          enum: [success]
+        beam_id:
+          type: integer
+        kpi_type:
+          type: string
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        interval:
+          type: string
+        datapoints:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp:
+                type: string
+                format: date-time
+              value:
+                type: number
+              quality:
+                type: string
+        count:
+          type: integer
+
+    BeamListResponse:
+      type: object
+      required:
+        - status
+        - beams
+        - count
+      properties:
+        status:
+          type: string
+          enum: [success]
+        timestamp:
+          type: string
+          format: date-time
+        beams:
+          type: array
+          items:
+            type: object
+            properties:
+              beam_id:
+                type: integer
+              cell_id:
+                type: string
+              status:
+                type: string
+                enum: [active, inactive, degraded]
+              last_update:
+                type: string
+                format: date-time
+              summary:
+                type: object
+                properties:
+                  rsrp_avg:
+                    type: number
+                  rsrq_avg:
+                    type: number
+                  sinr_avg:
+                    type: number
+                  ue_count:
+                    type: integer
+        count:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      required:
+        - status
+        - error_code
+        - message
+        - timestamp
+      properties:
+        status:
+          type: string
+          enum: [error]
+        error_code:
+          type: string
+          example: INVALID_PARAMETER
+        message:
+          type: string
+          description: Human-readable error message
+        timestamp:
+          type: string
+          format: date-time
+        suggestion:
+          type: string
+          description: Suggested action to resolve the error
+        details:
+          type: object
+          description: Additional error context

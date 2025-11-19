@@ -1,0 +1,192 @@
+================================================================================
+O1 Mediator (O1 接口支援) 組件部署狀態報告
+================================================================================
+
+部署日期: 2025-11-19 07:11:40
+集群: mbwcl711-3060-system-product-name (Kubernetes v1.28.5+k3s1)
+命名空間: ricplt
+環境: Linux 6.8.0-87-generic
+
+================================================================================
+1. HELM 部署狀態 [SUCCESS]
+================================================================================
+Release Name: r4-o1mediator
+Chart: o1mediator-3.0.0
+Status: DEPLOYED
+Revision: 1
+Command: 
+  helm install r4-o1mediator ./ric-dep/helm/o1mediator \
+    --namespace ricplt \
+    --values config/ric-platform/o1mediator-values.yaml \
+    --timeout 300s
+
+部署結果: 成功
+- Helm Chart 已成功部署
+- 配置已應用
+- Kubernetes 資源已創建
+
+================================================================================
+2. 配置文件 [SUCCESS]
+================================================================================
+路徑: /home/mbwcl711_3060/thc1006/tmep/oran-ric-platform/config/ric-platform/o1mediator-values.yaml
+
+主要配置:
+  - Image Registry: nexus3.o-ran-sc.org:10002/o-ran-sc
+  - Image Name: ric-plt-o1
+  - Image Tag: 0.3.1
+  - Image Pull Policy: IfNotPresent
+  - Replica Count: 1
+  - Log Level: INFO
+  - Prometheus Alert Manager: r4-infrastructure-prometheus-alertmanager:80
+  
+資源配置:
+  - CPU Request: 200m
+  - Memory Request: 256Mi
+  - CPU Limit: 500m
+  - Memory Limit: 512Mi
+  
+健康檢查:
+  - Liveness Probe: Enabled
+    * Initial Delay: 10 seconds
+    * Period: 10 seconds
+  - Readiness Probe: Enabled
+    * Initial Delay: 5 seconds
+    * Period: 10 seconds
+
+================================================================================
+3. Kubernetes 資源創建 [SUCCESS]
+================================================================================
+
+Deployment:
+  Name: deployment-ricplt-o1mediator
+  Type: Deployment
+  Status: Created (1 replica requested)
+  Selector: app=ricplt-o1mediator, release=r4-o1mediator
+  
+Pod:
+  Name: deployment-ricplt-o1mediator-774b96c87-bvblb
+  Status: ImagePullBackOff (Pod scheduling is pending image pull)
+  Node: mbwcl711-3060-system-product-name
+  
+Service - HTTP API:
+  Name: service-ricplt-o1mediator-http
+  Type: ClusterIP
+  Cluster IP: 10.43.245.62
+  Ports:
+    - NETCONF (9001/TCP) - Management operations
+    - HTTP API (8080/TCP) - RESTful interface
+    - Additional (3000/TCP)
+  
+Service - NETCONF/TCP:
+  Name: service-ricplt-o1mediator-tcp-netconf
+  Type: NodePort
+  Cluster IP: 10.43.94.252
+  Port Mapping: 830:30830/TCP
+  Description: NETCONF SSH interface for configuration management
+
+================================================================================
+4. Pod 運行狀態 [FAILED - IMAGE PULL ERROR]
+================================================================================
+
+Pod Name: deployment-ricplt-o1mediator-774b96c87-bvblb
+Current Status: ImagePullBackOff
+
+Event Timeline:
+  1. 2025-11-19 07:11:50 - Pod Scheduled (Successfully assigned ricplt namespace)
+  2. 2025-11-19 07:11:50 - Image Pull Started
+  3. 2025-11-19 07:11:51 - Image Pull Failed
+     Error: failed to resolve reference "nexus3.o-ran-sc.org:10002/o-ran-sc/ric-plt-o1:0.3.1": not found
+  4. 2025-11-19 07:11:52 - Back-off Retry (exponential backoff active)
+
+Error Details:
+  - Error Type: ErrImagePull / ImagePullBackOff
+  - Image URI: nexus3.o-ran-sc.org:10002/o-ran-sc/ric-plt-o1:0.3.1
+  - Root Cause: Image not found in repository
+  - Image Pull Secret Issue: Unable to retrieve image pull secret "secret-nexus3-o-ran-sc-org-10002-o-ran-sc"
+
+================================================================================
+5. 問題分析
+================================================================================
+
+主要問題 1: O1 Mediator 鏡像不可用
+  狀態: CRITICAL
+  原因: Docker 鏡像 "ric-plt-o1:0.3.1" 在 nexus3.o-ran-sc.org:10002 倉庫中不存在
+  影響: Pod 無法啟動
+  
+主要問題 2: 鏡像拉取授權
+  狀態: WARNING
+  原因: 未能檢索鏡像拉取密鑰 "secret-nexus3-o-ran-sc-org-10002-o-ran-sc"
+  影響: 即使鏡像存在，也無法拉取
+
+環境限制:
+  - 此環境中 O1 Mediator 鏡像在公共倉庫中不可用
+  - O-RAN-SC 官方倉庫可能未包含此版本
+  - 參考文檔指示 installO1Mediator: false
+
+================================================================================
+6. 部署摘要
+================================================================================
+
+成功部分:
+  ✓ Helm Chart 部署成功
+  ✓ 配置文件創建完成
+  ✓ Kubernetes Deployment 資源已創建
+  ✓ Kubernetes Service 資源已創建
+  ✓ Kubernetes ReplicaSet 已創建
+  ✓ Pod 已調度到節點
+
+失敗部分:
+  ✗ Docker 鏡像拉取失敗
+  ✗ Pod 無法啟動
+  ✗ Deployment 副本無法就緒
+
+整體部署狀態: PARTIAL (Helm 級別成功，但 Pod 運行失敗)
+
+================================================================================
+7. 解決建議
+================================================================================
+
+Option A: 使用本地構建的鏡像
+  1. 從源代碼構建 O1 Mediator 鏡像
+  2. 將鏡像上傳到本地 registry 或 Docker daemon
+  3. 更新 values.yaml 中的鏡像 URI
+  4. 執行 helm upgrade
+
+Option B: 禁用 O1 Mediator 部署
+  1. 執行: helm uninstall r4-o1mediator -n ricplt
+  2. 移除或注釋掉部署命令
+  3. 這是推薦選項，因為 O1 Mediator 不是必需的核心組件
+
+Option C: 使用替代版本
+  1. 檢查是否有其他可用的鏡像版本
+  2. 在 nexus3.o-ran-sc.org:10004 倉庫中查找
+
+推薦方案: Option B (禁用)
+  原因: 根據 minimal-nearrt-ric.yaml 配置，
+        installO1Mediator 設置為 false，
+        表示此環境不需要此組件
+
+================================================================================
+8. 相關文件路徑
+================================================================================
+
+配置文件:
+  - /home/mbwcl711_3060/thc1006/tmep/oran-ric-platform/config/ric-platform/o1mediator-values.yaml
+  - /home/mbwcl711_3060/thc1006/tmep/oran-ric-platform/ric-dep/helm/o1mediator/values.yaml
+
+Helm Chart:
+  - /home/mbwcl711_3060/thc1006/tmep/oran-ric-platform/ric-dep/helm/o1mediator/
+
+部署命令記錄:
+  helm install r4-o1mediator ./ric-dep/helm/o1mediator \
+    --namespace ricplt \
+    --values config/ric-platform/o1mediator-values.yaml \
+    --timeout 300s
+
+查詢狀態命令:
+  - kubectl get pod -n ricplt | grep o1mediator
+  - kubectl describe pod deployment-ricplt-o1mediator-774b96c87-bvblb -n ricplt
+  - helm status r4-o1mediator -n ricplt
+  - helm list -n ricplt
+
+================================================================================

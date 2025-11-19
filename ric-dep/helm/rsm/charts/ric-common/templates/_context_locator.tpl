@@ -13,18 +13,25 @@
 #   See the License for the specific language governing permissions and        #
 #   limitations under the License.                                             #
 ################################################################################
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: {{ include "common.ingressname.rsm" . }}
-spec:
-  rules:
-  - http:
-      paths:
-      - path: {{ include "common.kongpath.ric.rsm" . }}
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ include "common.servicename.rsm.http" . }}
-            port:
-              number: {{ include "common.serviceport.rsm.http" . }}
+
+
+
+
+
+{{- define "locate" -}}
+  {{- $ctx := .ctx }}
+  {{- $keylist := .keylist }}
+  {{- $currentkey := first $keylist -}}
+  {{- $restkeys := rest $keylist -}}
+  {{- if empty $restkeys -}}
+    {{- $result := index $ctx $currentkey -}}
+    {{- if not (empty $result) -}}
+      {{- $result -}}
+    {{- end -}}
+  {{- else -}}
+    {{- with index $ctx $currentkey }}
+      {{- $newctx := dict "ctx" . "keylist" $restkeys -}}
+      {{- include "locate" $newctx -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

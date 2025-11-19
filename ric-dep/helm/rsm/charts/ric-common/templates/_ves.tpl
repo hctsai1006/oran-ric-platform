@@ -14,42 +14,53 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.ves" -}}
+  {{- printf "ves" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
-  {{- $namespace := ( include "common.namespace.platform" . ) -}}
+
+{{- define "common.fullname.ves" -}}
+  {{- $name := ( include "common.name.ves" . ) -}}
+  {{- $namespace := ( include "common.namespace.aux" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.ves" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.ves" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.ves" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
+{{- define "common.serviceaccountname.ves" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
+  {{- printf "svcacct-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.ingressname.ves" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
+  {{- printf "ingress-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.kongpath.aux.vescollector" -}}/vescollector{{- end -}}
+
+{{- define "common.servicename.ves.http" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
   {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.servicename.ves.tcp" -}}
+  {{- $name := ( include "common.fullname.ves" . ) -}}
+  {{- printf "service-%s-tcp" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.serviceport.ves.http" -}}8080{{- end -}}
+{{- define "common.serviceport.ves.https" -}}8443{{- end -}}

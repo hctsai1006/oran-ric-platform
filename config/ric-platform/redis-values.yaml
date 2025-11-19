@@ -1,0 +1,78 @@
+# Redis Cluster Configuration for O-RAN RIC Platform
+# Author: 蔡秀吉 (thc1006)
+# Date: 2025-11-19
+# Purpose: Shared Data Layer (SDL) backend
+
+rediscluster:
+  # Node timeout for cluster communication
+  nodetimeout: 15000
+
+  # Number of Redis replicas (3 masters + 0 slaves for single node)
+  # In production with multi-node cluster: use 6 (3 masters + 3 slaves)
+  replicaCount: 3
+
+  name: redis-cluster
+
+image:
+  repository: redis
+  tag: 7.0-alpine  # Updated from 5.0.1 for security and performance
+  pullPolicy: IfNotPresent
+
+container:
+  name: redis
+
+# Resource limits for single-node development
+# For production: increase based on workload
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+
+topology:
+  policyUnstisfiable: DoNotSchedule
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+
+volume:
+  # Persistent storage for each Redis instance
+  # For production: increase to 50Gi or more
+  storage: "10Gi"
+
+  # Use local-path for single-node development
+  # For production: use appropriate storage class (e.g., ceph-rbd, aws-ebs)
+  storageClass: "local-path"
+
+# Redis configuration
+# These settings will be applied to redis.conf
+redis:
+  # Memory management
+  maxmemory: "2gb"
+  maxmemory-policy: "allkeys-lru"
+
+  # Persistence - RDB snapshots
+  save:
+    - "900 1"      # Save after 900 sec (15 min) if at least 1 key changed
+    - "300 10"     # Save after 300 sec (5 min) if at least 10 keys changed
+    - "60 10000"   # Save after 60 sec if at least 10000 keys changed
+
+  # Persistence - AOF (Append Only File)
+  appendonly: "yes"
+  appendfsync: "everysec"  # fsync every second (good balance)
+
+  # Cluster settings
+  cluster-enabled: "yes"
+  cluster-config-file: "nodes.conf"
+  cluster-node-timeout: "15000"
+  cluster-require-full-coverage: "no"  # Allow operations even if some slots are not covered
+
+# Security (optional - uncomment for production)
+# redis:
+#   requirepass: "your-redis-password-here"
+#   masterauth: "your-redis-password-here"

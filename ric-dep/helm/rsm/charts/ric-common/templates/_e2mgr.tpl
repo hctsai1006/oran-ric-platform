@@ -14,42 +14,53 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.e2mgr" -}}
+  {{- printf "e2mgr" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
+{{- define "common.fullname.e2mgr" -}}
+  {{- $name := ( include "common.name.e2mgr" . ) -}}
   {{- $namespace := ( include "common.namespace.platform" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.e2mgr" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.e2mgr" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.e2mgr" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.serviceaccountname.e2mgr" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
+  {{- printf "svcacct-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.ingressname.e2mgr" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
+  {{- printf "ingress-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.kongpath.ric.e2mgr" -}}/e2mgr{{- end -}}
+
+{{- define "common.servicename.e2mgr.rmr" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
   {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.servicename.e2mgr.http" -}}
+  {{- $name := ( include "common.fullname.e2mgr" . ) -}}
   {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.serviceport.e2mgr.rmr.data" -}}3801{{- end -}}
+{{- define "common.serviceport.e2mgr.rmr.route" -}}4561{{- end -}}
+{{- define "common.serviceport.e2mgr.http" -}}3800{{- end -}}

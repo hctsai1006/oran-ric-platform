@@ -1,0 +1,41 @@
+################################################################################
+# Subscription Manager Custom Configuration
+# TDD Green Phase - Configuration for submgr deployment
+################################################################################
+
+submgr:
+  imagePullPolicy: IfNotPresent
+  image:
+    name: ric-plt-submgr
+    tag: 0.10.7
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  replicaCount: 1
+
+  # Service configuration
+  service:
+    http:
+      port: 8080
+    rmr:
+      data:
+        port: 4560
+      route:
+        port: 4561
+
+  # Environment variables for RMR and DBAAS connectivity
+  env:
+    - name: RMR_RTG_SVC
+      value: "service-ricplt-rtmgr-rmr.ricplt:4561"
+    - name: DBAAS_SERVICE_HOST
+      value: "service-ricplt-dbaas-tcp.ricplt"
+    - name: DBAAS_SERVICE_PORT
+      value: "6379"
+
+  # Resource limits and requests
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"

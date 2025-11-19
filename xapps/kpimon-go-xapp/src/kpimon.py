@@ -21,6 +21,9 @@ from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from flask import Flask, jsonify, request
 import numpy as np
 
+# Import beam query API
+from beam_query_api import beam_api, init_beam_service
+
 # Configure logging
 logger = Logger(name="KPIMON")
 logger.set_level(logging.INFO)
@@ -28,7 +31,7 @@ logger.set_level(logging.INFO)
 # Prometheus metrics
 MESSAGES_RECEIVED = Counter('kpimon_messages_received_total', 'Total number of messages received')
 MESSAGES_PROCESSED = Counter('kpimon_messages_processed_total', 'Total number of messages processed')
-KPI_VALUES = Gauge('kpimon_kpi_value', 'Current KPI values', ['kpi_type', 'cell_id'])
+KPI_VALUES = Gauge('kpimon_kpi_value', 'Current KPI values', ['kpi_type', 'cell_id', 'beam_id'])
 PROCESSING_TIME = Histogram('kpimon_processing_time_seconds', 'Time spent processing messages')
 
 # E2SM-KPM v3.0 Message Types (O-RAN Release J)
@@ -78,12 +81,18 @@ class KPIMonitor:
             "UE.RSRQ": {"id": 17, "type": "signal", "unit": "dB"},
             "UE.SINR": {"id": 18, "type": "signal", "unit": "dB"},
             "QoS.DlPktDelayPerQCI": {"id": 19, "type": "qos", "unit": "ms"},
-            "QoS.UlPktDelayPerQCI": {"id": 20, "type": "qos", "unit": "ms"}
+            "QoS.UlPktDelayPerQCI": {"id": 20, "type": "qos", "unit": "ms"},
+            # Beam-specific KPIs (5G NR beamforming)
+            "L1-RSRP.beam": {"id": 21, "type": "beam_signal", "unit": "dBm", "beam_specific": True},
+            "L1-SINR.beam": {"id": 22, "type": "beam_signal", "unit": "dB", "beam_specific": True}
         }
 
-        # Initialize Flask app for health checks
+        # Initialize Flask app for health checks and beam query API
         self.flask_app = Flask(__name__)
         self._setup_health_routes()
+
+        # Register beam query API blueprint
+        self.flask_app.register_blueprint(beam_api)
 
         logger.info(f"KPIMON xApp initialized with config: {self.config}")
     
@@ -189,11 +198,20 @@ class KPIMonitor:
         """Start the xApp"""
         logger.info("Starting KPIMON xApp...")
 
+        # Initialize beam query service
+        init_beam_service(
+            self.redis_client,
+            self.influx_client,
+            self.config['influxdb']['org'],
+            self.config['influxdb']['bucket']
+        )
+        logger.info("Beam Query Service initialized")
+
         # Start Prometheus metrics server
         start_http_server(8080)
         logger.info("Prometheus metrics server started on port 8080")
 
-        # Start Flask health check server on port 8081
+        # Start Flask server on port 8081 (health checks + beam query API)
         flask_thread = threading.Thread(target=lambda: self.flask_app.run(
             host='0.0.0.0',
             port=8081,
@@ -202,7 +220,7 @@ class KPIMonitor:
         ))
         flask_thread.daemon = True
         flask_thread.start()
-        logger.info("Flask health check server started on port 8081")
+        logger.info("Flask server started on port 8081 (health checks + beam query API)")
 
         # Initialize RMR xApp
         # Fixed: Changed from RmrXapp to RMRXapp (correct class name per official docs)
@@ -263,50 +281,83 @@ class KPIMonitor:
         rmr_xapp.rmr_free(sbuf)
     
     def _handle_indication(self, payload):
-        """Handle RIC Indication messages containing KPIs"""
+        """Handle RIC Indication messages containing KPIs with beam_id support"""
         try:
             # Parse E2SM-KPM v3.0 indication
             indication = json.loads(payload)
-            
-            # Extract KPI data
+
+            # Extract KPI data (with backward compatibility)
             cell_id = indication.get('cell_id')
             ue_id = indication.get('ue_id')
+            beam_id = indication.get('beam_id', 'n/a')  # NEW: Extract beam_id (SSB Index)
             timestamp = indication.get('timestamp', datetime.now().isoformat())
             measurements = indication.get('measurements', [])
-            
-            logger.debug(f"Received {len(measurements)} measurements from cell {cell_id}")
-            
+
+            logger.debug(f"Received {len(measurements)} measurements from cell {cell_id}, beam {beam_id}")
+
             # Process each measurement
             for measurement in measurements:
                 kpi_name = measurement.get('name')
                 kpi_value = measurement.get('value')
-                
+                # Beam-specific measurements may have beam_id in the measurement itself
+                measurement_beam_id = measurement.get('beam_id', beam_id)
+
                 if kpi_name in self.kpi_definitions:
+                    kpi_def = self.kpi_definitions[kpi_name]
+                    is_beam_specific = kpi_def.get('beam_specific', False)
+
                     kpi_data = {
                         'timestamp': timestamp,
                         'cell_id': cell_id,
                         'ue_id': ue_id,
+                        'beam_id': measurement_beam_id,  # NEW: Include beam_id
                         'kpi_name': kpi_name,
                         'kpi_value': kpi_value,
-                        'kpi_type': self.kpi_definitions[kpi_name]['type'],
-                        'unit': self.kpi_definitions[kpi_name]['unit']
+                        'kpi_type': kpi_def['type'],
+                        'unit': kpi_def['unit'],
+                        'beam_specific': is_beam_specific
                     }
-                    
+
                     # Add to buffer for batch processing
                     self.kpi_buffer.append(kpi_data)
-                    
-                    # Update Prometheus metrics
-                    KPI_VALUES.labels(kpi_type=kpi_name, cell_id=cell_id).set(kpi_value)
-                    
+
+                    # Update Prometheus metrics with beam_id label
+                    KPI_VALUES.labels(
+                        kpi_type=kpi_name,
+                        cell_id=cell_id,
+                        beam_id=str(measurement_beam_id)
+                    ).set(kpi_value)
+
                     # Store in Redis for real-time access
                     if self.redis_client:
-                        key = f"kpi:{cell_id}:{kpi_name}"
+                        # Store with beam_id in key for beam-specific KPIs
+                        if is_beam_specific:
+                            key = f"kpi:{cell_id}:{kpi_name}:beam_{measurement_beam_id}"
+                        else:
+                            key = f"kpi:{cell_id}:{kpi_name}"
+
                         self.redis_client.setex(key, 300, json.dumps(kpi_data))
+
+                        # Additional beam-centric storage for beam query API
+                        beam_key = f"kpi:beam:{measurement_beam_id}:cell:{cell_id}:{kpi_name}"
+                        self.redis_client.setex(beam_key, 300, json.dumps(kpi_data))
+
+                        # Update UE-beam association if ue_id present
+                        if ue_id:
+                            ue_beam_key = f"ue:beam:{measurement_beam_id}:cell:{cell_id}:{ue_id}"
+                            self.redis_client.setex(ue_beam_key, 300, "1")
+
+                        # Store in timeline (cell-level for backward compatibility)
                         self.redis_client.zadd(f"kpi:timeline:{cell_id}", {timestamp: kpi_value})
-            
+
+                        # NEW: Store beam-specific timeline
+                        if is_beam_specific and measurement_beam_id != 'n/a':
+                            beam_timeline_key = f"kpi:timeline:{cell_id}:beam_{measurement_beam_id}"
+                            self.redis_client.zadd(beam_timeline_key, {timestamp: kpi_value})
+
             # Trigger anomaly detection
-            self._detect_anomalies(cell_id, measurements)
-            
+            self._detect_anomalies(cell_id, measurements, beam_id)
+
         except Exception as e:
             logger.error(f"Error handling indication: {e}")
     
@@ -373,106 +424,137 @@ class KPIMonitor:
                 time.sleep(10)
     
     def _kpi_processor(self):
-        """Process KPI buffer and store in InfluxDB"""
+        """Process KPI buffer and store in InfluxDB with beam_id support"""
         while self.running:
             try:
                 if len(self.kpi_buffer) >= 100:  # Batch size
                     batch = self.kpi_buffer[:100]
                     self.kpi_buffer = self.kpi_buffer[100:]
-                    
+
                     # Write to InfluxDB
                     if self.influx_client:
                         points = []
                         for kpi in batch:
+                            # Create point with beam_id tag for filtering
                             point = influxdb_client.Point("kpi_measurement") \
                                 .tag("cell_id", kpi['cell_id']) \
                                 .tag("kpi_name", kpi['kpi_name']) \
                                 .tag("kpi_type", kpi['kpi_type']) \
+                                .tag("beam_id", str(kpi.get('beam_id', 'n/a'))) \
                                 .field("value", float(kpi['kpi_value'])) \
                                 .time(kpi['timestamp'])
+
+                            # Add ue_id as field for better querying
+                            if kpi.get('ue_id'):
+                                point = point.tag("ue_id", kpi['ue_id'])
+
+                            # Mark if beam-specific for easy filtering
+                            if kpi.get('beam_specific', False):
+                                point = point.tag("beam_specific", "true")
+
                             points.append(point)
-                        
+
                         self.write_api.write(
                             bucket=self.config['influxdb']['bucket'],
                             org=self.config['influxdb']['org'],
                             record=points
                         )
                         logger.debug(f"Wrote {len(points)} KPI points to InfluxDB")
-                
+
                 time.sleep(1)
-                
+
             except Exception as e:
                 logger.error(f"Error in KPI processor: {e}")
                 time.sleep(5)
     
-    def _detect_anomalies(self, cell_id: str, measurements: List[Dict]):
-        """Detect anomalies in KPI data"""
+    def _detect_anomalies(self, cell_id: str, measurements: List[Dict], beam_id=None):
+        """Detect anomalies in KPI data including beam-specific metrics"""
         try:
             # Simple threshold-based anomaly detection
             anomalies = []
-            
+
             for measurement in measurements:
                 kpi_name = measurement.get('name')
                 kpi_value = measurement.get('value')
-                
+                measurement_beam_id = measurement.get('beam_id', beam_id)
+
                 # Define thresholds
                 thresholds = {
                     "DRB.PacketLossDl": 5.0,  # Alert if packet loss > 5%
                     "RRU.PrbUsedDl": 90.0,     # Alert if PRB usage > 90%
                     "RRU.PrbUsedUl": 90.0,     # Alert if PRB usage > 90%
                     "UE.RSRP": -110.0,         # Alert if RSRP < -110 dBm
-                    "RRC.ConnEstabSucc": 95.0  # Alert if success rate < 95%
+                    "RRC.ConnEstabSucc": 95.0,  # Alert if success rate < 95%
+                    # Beam-specific thresholds
+                    "L1-RSRP.beam": -105.0,    # Alert if beam RSRP < -105 dBm
+                    "L1-SINR.beam": 10.0       # Alert if beam SINR < 10 dB
                 }
-                
+
                 if kpi_name in thresholds:
                     threshold = thresholds[kpi_name]
-                    
-                    if kpi_name in ["UE.RSRP"]:
+
+                    if kpi_name in ["UE.RSRP", "L1-RSRP.beam"]:
                         if kpi_value < threshold:
-                            anomalies.append({
+                            anomaly = {
                                 'kpi': kpi_name,
                                 'value': kpi_value,
                                 'threshold': threshold,
                                 'type': 'below_threshold'
-                            })
-                    elif kpi_name in ["RRC.ConnEstabSucc"]:
+                            }
+                            if measurement_beam_id is not None:
+                                anomaly['beam_id'] = measurement_beam_id
+                            anomalies.append(anomaly)
+                    elif kpi_name in ["RRC.ConnEstabSucc", "L1-SINR.beam"]:
                         if kpi_value < threshold:
-                            anomalies.append({
+                            anomaly = {
                                 'kpi': kpi_name,
                                 'value': kpi_value,
                                 'threshold': threshold,
                                 'type': 'below_threshold'
-                            })
+                            }
+                            if measurement_beam_id is not None:
+                                anomaly['beam_id'] = measurement_beam_id
+                            anomalies.append(anomaly)
                     else:
                         if kpi_value > threshold:
-                            anomalies.append({
+                            anomaly = {
                                 'kpi': kpi_name,
                                 'value': kpi_value,
                                 'threshold': threshold,
                                 'type': 'above_threshold'
-                            })
-            
+                            }
+                            if measurement_beam_id is not None:
+                                anomaly['beam_id'] = measurement_beam_id
+                            anomalies.append(anomaly)
+
             if anomalies:
-                self._raise_alarm(cell_id, anomalies)
-        
+                self._raise_alarm(cell_id, anomalies, beam_id)
+
         except Exception as e:
             logger.error(f"Error detecting anomalies: {e}")
     
-    def _raise_alarm(self, cell_id: str, anomalies: List[Dict]):
-        """Raise alarm for detected anomalies"""
+    def _raise_alarm(self, cell_id: str, anomalies: List[Dict], beam_id=None):
+        """Raise alarm for detected anomalies including beam-specific issues"""
         alarm = {
             'timestamp': datetime.now().isoformat(),
             'cell_id': cell_id,
+            'beam_id': beam_id,
             'anomalies': anomalies,
             'severity': 'warning'
         }
-        
+
         # Store alarm in Redis
         if self.redis_client:
             self.redis_client.rpush(f"alarms:{cell_id}", json.dumps(alarm))
             self.redis_client.expire(f"alarms:{cell_id}", 86400)  # 24 hours
-        
-        logger.warning(f"Anomaly detected in cell {cell_id}: {anomalies}")
+
+            # Store beam-specific alarms separately for easier filtering
+            if beam_id is not None and beam_id != 'n/a':
+                beam_alarm_key = f"alarms:{cell_id}:beam_{beam_id}"
+                self.redis_client.rpush(beam_alarm_key, json.dumps(alarm))
+                self.redis_client.expire(beam_alarm_key, 86400)  # 24 hours
+
+        logger.warning(f"Anomaly detected in cell {cell_id}, beam {beam_id}: {anomalies}")
     
     def _send_message(self, msg_type: int, payload: str):
         """Send RMR message"""

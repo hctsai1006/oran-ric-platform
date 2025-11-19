@@ -1,0 +1,41 @@
+################################################################################
+# RTMgr Custom Configuration
+# Component: Routing Manager (RTMgr)
+# Purpose: Core component for RMR routing management
+################################################################################
+
+rtmgr:
+  # Image configuration
+  image:
+    name: ric-plt-rtmgr
+    tag: 0.8.2
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  imagePullPolicy: IfNotPresent
+
+  # Number of replicas
+  replicaCount: 1
+
+  # Routing Policy Engine
+  rpe: rmrpush
+
+  # Southbound Interface
+  sbi: rmrpush
+  sbiurl: 0.0.0.0
+
+  # Northbound Interface
+  nbi: httpRESTful
+  nbiurl: http://0.0.0.0:8888
+
+  # Annotations (optional)
+  annotations: {}
+
+# Resource limits and requests
+# Note: These are applied via the deployment template
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "200m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"

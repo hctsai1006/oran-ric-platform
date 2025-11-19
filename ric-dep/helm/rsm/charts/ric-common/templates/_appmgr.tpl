@@ -14,42 +14,61 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.appmgr" -}}
+  {{- printf "appmgr" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
+
+{{- define "common.fullname.appmgr" -}}
+  {{- $name := ( include "common.name.appmgr" . ) -}}
   {{- $namespace := ( include "common.namespace.platform" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.appmgr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.appmgr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.appmgr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+
+{{- define "common.serviceaccountname.appmgr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
+  {{- printf "svcacct-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.ingressname.appmgr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
+  {{- printf "ingress-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.kongpath.ric.appmgr" -}}/appmgr{{- end -}}
+
+{{- define "common.servicename.appmgr.rmr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
   {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.servicename.appmgr.http" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
   {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.secretname.appmgr" -}}
+  {{- $name := ( include "common.fullname.appmgr" . ) -}}
+  {{- printf "secret-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.serviceport.appmgr.rmr.data" -}}4560{{- end -}}
+{{- define "common.serviceport.appmgr.rmr.route" -}}4561{{- end -}}
+{{- define "common.serviceport.appmgr.http" -}}8080{{- end -}}
+

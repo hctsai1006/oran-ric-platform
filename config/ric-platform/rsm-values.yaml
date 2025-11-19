@@ -1,0 +1,30 @@
+################################################################################
+# Resource Status Manager (RSM) Custom Configuration
+# O-RAN SC J-Release - Configuration for RSM deployment
+################################################################################
+
+rsm:
+  imagePullPolicy: IfNotPresent
+  image:
+    init:
+      name: redis
+      tag: latest
+      registry: "docker.io"
+    main:
+      name: ric-plt-resource-status-manager
+      tag: 3.0.1
+      registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+
+  replicaCount: 1
+
+  # Resource limits and requests
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+  # Privileged mode disabled for security
+  privilegedmode: false

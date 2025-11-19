@@ -14,42 +14,53 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+{{- define "common.name.rsm" -}}
+  {{- printf "rsm" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
+{{- define "common.fullname.rsm" -}}
+  {{- $name := ( include "common.name.rsm" . ) -}}
   {{- $namespace := ( include "common.namespace.platform" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.configmapname.rsm" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.deploymentname.rsm" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
   {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.rsm" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.serviceaccountname.rsm" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
+  {{- printf "svcacct-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.ingressname.rsm" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
+  {{- printf "ingress-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "common.kongpath.ric.rsm" -}}/rsm{{- end -}}
+
+{{- define "common.servicename.rsm.rmr" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
   {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.servicename.rsm.http" -}}
+  {{- $name := ( include "common.fullname.rsm" . ) -}}
   {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}
+{{- define "common.serviceport.rsm.rmr.data" -}}4801{{- end -}}
+{{- define "common.serviceport.rsm.rmr.route" -}}4561{{- end -}}
+{{- define "common.serviceport.rsm.http" -}}4800{{- end -}}

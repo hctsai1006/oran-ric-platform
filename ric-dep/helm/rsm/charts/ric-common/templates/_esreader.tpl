@@ -14,42 +14,47 @@
 #   limitations under the License.                                             #
 ################################################################################
 
-{{- define "common.name.submgr" -}}
-  {{- printf "submgr" -}}
+
+{{- define "common.name.esreader" -}}
+  {{- printf "esreader" -}}
 {{- end -}}
 
-{{- define "common.fullname.submgr" -}}
-  {{- $name := ( include "common.name.submgr" . ) -}}
-  {{- $namespace := ( include "common.namespace.platform" . ) -}}
+
+{{- define "common.fullname.esreader" -}}
+  {{- $name := ( include "common.name.esreader" . ) -}}
+  {{- $namespace := ( include "common.namespace.infra" . ) -}}
   {{- printf "%s-%s" $namespace $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.configmapname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+
+
+{{- define "common.deploymentname.esreader" -}}
+  {{- $name := ( include "common.fullname.esreader" . ) -}}
+  {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
+{{- define "common.configmapname.esreader" -}}
+  {{- $name := ( include "common.fullname.esreader" . ) -}}
   {{- printf "configmap-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 
-{{- define "common.deploymentname.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "deployment-%s" $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "common.containername.submgr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
+{{- define "common.containername.esreader" -}}
+  {{- $name := ( include "common.fullname.esreader" . ) -}}
   {{- printf "container-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.rmr" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-rmr" $name | trunc 63 | trimSuffix "-" -}}
+
+{{- define "common.serviceport.esreader.http" -}}8080{{- end -}}
+
+{{- define "common.pvname.esreader" -}}
+  {{- $name := ( include "common.fullname.esreader" . ) -}}
+  {{- printf "pv-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.servicename.submgr.http" -}}
-  {{- $name := ( include "common.fullname.submgr" . ) -}}
-  {{- printf "service-%s-http" $name | trunc 63 | trimSuffix "-" -}}
+{{- define "common.pvcname.esreader" -}}
+  {{- $name := ( include "common.fullname.esreader" . ) -}}
+  {{- printf "pvc-%s" $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "common.serviceport.submgr.rmr.data" -}}4560{{- end -}}
-{{- define "common.serviceport.submgr.rmr.route" -}}4561{{- end -}}
-{{- define "common.serviceport.submgr.http" -}}8080{{- end -}}

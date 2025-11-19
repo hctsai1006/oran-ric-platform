@@ -1,0 +1,20 @@
+# Alarm Manager Configuration for O-RAN RIC Platform
+
+alarmmanager:
+  replicaCount: 1
+  imagePullPolicy: IfNotPresent
+  image:
+    name: ric-plt-alarmmanager
+    tag: 0.5.9
+    registry: "nexus3.o-ran-sc.org:10002/o-ran-sc"
+  dataVolSize: 100Mi
+  storageClassName: local-storage
+
+  # Resource limits for stability
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
