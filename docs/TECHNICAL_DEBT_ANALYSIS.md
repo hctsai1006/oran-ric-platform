@@ -1,6 +1,5 @@
 # O-RAN RIC Platform 技術債務全面分析報告
 
-**作者**: 蔡秀吉 (thc1006)
 **分析日期**: 2025-11-17
 **專案版本**: v2.0.1
 **分析範圍**: 完整專案架構、配置、程式碼、部署策略
@@ -277,7 +276,6 @@ platform/
 
 ## 3. 程式碼品質與抽象
 
-### 3.1 遵循 CLAUDE.md 規則檢查
 
 **問題 TD-008**: **存在潛在的過早抽象風險**
 - **嚴重性**: LOW (當前未發現明顯違規，但需持續監控)
@@ -290,7 +288,6 @@ platform/
 **問題 TD-009**: **Import 語句組織需要改進**
 - **嚴重性**: LOW
 - **位置**: 多個 xApp Python 檔案
-- **CLAUDE.md 規則**: "All imports MUST be at module top-level and follow PEP 8 ordering"
 - **檢查結果**:
   - ✅ 所有 import 都在檔案頂部
   - ⚠️ 部分檔案 import 順序不完全符合 PEP 8 (標準庫 → 第三方 → 本地)
@@ -323,10 +320,8 @@ platform/
 
 **問題 TD-010**: **錯誤處理模式不一致**
 - **嚴重性**: MEDIUM
-- **CLAUDE.md 規則**: "Use logger.exception in except blocks"
 - **分析**:
 
-  **良好範例** (符合 CLAUDE.md):
   ```python
   # 假設的 kpimon.py handler 模式
   def handler():
@@ -408,7 +403,6 @@ platform/
 **問題 TD-013**: **Dockerfile 包含構建時依賴於運行時映像**
 - **嚴重性**: MEDIUM
 - **位置**: 所有 xApp Dockerfiles
-- **CLAUDE.md 規則**: "Keep runtime images slim and focused on runtime dependencies"
 - **問題範例** (`xapps/kpimon-go-xapp/Dockerfile`):
   ```dockerfile
   # 安裝系統依賴
@@ -1143,7 +1137,6 @@ ROI: 42-71% (首年)
    - [ ] API 文檔更新
 
 2. **Code Review Checklist**:
-   - [ ] 遵循 CLAUDE.md 規則
    - [ ] 無硬編碼密碼或配置
    - [ ] 錯誤處理使用 `logger.exception`
    - [ ] Metrics 命名符合 Prometheus 規範
@@ -1203,7 +1196,6 @@ ROI: 42-71% (首年)
 
 ### A. 參考資料
 
-- [CLAUDE.md](/home/thc1006/oran-ric-platform/CLAUDE.md) - 專案開發規範
 - [DEPLOYMENT_ISSUES_LOG.md](/home/thc1006/oran-ric-platform/DEPLOYMENT_ISSUES_LOG.md) - 已知部署問題
 - [O-RAN Alliance Specifications](https://www.o-ran.org/specifications) - O-RAN 標準
 - [12-Factor App](https://12factor.net/) - 應用程式設計原則

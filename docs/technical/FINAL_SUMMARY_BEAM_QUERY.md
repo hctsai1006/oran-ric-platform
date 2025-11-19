@@ -1,6 +1,5 @@
 #  [DONE] Beam KPI Query System - 完成總結
 
-**作者**: 蔡秀吉 (thc1006)
 **完成日期**: 2025-11-19
 **專案**: O-RAN RIC Platform - Beam KPI Query System
 
@@ -256,7 +255,6 @@ curl -s http://localhost:8888/ | head -10
 
 ##   聯絡資訊
 
-**作者**: 蔡秀吉 (thc1006)
 **Email**: [Your Email]
 **專案**: O-RAN RIC Platform
 

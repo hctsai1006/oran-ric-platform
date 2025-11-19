@@ -1,7 +1,6 @@
 #   O-RAN RIC Platform 文檔索引
 
 **最後更新**: 2025-11-19
-**作者**: 蔡秀吉 (thc1006)
 
 ---
 
@@ -13,6 +12,8 @@
 | **部署指南** | 完整部署流程 | [`guides/`](#部署指南) |
 | **報告** | 部署、測試、分析報告 | [`reports/`](#報告) |
 | **技術文檔** | 架構、數據流、API | [`technical/`](#技術文檔) |
+| **開發者文檔** | 開發規範、AI 指引 | [`developer/`](#開發者文檔) |
+| **UI 文檔** | 前端介面、Proxy | [`ui/`](#ui-文檔) |
 | **歸檔** | 歷史文檔 | [`archived/`](#歸檔文檔) |
 
 ---
@@ -62,6 +63,7 @@
 | **DEPLOYMENT_FIXES_SUMMARY.md** | 部署問題修復總結 | 2025-11-XX |
 | **DEPLOYMENT_ISSUES_LOG.md** | 部署問題日誌 | 持續更新 |
 | **RTMGR_STUB_DEPLOYMENT.md** | RTMgr Stub 部署記錄 | 2025-11-XX |
+| **O1_MEDIATOR_DEPLOYMENT_REPORT.txt** | O1 Mediator 部署報告 | 文字格式 |
 
 ###   `reports/testing/` - 測試報告
 
@@ -69,6 +71,9 @@
 |------|------|---------|
 | **TEST_RESULTS_FINAL.md** | 最終測試結果（完整） |  |
 | **TEST_RESULTS_REPORT.md** | 測試結果報告 |  |
+| **TEST_EXECUTION_SUMMARY.txt** | 測試執行總結 | 文字格式 |
+| **TEST_SUMMARY.txt** | 測試摘要 | 文字格式 |
+| **VERIFICATION_COMPLETE.txt** | 驗證完成報告 | 文字格式 |
 
 ###   `reports/analysis/` - 分析報告
 
@@ -79,6 +84,7 @@
 | **XAPP_INTEGRATION_REPORT.md** | xApp 整合分析報告 |  |
 | **COMPONENT_COMPARISON_REPORT.md** | 組件比較報告 |  |
 | **BEAM_QUERY_API_IMPLEMENTATION_REPORT.md** | Beam Query API 實作報告 |  |
+| **BEAM_API_FILES_SUMMARY.txt** | Beam API 檔案摘要 | 文字格式 |
 
 **使用情境**:
 -   我想**檢查系統健康狀態** → `SYSTEM_HEALTH_REPORT.md`
@@ -101,6 +107,7 @@
 | 文檔 | 說明 | 類型 |
 |------|------|------|
 | **FINAL_SUMMARY_BEAM_QUERY.md** | Beam Query 系統完成總結 | 總結 |
+| **KPIMON_DATA_FLOW_AND_XAPP_INTERACTION.md** | KPIMON 數據流與 xApp 互動 | 技術深度  |
 | **Rel-J-spec.md** | O-RAN Release J 規格 | 規格 |
 | **BEAM_KPI_COMPLETE_GUIDE.md** | Beam KPI 完整使用指南 | 指南  |
 | **BEAM_ID_INTEGRATION_SUMMARY.md** | Beam ID 整合總結 | 總結 |
@@ -112,7 +119,36 @@
 **使用情境**:
 -   我想**了解完整數據流** → `DATA_FLOW_EXPLANATION.md`
 -   我想**了解 Beam ID 怎麼傳輸** → `BEAM_ID_DATA_TRANSMISSION.md`
+-   我想**了解 KPIMON 與其他 xApp 的互動** → `KPIMON_DATA_FLOW_AND_XAPP_INTERACTION.md`
 -   我想**使用 Beam KPI API** → `BEAM_KPI_COMPLETE_GUIDE.md`
+
+---
+
+##   開發者文檔
+
+###   `developer/` - 開發規範
+
+| 文檔 | 說明 | 類型 |
+|------|------|------|
+| **AI-DEVELOPMENT-GUIDELINES.md** | AI 開發規範與補丁防護 | 規範  |
+
+**使用情境**:
+-   我想**了解 AI 開發規範** → `AI-DEVELOPMENT-GUIDELINES.md`
+
+---
+
+##   UI 文檔
+
+###   `ui/` - 前端介面與工具
+
+| 文檔 | 說明 | 類型 |
+|------|------|------|
+| **beam-query-interface.html** | Beam Query 查詢介面 | HTML |
+| **beam-ui-proxy.py** | CORS Proxy 服務器 | Python |
+
+**使用情境**:
+-   我想**使用 Web UI 查詢 Beam KPI** → `beam-query-interface.html`
+-   我想**解決 CORS 問題** → `beam-ui-proxy.py`
 
 ---
 
@@ -204,7 +240,6 @@
 
 ##   聯絡資訊
 
-**作者**: 蔡秀吉 (thc1006)
 **專案**: O-RAN RIC Platform
 **GitHub**: [hctsai1006/oran-ric-platform](https://github.com/hctsai1006/oran-ric-platform)
 

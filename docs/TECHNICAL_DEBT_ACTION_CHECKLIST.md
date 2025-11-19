@@ -1,6 +1,5 @@
 # 技術債務修復行動檢查清單
 
-**作者**: 蔡秀吉 (thc1006)
 **建立日期**: 2025-11-17
 **參考文檔**: [TECHNICAL_DEBT_ANALYSIS.md](./TECHNICAL_DEBT_ANALYSIS.md)
 
@@ -628,7 +627,6 @@
 
 - [完整技術債務分析](./TECHNICAL_DEBT_ANALYSIS.md)
 - [執行摘要](./TECHNICAL_DEBT_EXECUTIVE_SUMMARY.md)
-- [CLAUDE.md 開發規範](/home/thc1006/oran-ric-platform/CLAUDE.md)
 - [部署問題記錄](/home/thc1006/oran-ric-platform/DEPLOYMENT_ISSUES_LOG.md)
 
 ---

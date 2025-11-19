@@ -1,6 +1,5 @@
 # O-RAN RIC Platform 腳本技術債修復計劃 v2.0
 
-作者: 蔡秀吉 (thc1006)
 日期: 2025-11-17
 基於: 深度分析報告 2025-11-17
 
@@ -105,7 +104,6 @@ fix: correct execute permissions for shell scripts
 - 修改 7 個檔案屬性
 - 無程式碼變更
 
-作者: 蔡秀吉 (thc1006)
 ```
 
 ---
@@ -219,7 +217,6 @@ fix: remove hardcoded absolute paths from deployment scripts
 - 修改 3 個檔案
 - +30 行, -3 行
 
-作者: 蔡秀吉 (thc1006)
 ```
 
 ---
@@ -309,7 +306,6 @@ fix: resolve fragile path dependencies in deploy-ml-xapps.sh
 - 修改 1 個檔案
 - +20 行, -8 行
 
-作者: 蔡秀吉 (thc1006)
 ```
 
 ---
@@ -371,7 +367,6 @@ refactor: rename xapps/scripts/deploy-all.sh to avoid naming conflict
 - 重新命名 1 個檔案
 - 更新文件參考
 
-作者: 蔡秀吉 (thc1006)
 ```
 
 ---
@@ -817,7 +812,6 @@ load test_helper
 ```markdown
 # O-RAN RIC Platform 腳本使用指南
 
-作者: 蔡秀吉 (thc1006)
 日期: 2025-11-17
 
 ## 目錄結構
@@ -1078,7 +1072,6 @@ verify_config_files "${PROJECT_ROOT}/config/grafana-values.yaml" || exit 1
 - [ ] 無硬編碼路徑 (`grep -r "/home/"`)
 - [ ] 從不同目錄執行成功
 - [ ] Commit message 符合規範
-- [ ] 無 Claude/Anthropic 相關內容
 - [ ] 變更小於 300 行
 - [ ] 有對應的驗證步驟
 
@@ -1086,7 +1079,6 @@ verify_config_files "${PROJECT_ROOT}/config/grafana-values.yaml" || exit 1
 
 ## 聯絡資訊
 
-**作者**: 蔡秀吉 (thc1006)
 **專案**: O-RAN RIC Platform
 **日期**: 2025-11-17
 

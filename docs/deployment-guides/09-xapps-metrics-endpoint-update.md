@@ -1,6 +1,5 @@
 # xApps Prometheus Metrics 端點更新部署指南
 
-**作者**: 蔡秀吉 (thc1006)
 **最後更新**: 2025年11月15日 11:54
 **部署日期**: 2025年11月15日 11:41-11:54
 
@@ -58,7 +57,6 @@
 
 ### Small CLs 分解
 
-遵循 CLAUDE.md 的 Small CLs 原則，將修正工作分為 4 個獨立的 Small CLs：
 
 - **Small CL #2**: 修正 RC xApp metrics 端點
 - **Small CL #3**: 修正 QoE Predictor metrics 端點

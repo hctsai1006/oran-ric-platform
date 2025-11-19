@@ -1,6 +1,5 @@
 # O-RAN RIC Platform 完整部署指南
 
-**作者**: 蔡秀吉 (thc1006)
 **日期**: 2025-11-19
 **系統版本**: O-RAN SC J-Release
 **部署時間**: ~2-3 小時
@@ -763,6 +762,5 @@ kubectl edit configmap -n ricplt prometheus-server
 - RMR 問題: `RMR_ERROR_ANALYSIS.md`
 - Beam 查詢: `QUICK_START_BEAM_QUERY.md`
 
-**作者**: 蔡秀吉 (thc1006)
 **最後更新**: 2025-11-19
 **版本**: 1.0

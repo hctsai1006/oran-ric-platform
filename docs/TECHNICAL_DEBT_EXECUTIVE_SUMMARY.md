@@ -1,6 +1,5 @@
 # O-RAN RIC Platform 技術債務分析 - 執行摘要
 
-**作者**: 蔡秀吉 (thc1006)
 **日期**: 2025-11-17
 **版本**: v2.0.1
 **完整報告**: [TECHNICAL_DEBT_ANALYSIS.md](./TECHNICAL_DEBT_ANALYSIS.md)
@@ -234,12 +233,10 @@ O-RAN RIC Platform 是一個**功能完整、架構合理**的專案，具備生
 
 ### 給技術團隊
 1. **Definition of Done**: 更新 DoD 包含測試覆蓋率和安全掃描
-2. **Code Review**: 強化 review 流程，檢查 CLAUDE.md 合規性
 3. **技術分享**: 每週技術分享會討論修復經驗
 4. **文檔維護**: 修復過程中持續更新文檔
 
 ### 給開發者
-1. **遵循規範**: 嚴格遵循 CLAUDE.md 開發規範
 2. **寫測試**: 新功能必須包含單元測試
 3. **安全意識**: 絕不硬編碼密碼或敏感資訊
 4. **主動債務管理**: 發現債務立即記錄並評估
@@ -312,7 +309,6 @@ O-RAN RIC Platform 具備堅實的技術基礎和清晰的架構設計，但需�
 
 - **完整報告**: [TECHNICAL_DEBT_ANALYSIS.md](./TECHNICAL_DEBT_ANALYSIS.md)
 - **部署問題記錄**: [DEPLOYMENT_ISSUES_LOG.md](/home/thc1006/oran-ric-platform/DEPLOYMENT_ISSUES_LOG.md)
-- **開發規範**: [CLAUDE.md](/home/thc1006/oran-ric-platform/CLAUDE.md)
 - **故障排除**: [TROUBLESHOOTING.md](./deployment/TROUBLESHOOTING.md)
 
 ### 聯絡資訊

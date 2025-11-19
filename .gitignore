@@ -47,6 +47,7 @@ test-results/
 # Temporary files
 *.tmp
 /tmp/
+/temp/
 
 # ric-dep vendoring exclusions (only keep necessary files)
 ric-dep/docs/

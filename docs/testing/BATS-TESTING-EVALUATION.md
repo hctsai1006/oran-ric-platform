@@ -1,6 +1,5 @@
 # Shell 腳本測試框架評估報告
 
-**作者**: 蔡秀吉 (thc1006)
 **日期**: 2025-11-17
 **評估範圍**: /home/thc1006/oran-ric-platform/scripts/
 

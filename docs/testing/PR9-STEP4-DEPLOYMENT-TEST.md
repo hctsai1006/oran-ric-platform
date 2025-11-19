@@ -41,7 +41,6 @@ bash scripts/deployment/deploy-prometheus.sh
 [資訊] 使用現有 KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 ==================================================
    O-RAN RIC Prometheus 監控部署
-   作者: 蔡秀吉 (thc1006)
    日期: 2025-11-17 20:01:32
 ==================================================
 
@@ -91,7 +90,6 @@ bash scripts/deployment/deploy-grafana.sh
 [資訊] 使用標準 KUBECONFIG: /home/thc1006/.kube/config
 ======================================
    O-RAN RIC Grafana 部署
-   作者: 蔡秀吉 (thc1006)
    日期: 2025-11-17 20:01:42
 ======================================
 

@@ -187,4 +187,3 @@ curl "http://localhost:30081/api/beam/1/kpi" | jq
 
 ---
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)

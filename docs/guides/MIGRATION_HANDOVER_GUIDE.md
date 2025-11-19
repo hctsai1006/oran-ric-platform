@@ -1,7 +1,5 @@
 # O-RAN RIC Platform Migration - Handover Guide
 
-**文檔類型**: Handover Guide for New Claude Code Session
-**作者**: 蔡秀吉 (thc1006)
 **日期**: 2025-11-18
 **目標**: 完整部署標準 O-RAN RIC Platform
 
@@ -24,7 +22,6 @@
 
 ### 1.1 你需要知道的事
 
-親愛的 Claude Code Session，歡迎接手這個專案！👋
 
 **你的任務**: 將當前**輕量化 O-RAN RIC Platform** 遷移到**符合 O-RAN 標準的完整架構**
 
@@ -51,7 +48,6 @@
 | **RFC** | `RIC_PLATFORM_MIGRATION_RFC.md` | 完整遷移計畫（技術細節） |
 | **ADR** | `docs/ADR-001-RIC-Platform-Migration.md` | 架構決策記錄（為什麼這樣做） |
 | **Current Architecture** | `CURRENT_STRATEGY_AND_ARCHITECTURE.md` | 當前架構說明 |
-| **CLAUDE.md** | `CLAUDE.md` | 開發規範（必須遵守！） |
 
 ### 1.3 Key Principles
 
@@ -1291,7 +1287,6 @@ Test: bash tests/integration/test_kpimon_rmr.sh
 
 Next PR: PR-08 (Deprecate HTTP)
 
-Refs: ADR-001, CLAUDE.md Boy Scout Rule"
 
 git push origin feature/pr-07-kpimon-rmr
 ```
@@ -1372,7 +1367,6 @@ kubectl set env deployment/e2-simulator RMR_TRAFFIC_RATIO=1.0
 - [ ] Grafana dashboards updated
 
 ### Code Quality
-- [ ] Follows CLAUDE.md guidelines
 - [ ] Boy Scout Rule applied
 - [ ] Structured logging added
 - [ ] Prometheus metrics added
@@ -1497,12 +1491,10 @@ helm upgrade r4-redis-cluster ./ric-dep/helm/redis-cluster \
 
 ## 9. Final Notes
 
-### For the Next Claude Code Session
 
 親愛的接手者：
 
 1. **請先閱讀所有文檔** - 特別是 RFC 和 ADR
-2. **遵守 CLAUDE.md** - 這是非常重要的開發規範
 3. **小步前進** - 每個 PR 保持小而聚焦
 4. **測試先行** - 永遠使用 TDD
 5. **持續改善** - 應用 Boy Scout Rule
@@ -1559,7 +1551,6 @@ pytest tests/e2e/ -v
 
 **Date**: 2025-11-18
 **Prepared by**: 蔡秀吉 (thc1006)
-**For**: Next Claude Code Session
 **Status**: Ready for Handover
 
 ---

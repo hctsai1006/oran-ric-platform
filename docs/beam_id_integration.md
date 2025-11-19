@@ -1,6 +1,5 @@
 # Beam ID Integration Documentation
 
-**Author:** Agent 5
 **Date:** 2025-11-19
 **Version:** 1.0
 

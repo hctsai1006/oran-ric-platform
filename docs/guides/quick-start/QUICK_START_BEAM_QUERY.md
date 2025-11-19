@@ -1,6 +1,5 @@
 # Beam KPI Query - 快速開始指南
 
-**作者**: 蔡秀吉 (thc1006)
 **日期**: 2025-11-19
 **專案**: O-RAN RIC Platform - Beam KPI Query System
 
