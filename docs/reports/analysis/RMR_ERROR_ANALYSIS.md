@@ -6,7 +6,7 @@
 
 ---
 
-## 🔴 錯誤現象
+##   錯誤現象
 
 ### Traffic Steering 日誌錯誤
 ```json
@@ -23,9 +23,9 @@
 
 ---
 
-## 🔍 根本原因分析
+##   根本原因分析
 
-### 1. RTMgr 配置問題 ⚠️
+### 1. RTMgr 配置問題  [WARN]
 
 #### RTMgr 錯誤日誌
 ```json
@@ -52,9 +52,9 @@ PlatformComponents:
     port: 4562
 ```
 
-**❌ 問題**: 缺少 E2TERM 組件定義！
+** [FAIL] 問題**: 缺少 E2TERM 組件定義！
 
-**✅ 應該要有**:
+** [DONE] 應該要有**:
 ```yaml
   - name: E2TERM
     fqdn: service-ricplt-e2term-rmr-alpha.ricplt
@@ -63,17 +63,17 @@ PlatformComponents:
 
 ---
 
-### 2. 消息類型路由缺失 ⚠️
+### 2. 消息類型路由缺失  [WARN]
 
 #### 已定義的消息類型
 從 RTMgr 配置可以看到 **30000** 和相關消息已定義：
 ```yaml
 messagetypes:
-  - "TS_UE_LIST=30000"           # ✅ 已定義
-  - "TS_QOE_PRED_REQ=30001"      # ✅ 已定義
-  - "TS_QOE_PREDICTION=30002"    # ✅ 已定義
-  - "TS_ANOMALY_UPDATE=30003"    # ✅ 已定義
-  - "TS_ANOMALY_ACK=30004"       # ✅ 已定義
+  - "TS_UE_LIST=30000"           #  [DONE] 已定義
+  - "TS_QOE_PRED_REQ=30001"      #  [DONE] 已定義
+  - "TS_QOE_PREDICTION=30002"    #  [DONE] 已定義
+  - "TS_ANOMALY_UPDATE=30003"    #  [DONE] 已定義
+  - "TS_ANOMALY_ACK=30004"       #  [DONE] 已定義
 ```
 
 **問題**: 消息類型 40000 **未定義**
@@ -91,9 +91,9 @@ PlatformRoutes:
   # ... 其他 E2, A1 消息
 ```
 
-**❌ 問題**: **沒有 30000 系列消息的路由規則**！
+** [FAIL] 問題**: **沒有 30000 系列消息的路由規則**！
 
-**✅ 應該要有**:
+** [DONE] 應該要有**:
 ```yaml
 PlatformRoutes:
   # Traffic Steering 相關路由
@@ -112,7 +112,7 @@ PlatformRoutes:
 
 ---
 
-### 3. xApp 註冊問題 🔍
+### 3. xApp 註冊問題  
 
 #### RTMgr 獲取 xApp 列表的配置
 ```yaml
@@ -126,13 +126,13 @@ Update Routes to Endpoint: service-ricplt-e2mgr-rmr.ricplt:3801 successful
 Update Routes to Endpoint: service-ricplt-a1mediator-rmr.ricplt:4562 successful
 ```
 
-**❌ 問題**: 沒有看到任何 **xApp 的路由更新**！
+** [FAIL] 問題**: 沒有看到任何 **xApp 的路由更新**！
 - Traffic Steering 可能沒有正確註冊到 AppMgr
 - 或者 AppMgr 沒有向 RTMgr 報告 xApp 列表
 
 ---
 
-## 📊 完整錯誤鏈
+##   完整錯誤鏈
 
 ```
 1. Traffic Steering 決定執行 Handover
@@ -157,9 +157,9 @@ RTMgr 無法生成完整路由表
 
 ---
 
-## 🔧 解決方案
+##   解決方案
 
-### 方案 1: 修復 RTMgr 配置 (推薦) ✅
+### 方案 1: 修復 RTMgr 配置 (推薦)  [DONE]
 
 #### Step 1: 添加 E2Term 到 PlatformComponents
 
@@ -222,7 +222,7 @@ RTMgr 會自動重啟並載入新配置。
 
 ---
 
-### 方案 2: 使用 HTTP 替代 RMR (臨時方案) ⚠️
+### 方案 2: 使用 HTTP 替代 RMR (臨時方案)  [WARN]
 
 如果 RMR 配置複雜，可以暫時使用 HTTP 通訊：
 
@@ -251,7 +251,7 @@ def send_handover_command(ue_id, target_cell):
 
 ---
 
-### 方案 3: 檢查 xApp 註冊狀態 🔍
+### 方案 3: 檢查 xApp 註冊狀態  
 
 ```bash
 # 檢查 AppMgr 中的 xApp 列表
@@ -283,7 +283,7 @@ curl -X POST http://appmgr:8080/ric/v1/xapps \
 
 ---
 
-## 🎯 驗證步驟
+##   驗證步驟
 
 ### 1. 驗證 RTMgr 配置
 
@@ -301,8 +301,8 @@ kubectl get configmap configmap-ricplt-rtmgr-rtmgrcfg -n ricplt -o yaml | grep T
 kubectl logs -n ricplt deployment/deployment-ricplt-rtmgr --tail=50
 
 # 應該看到：
-# ✅ "Platform component not found: E2 Termination List" 錯誤消失
-# ✅ "Update Routes to Endpoint: service-ricplt-e2term-rmr-alpha" 出現
+#  [DONE] "Platform component not found: E2 Termination List" 錯誤消失
+#  [DONE] "Update Routes to Endpoint: service-ricplt-e2term-rmr-alpha" 出現
 ```
 
 ### 3. 測試 Traffic Steering
@@ -312,8 +312,8 @@ kubectl logs -n ricplt deployment/deployment-ricplt-rtmgr --tail=50
 kubectl logs -n ricxapp deployment/traffic-steering --tail=50
 
 # 應該看到：
-# ✅ "Failed to send message type 30000" 錯誤消失
-# ✅ "Handover command sent successfully" (或類似成功消息)
+#  [DONE] "Failed to send message type 30000" 錯誤消失
+#  [DONE] "Handover command sent successfully" (或類似成功消息)
 ```
 
 ### 4. 驗證路由表
@@ -328,7 +328,7 @@ kubectl exec -n ricplt deployment/deployment-ricplt-rtmgr -- \
 
 ---
 
-## 📚 相關技術背景
+##   相關技術背景
 
 ### RMR (RIC Message Router) 簡介
 
@@ -395,7 +395,7 @@ kubectl exec -n ricplt deployment/deployment-ricplt-rtmgr -- \
 
 ---
 
-## ⚠️ 當前架構的特殊性
+##  [WARN] 當前架構的特殊性
 
 ### 混合架構 (Parallel Change)
 
@@ -420,8 +420,8 @@ kubectl exec -n ricplt deployment/deployment-ricplt-rtmgr -- \
 ```
 
 **這就是為什麼**:
-- ✅ HTTP 通訊正常工作 (E2 Simulator → xApps)
-- ⚠️ RMR 通訊失敗 (xApps 之間的 RMR 消息)
+-  [DONE] HTTP 通訊正常工作 (E2 Simulator → xApps)
+-  [WARN] RMR 通訊失敗 (xApps 之間的 RMR 消息)
 
 **Traffic Steering 錯誤的真正含義**:
 > "我已經準備好使用 RMR 了，但 RMR 路由還沒配置好！"
@@ -441,7 +441,7 @@ kubectl exec -n ricplt deployment/deployment-ricplt-rtmgr -- \
 
 ---
 
-## 🎯 總結
+##   總結
 
 ### RMR 錯誤的三個層次
 
@@ -471,10 +471,10 @@ kubectl logs -n ricxapp deployment/traffic-steering --follow
 
 ### 長期改進
 
-1. ✅ 完成 xApp RMR 遷移 (移除 HTTP fallback)
-2. ✅ 標準化消息類型定義 (建立 message registry)
-3. ✅ 自動化 RTMgr 配置生成
-4. ✅ 添加路由健康檢查和監控
+1.  [DONE] 完成 xApp RMR 遷移 (移除 HTTP fallback)
+2.  [DONE] 標準化消息類型定義 (建立 message registry)
+3.  [DONE] 自動化 RTMgr 配置生成
+4.  [DONE] 添加路由健康檢查和監控
 
 ---
 

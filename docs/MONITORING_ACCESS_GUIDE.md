@@ -1,13 +1,13 @@
 # O-RAN RIC 監控服務存取指南
 
-> 📌 **適用場景**: 透過 SSH 連線到遠端機器，使用 VS Code IDE，想要在本地瀏覽器存取 Grafana、Prometheus 等監控服務
+>   **適用場景**: 透過 SSH 連線到遠端機器，使用 VS Code IDE，想要在本地瀏覽器存取 Grafana、Prometheus 等監控服務
 
 **最後更新**: 2025-11-19
-**狀態**: ✅ 已測試驗證
+**狀態**:  [DONE] 已測試驗證
 
 ---
 
-## 🚀 Quick Start (3 分鐘)
+##   Quick Start (3 分鐘)
 
 ### 步驟 1: 啟動 Port Forwarding
 
@@ -19,13 +19,13 @@ cd /home/mbwcl711_3060/thc1006/tmep/oran-ric-platform
 
 看到這個訊息表示成功:
 ```
-✅ Port Forwards Started Successfully
+ [DONE] Port Forwards Started Successfully
 
 Services available on localhost:
-  📊 Grafana:           http://localhost:3000
+    Grafana:           http://localhost:3000
   📈 Prometheus:        http://localhost:9090
   📡 KPIMON Metrics:    http://localhost:8080/metrics
-  🎯 Beam API:          http://localhost:8081/api/beam/5/kpi
+    Beam API:          http://localhost:8081/api/beam/5/kpi
 ```
 
 ### 步驟 2: 開啟 PORTS 面板
@@ -48,16 +48,16 @@ PORTS
 ───────────────────────────────────────────
  Port    Local Address    Running Process
 ───────────────────────────────────────────
- 3000    localhost:3000   kubectl          [🌐]
- 8080    localhost:8080   kubectl          [🌐]
- 8081    localhost:8081   kubectl          [🌐]
- 9090    localhost:9090   kubectl          [🌐]
+ 3000    localhost:3000   kubectl          [ ]
+ 8080    localhost:8080   kubectl          [ ]
+ 8081    localhost:8081   kubectl          [ ]
+ 9090    localhost:9090   kubectl          [ ]
 ───────────────────────────────────────────
 ```
 
 ### 步驟 3: 開啟監控服務
 
-點擊 port 右側的 **🌐 圖示**，VS Code 會在本地瀏覽器開啟服務！
+點擊 port 右側的 **  圖示**，VS Code 會在本地瀏覽器開啟服務！
 
 或直接在瀏覽器輸入:
 - **Grafana**: http://localhost:3000
@@ -92,7 +92,7 @@ Port Forwarding 讓你可以在**本地電腦瀏覽器**存取**遠端 Kubernete
 3. VS Code 自動建立 SSH tunnel → 將遠端 localhost:3000 轉發到本地 localhost:3000
 4. 你在本地瀏覽器開啟 `http://localhost:3000` → 透過 SSH tunnel 連到遠端 → 連到 Kubernetes Grafana
 
-**結果**: 不需要連到實驗室區網，就可以看到所有監控畫面！✅
+**結果**: 不需要連到實驗室區網，就可以看到所有監控畫面！ [DONE]
 
 ### 如何啟動 Port Forwarding
 
@@ -154,9 +154,9 @@ tmux attach -t monitoring
 
 #### Port 狀態指示
 
-- **🌐 綠色**: Port forwarding 正常運行
-- **⚠️ 黃色**: Port 有問題（例如 port already in use）
-- **🔴 紅色**: Port forwarding 失敗
+- **  綠色**: Port forwarding 正常運行
+- ** [WARN] 黃色**: Port 有問題（例如 port already in use）
+- **  紅色**: Port forwarding 失敗
 
 #### 停止 Port Forwarding
 
@@ -173,9 +173,9 @@ kill <PID>
 
 ---
 
-## 🔍 服務詳細分析
+##   服務詳細分析
 
-### 1. Grafana (Port 3000) 📊
+### 1. Grafana (Port 3000)  
 
 **服務類型**: Web 視覺化監控平台
 
@@ -191,9 +191,9 @@ kill <PID>
 
 **你會看到什麼**:
 - 🎨 登入頁面: Username/Password 輸入框
-- 📊 Dashboard 列表: 所有已建立的監控 dashboard
+-   Dashboard 列表: 所有已建立的監控 dashboard
 - 📈 即時圖表: KPIMON、E2 Simulator、xApps 的即時資料
-- 🔍 查詢介面: 可以自訂 Prometheus 查詢
+-   查詢介面: 可以自訂 Prometheus 查詢
 
 **Dashboard 內容**:
 - CPU/Memory 使用率圖表
@@ -224,11 +224,11 @@ kill <PID>
 **存取方式**: http://localhost:9090
 
 **你會看到什麼**:
-- 🔍 查詢介面: 輸入 PromQL 查詢語句
-- 📊 即時圖表: 將查詢結果視覺化
-- 🎯 Targets 頁面: 所有被監控的目標 (KPIMON, E2Term, etc.)
-- ⚠️ Alerts 頁面: 告警規則與狀態
-- ⚙️ Configuration: Prometheus 設定檔
+-   查詢介面: 輸入 PromQL 查詢語句
+-   即時圖表: 將查詢結果視覺化
+-   Targets 頁面: 所有被監控的目標 (KPIMON, E2Term, etc.)
+-  [WARN] Alerts 頁面: 告警規則與狀態
+-   Configuration: Prometheus 設定檔
 
 **儲存的 Metrics 範例**:
 ```promql
@@ -276,7 +276,7 @@ kpimon_e2_messages_received_total
 **存取方式**: http://localhost:8080/metrics
 
 **你會看到什麼**:
-- 📄 純文字格式: Prometheus metrics 格式
+-   純文字格式: Prometheus metrics 格式
 - 🔢 即時數值: 所有 KPIMON 收集的 KPI 數值
 
 **實際內容範例**:
@@ -314,7 +314,7 @@ python_gc_objects_collected_total{generation="0"} 2160.0
 
 ---
 
-### 4. Beam API (Port 8081) 🎯
+### 4. Beam API (Port 8081)  
 
 **服務類型**: RESTful API (Flask Web Server)
 
@@ -330,7 +330,7 @@ python_gc_objects_collected_total{generation="0"} 2160.0
    {"status": "alive"}
    ```
 
-2. **查詢 Beam KPI** ⭐
+2. **查詢 Beam KPI** 
    ```
    GET http://localhost:8081/api/beam/{beam_id}/kpi?kpi_type={type}
 
@@ -371,7 +371,7 @@ curl -s "http://localhost:8081/api/beam/5/kpi?kpi_type=all" | python3 -m json.to
 
 ---
 
-## 📊 完整數據流向
+##   完整數據流向
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -380,7 +380,7 @@ curl -s "http://localhost:8081/api/beam/5/kpi?kpi_type=all" | python3 -m json.to
 │  http://localhost:3000  ← Grafana 監控儀表板                    │
 │  http://localhost:9090  ← Prometheus 查詢介面                   │
 │  http://localhost:8080  ← KPIMON Metrics (原始數據)             │
-│  http://localhost:8081  ← Beam API (輸入 Beam ID 查詢) ⭐       │
+│  http://localhost:8081  ← Beam API (輸入 Beam ID 查詢)        │
 │                                                                  │
 └──────────────────┬──────────────────────────────────────────────┘
                    │
@@ -417,7 +417,7 @@ curl -s "http://localhost:8081/api/beam/5/kpi?kpi_type=all" | python3 -m json.to
 │  │                                                           │  │
 │  │  [KPIMON Pod]                                            │  │
 │  │    ├─ Port 8080: /metrics ← Prometheus 格式 metrics      │  │
-│  │    └─ Port 8081: Beam API ← 處理 Beam ID 查詢 ⭐        │  │
+│  │    └─ Port 8081: Beam API ← 處理 Beam ID 查詢         │  │
 │  │         ↓ 讀取                                            │  │
 │  │  [Redis] ← 儲存 beam-indexed KPI 資料                    │  │
 │  │         ↑ 寫入                                            │  │
@@ -430,9 +430,9 @@ curl -s "http://localhost:8081/api/beam/5/kpi?kpi_type=all" | python3 -m json.to
 
 ---
 
-## 🔧 故障排除
+##   故障排除
 
-### ❌ 瀏覽器顯示 "無法連線"
+###  [FAIL] 瀏覽器顯示 "無法連線"
 
 **檢查 port forwards 是否在執行:**
 ```bash
@@ -454,7 +454,7 @@ kubectl port-forward -n ricxapp svc/kpimon 8081:8081
 
 ---
 
-### ❌ Port already in use
+###  [FAIL] Port already in use
 
 **錯誤訊息:**
 ```
@@ -475,7 +475,7 @@ kill <PID>
 
 ---
 
-### ❌ VS Code PORTS 面板沒有顯示 ports
+###  [FAIL] VS Code PORTS 面板沒有顯示 ports
 
 **解決方案 1: 手動新增**
 1. 在 PORTS 面板點擊 **"+"** (新增 port)
@@ -492,7 +492,7 @@ kill <PID>
 
 ---
 
-### ❌ Grafana 無法登入
+###  [FAIL] Grafana 無法登入
 
 **常見問題:**
 - Username/Password 錯誤
@@ -512,7 +512,7 @@ kubectl logs -n ricplt $(kubectl get pods -n ricplt -l app.kubernetes.io/name=gr
 
 ---
 
-### ❌ Prometheus 查詢沒有資料
+###  [FAIL] Prometheus 查詢沒有資料
 
 **常見問題:**
 - KPIMON 還沒開始收集資料
@@ -533,7 +533,7 @@ curl http://localhost:8080/metrics | grep kpimon
 
 ---
 
-### ❌ 關閉 Terminal 後 port forwards 停止
+###  [FAIL] 關閉 Terminal 後 port forwards 停止
 
 **解決方案: 使用 tmux**
 ```bash
@@ -561,7 +561,7 @@ tmux kill-session -t monitoring
 
 ---
 
-## 📚 相關文件
+##   相關文件
 
 - **Beam KPI 查詢指南**: [BEAM_KPI_COMPLETE_GUIDE.md](BEAM_KPI_COMPLETE_GUIDE.md)
 - **Port Forward 腳本**: `/scripts/start-monitoring-ports.sh`
@@ -569,7 +569,7 @@ tmux kill-session -t monitoring
 
 ---
 
-## ✅ 驗證檢查清單
+##  [DONE] 驗證檢查清單
 
 完成設定後，確認以下項目:
 
@@ -587,5 +587,5 @@ tmux kill-session -t monitoring
 
 **建立日期**: 2025-11-19
 **最後測試**: 2025-11-19
-**狀態**: ✅ 已驗證運行正常
+**狀態**:  [DONE] 已驗證運行正常
 **適用版本**: O-RAN RIC Platform v1.0.2-beam

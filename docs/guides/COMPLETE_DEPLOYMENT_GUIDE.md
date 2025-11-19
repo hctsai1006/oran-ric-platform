@@ -7,7 +7,7 @@
 
 ---
 
-## 📋 目錄
+##   目錄
 
 - [1. 系統概述](#1-系統概述)
 - [2. 部署前準備](#2-部署前準備)
@@ -25,55 +25,55 @@
 
 #### 基礎設施層 (Infrastructure Layer)
 ```
-✅ Prometheus (監控數據收集)
-✅ Grafana (監控視覺化)
-✅ Redis Cluster (3 節點，SDL Backend)
-✅ DBaaS (Database as a Service，SDL Frontend)
+ [DONE] Prometheus (監控數據收集)
+ [DONE] Grafana (監控視覺化)
+ [DONE] Redis Cluster (3 節點，SDL Backend)
+ [DONE] DBaaS (Database as a Service，SDL Frontend)
 ```
 
 #### E2 接口層 (E2 Interface Layer)
 ```
-✅ E2 Term (E2AP 協議終止點)
-✅ E2 Manager (E2 連接管理)
-✅ Subscription Manager (E2 訂閱管理)
+ [DONE] E2 Term (E2AP 協議終止點)
+ [DONE] E2 Manager (E2 連接管理)
+ [DONE] Subscription Manager (E2 訂閱管理)
 ```
 
 #### RMR 路由層 (RMR Routing Layer)
 ```
-✅ Routing Manager (動態路由管理)
+ [DONE] Routing Manager (動態路由管理)
 ```
 
 #### xApp 管理層 (xApp Management)
 ```
-✅ App Manager (xApp 生命週期管理)
-✅ Resource Status Manager (資源狀態管理)
+ [DONE] App Manager (xApp 生命週期管理)
+ [DONE] Resource Status Manager (資源狀態管理)
 ```
 
 #### North-Bound 接口 (A1 Interface)
 ```
-✅ A1 Mediator (Non-RT RIC 接口)
+ [DONE] A1 Mediator (Non-RT RIC 接口)
 ```
 
 #### 支援組件 (Supporting Components)
 ```
-✅ O1 Mediator (OAM 接口)
-✅ Alarm Manager (告警管理)
-✅ Jaeger Adapter (分散式追蹤)
-✅ VES Manager (VES 事件管理)
+ [DONE] O1 Mediator (OAM 接口)
+ [DONE] Alarm Manager (告警管理)
+ [DONE] Jaeger Adapter (分散式追蹤)
+ [DONE] VES Manager (VES 事件管理)
 ```
 
 #### xApps (5 個)
 ```
-✅ KPIMON (KPI 監控)
-✅ Traffic Steering (流量控制)
-✅ QoE Predictor (QoE 預測)
-✅ RAN Control (RAN 控制)
-✅ Federated Learning (聯邦學習)
+ [DONE] KPIMON (KPI 監控)
+ [DONE] Traffic Steering (流量控制)
+ [DONE] QoE Predictor (QoE 預測)
+ [DONE] RAN Control (RAN 控制)
+ [DONE] Federated Learning (聯邦學習)
 ```
 
 #### E2 Simulator
 ```
-✅ E2 Simulator (模擬 gNodeB)
+ [DONE] E2 Simulator (模擬 gNodeB)
 ```
 
 ---
@@ -328,7 +328,7 @@ kubectl logs -n ${NAMESPACE_PLT} deployment/deployment-ricplt-rtmgr --tail=20
 
 **部署時間**: ~2-3 分鐘
 
-⚠️ **重要**: RTMgr 部署後需要配置 E2Term (見 RMR_ERROR_ANALYSIS.md)
+ [WARN] **重要**: RTMgr 部署後需要配置 E2Term (見 RMR_ERROR_ANALYSIS.md)
 
 ---
 
@@ -756,7 +756,7 @@ kubectl edit configmap -n ricplt prometheus-server
 
 ---
 
-**部署完成！🎉**
+**部署完成！ **
 
 如有任何問題，請參考：
 - 系統健康報告: `SYSTEM_HEALTH_REPORT.md`

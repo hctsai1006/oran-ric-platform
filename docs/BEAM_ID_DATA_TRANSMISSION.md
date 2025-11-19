@@ -7,7 +7,7 @@
 
 ---
 
-## 📋 目錄
+##   目錄
 
 - [1. Executive Summary](#1-executive-summary)
 - [2. Beam ID 生成階段](#2-beam-id-生成階段)
@@ -61,10 +61,10 @@
 ```
 
 **核心特色**:
-- ✅ **動態配置**: 可透過環境變數 `BEAM_IDS` 控制生成哪些 beam
-- ✅ **多層儲存**: Redis 中有 4 種不同的 key 結構儲存 beam 資料
-- ✅ **向後相容**: 支援舊版沒有 beam_id 的資料格式
-- ✅ **Beam-specific KPIs**: L1-RSRP 和 L1-SINR 按 beam 分別記錄
+-  [DONE] **動態配置**: 可透過環境變數 `BEAM_IDS` 控制生成哪些 beam
+-  [DONE] **多層儲存**: Redis 中有 4 種不同的 key 結構儲存 beam 資料
+-  [DONE] **向後相容**: 支援舊版沒有 beam_id 的資料格式
+-  [DONE] **Beam-specific KPIs**: L1-RSRP 和 L1-SINR 按 beam 分別記錄
 
 ---
 
@@ -196,9 +196,9 @@ return {
 ```
 
 **關鍵設計**:
-- ✅ **雙層 beam_id**: 頂層有 `beam_id: 5`，measurement 內 L1-RSRP/L1-SINR 也有 `beam_id: 5`
-- ✅ **Beam Quality Degradation**: 越大的 beam_id，信號品質越差（模擬真實場景）
-- ✅ **向後相容**: 即使不設定 `BEAM_IDS`，系統仍會自動生成所有 beam
+-  [DONE] **雙層 beam_id**: 頂層有 `beam_id: 5`，measurement 內 L1-RSRP/L1-SINR 也有 `beam_id: 5`
+-  [DONE] **Beam Quality Degradation**: 越大的 beam_id，信號品質越差（模擬真實場景）
+-  [DONE] **向後相容**: 即使不設定 `BEAM_IDS`，系統仍會自動生成所有 beam
 
 ### 2.3 日誌輸出範例
 
@@ -1216,14 +1216,14 @@ for measurement in measurements:
 | **kpi:timeline:{cell}:beam_{id}** | 時序分析 | 「Beam 5 過去 5 分鐘的 L1-RSRP 趨勢？」 |
 
 **如果只用單一 key 格式**:
-- ❌ 查詢 Beam 5 所有 KPI 需要 `KEYS kpi:*:*:beam_5` → O(N) 全掃描
-- ❌ 查詢 Cell 003 所有 Beam 需要 `KEYS kpi:cell_003:*` 再過濾 → 效率低
-- ❌ 查詢 UE-Beam 關聯需要解析所有 KPI 資料 → 浪費記憶體
+-  [FAIL] 查詢 Beam 5 所有 KPI 需要 `KEYS kpi:*:*:beam_5` → O(N) 全掃描
+-  [FAIL] 查詢 Cell 003 所有 Beam 需要 `KEYS kpi:cell_003:*` 再過濾 → 效率低
+-  [FAIL] 查詢 UE-Beam 關聯需要解析所有 KPI 資料 → 浪費記憶體
 
 **多層 key 結構的優勢**:
-- ✅ **查詢效率高**: 每種查詢都有對應的索引
-- ✅ **Redis 記憶體最佳化**: 只查詢需要的資料
-- ✅ **擴展性**: 未來新增查詢場景，新增 key pattern 即可
+-  [DONE] **查詢效率高**: 每種查詢都有對應的索引
+-  [DONE] **Redis 記憶體最佳化**: 只查詢需要的資料
+-  [DONE] **擴展性**: 未來新增查詢場景，新增 key pattern 即可
 
 ### 8.3 TTL 設計
 
@@ -1304,16 +1304,16 @@ Beam 7: L1-RSRP = -104.3 dBm (較差，可能觸發 anomaly)
 | **Redis** | 即時查詢、API | 300 秒（TTL） | Key-Value / Sorted Set |
 
 **Prometheus 優勢**:
-- ✅ 長期儲存（15 天 - 90 天）
-- ✅ 強大的聚合查詢（rate, increase, histogram_quantile）
-- ✅ Grafana 原生支援
-- ✅ 告警規則（AlertManager）
+-  [DONE] 長期儲存（15 天 - 90 天）
+-  [DONE] 強大的聚合查詢（rate, increase, histogram_quantile）
+-  [DONE] Grafana 原生支援
+-  [DONE] 告警規則（AlertManager）
 
 **Redis 優勢**:
-- ✅ 即時查詢（< 10ms）
-- ✅ 彈性資料結構（JSON, Sorted Set）
-- ✅ TTL 自動過期
-- ✅ Beam Query API 直接讀取
+-  [DONE] 即時查詢（< 10ms）
+-  [DONE] 彈性資料結構（JSON, Sorted Set）
+-  [DONE] TTL 自動過期
+-  [DONE] Beam Query API 直接讀取
 
 **互補關係**:
 ```
@@ -1410,14 +1410,14 @@ Beam ID 資料傳輸 5 階段：
 
 ### 關鍵設計亮點
 
-- ✅ **動態配置**: `BEAM_IDS` 環境變數控制生成哪些 beam
-- ✅ **雙層 beam_id**: Indication 頂層 + Measurement 內部
-- ✅ **4 層 Redis 儲存**: 不同查詢場景的最佳化索引
-- ✅ **向後相容**: 支援舊版無 beam_id 的資料格式
-- ✅ **Beam Quality Degradation**: 模擬真實 5G 波束品質差異
-- ✅ **TTL 自動過期**: 300 秒 TTL 避免 Redis 記憶體洩漏
-- ✅ **Prometheus + Redis**: 長期監控 + 即時查詢的完美組合
-- ✅ **CORS Proxy**: 解決前端跨域問題
+-  [DONE] **動態配置**: `BEAM_IDS` 環境變數控制生成哪些 beam
+-  [DONE] **雙層 beam_id**: Indication 頂層 + Measurement 內部
+-  [DONE] **4 層 Redis 儲存**: 不同查詢場景的最佳化索引
+-  [DONE] **向後相容**: 支援舊版無 beam_id 的資料格式
+-  [DONE] **Beam Quality Degradation**: 模擬真實 5G 波束品質差異
+-  [DONE] **TTL 自動過期**: 300 秒 TTL 避免 Redis 記憶體洩漏
+-  [DONE] **Prometheus + Redis**: 長期監控 + 即時查詢的完美組合
+-  [DONE] **CORS Proxy**: 解決前端跨域問題
 
 ### 程式碼位置速查
 
@@ -1436,7 +1436,7 @@ Beam ID 資料傳輸 5 階段：
 
 ---
 
-**文檔完成！** 🎉
+**文檔完成！**  
 
 如有任何疑問，請參考：
 - [BEAM_KPI_COMPLETE_GUIDE.md](./BEAM_KPI_COMPLETE_GUIDE.md) - Beam KPI 完整使用指南

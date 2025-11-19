@@ -6,13 +6,13 @@
 
 ---
 
-## 🎯 給甲方：最簡單的使用方式
+##   給甲方：最簡單的使用方式
 
 親愛的甲方，我們提供了**三種查詢方式**，按簡易度排序：
 
 ---
 
-### 方式 1：專業 Web UI ⭐⭐⭐⭐⭐（推薦！）
+### 方式 1：專業 Web UI （推薦！）
 
 **一鍵啟動，瀏覽器查詢**
 
@@ -31,10 +31,10 @@ http://localhost:8888/
 3. 查看結果！
 
 **看到什麼**：
-- ✅ Quick Stats（RSRP, SINR, Throughput）
-- ✅ 詳細表格（所有 KPI 指標）
-- ✅ 品質標籤（Excellent, Good, Fair, Poor）
-- ✅ 專業設計（Material Design 風格）
+-  [DONE] Quick Stats（RSRP, SINR, Throughput）
+-  [DONE] 詳細表格（所有 KPI 指標）
+-  [DONE] 品質標籤（Excellent, Good, Fair, Poor）
+-  [DONE] 專業設計（Material Design 風格）
 
 **截圖範例**：
 ```
@@ -50,7 +50,7 @@ http://localhost:8888/
 
 ---
 
-### 方式 2：命令列工具 ⭐⭐⭐⭐⭐（最快！）
+### 方式 2：命令列工具 （最快！）
 
 **一條命令搞定**
 
@@ -66,13 +66,13 @@ http://localhost:8888/
 ```
 
 **優點**：
-- ✅ 最簡單！一條命令
-- ✅ 適合 Demo 展示
-- ✅ 彩色輸出，清晰易讀
+-  [DONE] 最簡單！一條命令
+-  [DONE] 適合 Demo 展示
+-  [DONE] 彩色輸出，清晰易讀
 
 ---
 
-### 方式 3：REST API ⭐⭐⭐⭐（程式化調用）
+### 方式 3：REST API （程式化調用）
 
 **適合整合到其他系統**
 
@@ -89,7 +89,7 @@ curl -s "http://localhost:8081/api/beam/5/kpi" | jq '.'
 
 ---
 
-## 📊 支援的 Beam IDs 和 KPI 類型
+##   支援的 Beam IDs 和 KPI 類型
 
 ### Beam IDs
 - **範圍**: 1-7（對應 5G NR SSB Index）
@@ -106,7 +106,7 @@ curl -s "http://localhost:8081/api/beam/5/kpi" | jq '.'
 
 ---
 
-## 🚀 完整使用範例
+##   完整使用範例
 
 ### 範例 1：查詢 Beam 1 的信號品質
 
@@ -165,7 +165,7 @@ done
 
 ---
 
-## 🔧 環境檢查
+##   環境檢查
 
 在使用前，確認以下服務運行：
 
@@ -189,16 +189,16 @@ curl http://localhost:8081/health/alive
 
 | 特性 | Web UI | CLI 工具 | REST API |
 |------|--------|----------|----------|
-| **簡易度** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
-| **視覺化** | ✅ 完整 | ⚠️ 文字 | ❌ JSON |
+| **簡易度** |  |  |  |
+| **視覺化** |  [DONE] 完整 |  [WARN] 文字 |  [FAIL] JSON |
 | **適合對象** | 所有人 | 技術人員 | 開發者 |
-| **Demo 展示** | ✅ 最佳 | ✅ 快速 | ⚠️ 需工具 |
-| **程式化調用** | ❌ | ⚠️ Shell 腳本 | ✅ 最佳 |
+| **Demo 展示** |  [DONE] 最佳 |  [DONE] 快速 |  [WARN] 需工具 |
+| **程式化調用** |  [FAIL] |  [WARN] Shell 腳本 |  [DONE] 最佳 |
 | **學習曲線** | 最低 | 低 | 中 |
 
 ---
 
-## 🎓 使用建議
+##   使用建議
 
 ### 給甲方（Demo/展示）
 推薦：**Web UI** 或 **CLI 工具**
@@ -242,7 +242,7 @@ kubectl port-forward -n ricxapp svc/kpimon 8081:8081
 
 ---
 
-## 📞 支援
+##   支援
 
 **問題回報**：蔡秀吉 (thc1006)
 
@@ -253,13 +253,13 @@ kubectl port-forward -n ricxapp svc/kpimon 8081:8081
 
 ---
 
-## 🎉 Quick Tips
+##   Quick Tips
 
-1. ✅ **最快方式**：CLI 工具（一條命令）
-2. ✅ **最專業**：Web UI（視覺化完整）
-3. ✅ **最靈活**：REST API（可程式化）
-4. ✅ **Demo 展示**：Web UI + 投影螢幕
-5. ✅ **日常使用**：依個人習慣選擇
+1.  [DONE] **最快方式**：CLI 工具（一條命令）
+2.  [DONE] **最專業**：Web UI（視覺化完整）
+3.  [DONE] **最靈活**：REST API（可程式化）
+4.  [DONE] **Demo 展示**：Web UI + 投影螢幕
+5.  [DONE] **日常使用**：依個人習慣選擇
 
 ---
 

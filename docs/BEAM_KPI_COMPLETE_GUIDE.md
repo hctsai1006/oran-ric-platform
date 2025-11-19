@@ -1,16 +1,16 @@
 # Beam KPI 查詢完整指南
 
-> 📌 **甲方需求**: "希望有一個介面可以輸入 Beam ID 例如 1 或是 2，KPM 就可以有一個回傳的資訊"
+>   **甲方需求**: "希望有一個介面可以輸入 Beam ID 例如 1 或是 2，KPM 就可以有一個回傳的資訊"
 
 **最後更新**: 2025-11-19
-**狀態**: ✅ 已實現 - 提供 4 種查詢方法
+**狀態**:  [DONE] 已實現 - 提供 4 種查詢方法
 **API 版本**: v1.0.2-beam
 
 ---
 
-## 🚀 Quick Start (30 秒)
+##   Quick Start (30 秒)
 
-### 最簡單的方法: Web UI ⭐
+### 最簡單的方法: Web UI 
 
 **步驟 1**: 在 VS Code 開啟檔案
 ```
@@ -22,7 +22,7 @@
 **步驟 3**: 在介面中
 1. 選擇 Beam ID (點擊按鈕或輸入 1-7)
 2. 選擇 KPI 類型 (建議選 "全部 KPI")
-3. 點擊 **🔍 查詢 Beam KPI**
+3. 點擊 **  查詢 Beam KPI**
 
 **完成！** 1-2 秒後看到結果。
 
@@ -34,20 +34,20 @@
 
 | 方法 | 適用對象 | 難度 | 推薦度 |
 |-----|---------|------|--------|
-| **Web UI** | 一般使用者、甲方決策者 | ⭐ 簡單 | ⭐⭐⭐ 強烈推薦 |
-| **瀏覽器 URL** | 技術人員、快速查詢 | ⭐⭐ 中等 | ⭐⭐ 推薦 |
-| **curl 命令** | 開發人員、自動化腳本 | ⭐⭐ 中等 | ⭐⭐ 推薦 |
-| **Postman** | QA 測試人員、API 開發 | ⭐⭐ 中等 | ⭐⭐ 推薦 |
+| **Web UI** | 一般使用者、甲方決策者 |  簡單 |  強烈推薦 |
+| **瀏覽器 URL** | 技術人員、快速查詢 |  中等 |  推薦 |
+| **curl 命令** | 開發人員、自動化腳本 |  中等 |  推薦 |
+| **Postman** | QA 測試人員、API 開發 |  中等 |  推薦 |
 
 ---
 
-## 方法 1: Web UI 介面 ⭐⭐⭐
+## 方法 1: Web UI 介面 
 
 ### 適用場景
-- ✅ 一般使用者 (不需要技術背景)
-- ✅ 甲方決策者
-- ✅ 需要視覺化呈現的場景
-- ✅ 即時監控
+-  [DONE] 一般使用者 (不需要技術背景)
+-  [DONE] 甲方決策者
+-  [DONE] 需要視覺化呈現的場景
+-  [DONE] 即時監控
 
 ### 使用步驟
 
@@ -115,7 +115,7 @@ google-chrome beam-query-interface.html &
 
 ```
 ┌────────────────────────────────────────────────┐
-│  [🔍 查詢 Beam KPI]  [🗑️ 清除結果]           │
+│  [  查詢 Beam KPI]  [🗑️ 清除結果]           │
 │         ↑                                       │
 │      點擊這裡                                   │
 └────────────────────────────────────────────────┘
@@ -126,7 +126,7 @@ google-chrome beam-query-interface.html &
 會即時顯示:
 - 📡 訊號品質 (RSRP, RSRQ, SINR)
 - ⚡ 吞吐量 (下行/上行)
-- 💾 資源使用率 (PRB 使用率)
+-   資源使用率 (PRB 使用率)
 - 📦 封包遺失率
 - 品質指標 (Excellent/Good/Fair/Poor)
 
@@ -134,10 +134,10 @@ google-chrome beam-query-interface.html &
 
 ```
 ╔═══════════════════════════════════════════╗
-║  🎯 Beam ID KPI 查詢介面                  ║
+║    Beam ID KPI 查詢介面                  ║
 ╚═══════════════════════════════════════════╝
 
-✅ 查詢成功 - Beam ID: 5 | 時間: 2025-11-19 09:30:45
+ [DONE] 查詢成功 - Beam ID: 5 | 時間: 2025-11-19 09:30:45
 
 📡 訊號品質 (Signal Quality)
 ┌──────────────┬──────────────┬──────────────┐
@@ -152,7 +152,7 @@ google-chrome beam-query-interface.html &
 │ 75.01 Mbps   │ 15.28 Mbps   │
 └──────────────┴──────────────┘
 
-💾 資源使用率 (Resource Utilization)
+  資源使用率 (Resource Utilization)
 ┌──────────────┬──────────────┐
 │ PRB 使用率(下)│ PRB 使用率(上)│
 │ 81.64 %      │ 56.05 %      │
@@ -161,12 +161,12 @@ google-chrome beam-query-interface.html &
 
 ---
 
-## 方法 2: 瀏覽器直接輸入 URL ⭐⭐
+## 方法 2: 瀏覽器直接輸入 URL 
 
 ### 適用場景
-- ✅ 技術人員
-- ✅ 快速查詢
-- ✅ 需要書籤保存的場景
+-  [DONE] 技術人員
+-  [DONE] 快速查詢
+-  [DONE] 需要書籤保存的場景
 
 ### 基本格式
 
@@ -294,13 +294,13 @@ http://localhost:8081/api/beam/5/kpi?time_range=5min
 
 ---
 
-## 方法 3: curl 命令 ⭐⭐
+## 方法 3: curl 命令 
 
 ### 適用場景
-- ✅ 開發人員
-- ✅ 自動化腳本
-- ✅ CI/CD 整合
-- ✅ 命令列操作
+-  [DONE] 開發人員
+-  [DONE] 自動化腳本
+-  [DONE] CI/CD 整合
+-  [DONE] 命令列操作
 
 ### 基本查詢
 
@@ -379,7 +379,7 @@ while true; do
 
     # 如果 RSRP 太差，發出告警
     if (( $(echo "$RSRP < -110" | bc -l) )); then
-        echo "⚠️ WARNING: Poor signal quality!"
+        echo " [WARN] WARNING: Poor signal quality!"
     fi
 
     sleep 10
@@ -433,32 +433,32 @@ echo "Report saved to: $REPORT_FILE"
 
 # 1. 檢查 API 是否 alive
 if curl -s http://localhost:8081/health/alive | jq -e '.status == "alive"' > /dev/null; then
-    echo "✅ Beam API is alive"
+    echo " [DONE] Beam API is alive"
 else
-    echo "❌ Beam API is not responding"
+    echo " [FAIL] Beam API is not responding"
     exit 1
 fi
 
 # 2. 檢查能否查詢資料
 if curl -s "http://localhost:8081/api/beam/5/kpi?kpi_type=all" | jq -e '.status == "success"' > /dev/null; then
-    echo "✅ Beam API query successful"
+    echo " [DONE] Beam API query successful"
 else
-    echo "❌ Beam API query failed"
+    echo " [FAIL] Beam API query failed"
     exit 1
 fi
 
-echo "✅ All health checks passed"
+echo " [DONE] All health checks passed"
 ```
 
 ---
 
-## 方法 4: Postman / API 測試工具 ⭐⭐
+## 方法 4: Postman / API 測試工具 
 
 ### 適用場景
-- ✅ QA 測試人員
-- ✅ API 開發人員
-- ✅ 需要保存測試案例的場景
-- ✅ API 文件生成
+-  [DONE] QA 測試人員
+-  [DONE] API 開發人員
+-  [DONE] 需要保存測試案例的場景
+-  [DONE] API 文件生成
 
 ### Postman 設定
 
@@ -672,7 +672,7 @@ kpi_type        all                        all
 
 ---
 
-## 📊 支援的 Beam ID 與 KPI 類型
+##   支援的 Beam ID 與 KPI 類型
 
 ### Beam ID 範圍
 
@@ -682,13 +682,13 @@ kpi_type        all                        all
       代表不同方向的波束
 
 當前有資料的 Beam:
-  Beam 2: ⭐⭐⭐ (36 筆資料) - 推薦測試
-  Beam 5: ⭐⭐⭐ (38 筆資料) - 推薦測試
-  Beam 4: ⭐⭐  (13 筆資料)
-  Beam 6: ⭐⭐  (12 筆資料)
-  Beam 7: ⭐⭐  (25 筆資料)
-  Beam 1: ⭐   (1 筆資料)
-  Beam 3: ⭐   (1 筆資料)
+  Beam 2:  (36 筆資料) - 推薦測試
+  Beam 5:  (38 筆資料) - 推薦測試
+  Beam 4:   (13 筆資料)
+  Beam 6:   (12 筆資料)
+  Beam 7:   (25 筆資料)
+  Beam 1:    (1 筆資料)
+  Beam 3:    (1 筆資料)
 ```
 
 ### KPI 類型
@@ -725,7 +725,7 @@ kpi_type        all                        all
 
 ---
 
-## 🎯 使用範例
+##   使用範例
 
 ### 範例 1: 監控特定 Beam 的訊號品質
 
@@ -803,9 +803,9 @@ echo "CSV report saved to: $CSV_FILE"
 
 ---
 
-## 🔧 故障排除
+##   故障排除
 
-### ❌ API 回應 "無法連線"
+###  [FAIL] API 回應 "無法連線"
 
 **症狀:**
 ```
@@ -830,7 +830,7 @@ curl: (7) Failed to connect to localhost port 8081
 
 ---
 
-### ❌ 查詢失敗 "BEAM_NOT_FOUND"
+###  [FAIL] 查詢失敗 "BEAM_NOT_FOUND"
 
 **回應範例:**
 ```json
@@ -864,7 +864,7 @@ curl: (7) Failed to connect to localhost port 8081
 
 ---
 
-### ❌ Web UI 無法載入
+###  [FAIL] Web UI 無法載入
 
 **症狀:**
 - 開啟 `beam-query-interface.html` 但畫面空白
@@ -886,7 +886,7 @@ curl: (7) Failed to connect to localhost port 8081
 
 ---
 
-### ❌ 回應速度很慢
+###  [FAIL] 回應速度很慢
 
 **症狀:**
 查詢需要 5-10 秒才有回應
@@ -916,7 +916,7 @@ curl: (7) Failed to connect to localhost port 8081
 
 ---
 
-## 📚 相關文件
+##   相關文件
 
 - **監控服務存取指南**: [MONITORING_ACCESS_GUIDE.md](MONITORING_ACCESS_GUIDE.md)
 - **Port Forward 腳本**: `/scripts/start-monitoring-ports.sh`
@@ -925,7 +925,7 @@ curl: (7) Failed to connect to localhost port 8081
 
 ---
 
-## ✅ 快速開始檢查清單
+##  [DONE] 快速開始檢查清單
 
 ### 確認 Port Forwarding 已啟動
 
@@ -963,6 +963,6 @@ curl -s "http://localhost:8081/api/beam/5/kpi?kpi_type=all" | jq
 
 **建立日期**: 2025-11-19
 **最後測試**: 2025-11-19
-**狀態**: ✅ 生產就緒 (Production Ready)
+**狀態**:  [DONE] 生產就緒 (Production Ready)
 **API 版本**: v1.0.2-beam
 **Test Coverage**: 8/8 tests passed (100%)

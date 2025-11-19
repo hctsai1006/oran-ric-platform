@@ -24,9 +24,9 @@ This document describes the implementation of a **Beam ID Query API** for O-RAN 
 ### Design Decision: Option B - Extend KPIMON xApp
 
 After analyzing three options:
-- **Option A**: Extend E2 Simulator (❌ Wrong layer - simulator shouldn't expose APIs)
-- **Option B**: Extend KPIMON xApp (✅ **SELECTED** - Natural fit, already has data)
-- **Option C**: Standalone service (❌ Unnecessary complexity, data duplication)
+- **Option A**: Extend E2 Simulator ( [FAIL] Wrong layer - simulator shouldn't expose APIs)
+- **Option B**: Extend KPIMON xApp ( [DONE] **SELECTED** - Natural fit, already has data)
+- **Option C**: Standalone service ( [FAIL] Unnecessary complexity, data duplication)
 
 **Rationale for Option B:**
 1. KPIMON already receives and stores all KPI data in Redis

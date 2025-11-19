@@ -7,7 +7,7 @@
 
 ---
 
-## 📋 目錄
+##   目錄
 
 - [1. Executive Summary](#1-executive-summary)
 - [2. KPIMON 獲取資料的方式](#2-kpimon-獲取資料的方式)
@@ -41,15 +41,15 @@
 
 | 通訊方式 | 用途 | 協議 | 當前狀態 |
 |---------|------|------|---------|
-| **HTTP** | E2 Simulator → KPIMON（測試） | HTTP POST | ✅ 運行中 |
-| **RMR** | E2Term → KPIMON（生產） | RMR (RIC Message Router) | ⚠️ 已部署，待啟用 |
-| **SDL** | KPIMON ↔ 其他 xApps（數據共享） | Redis (Shared Data Layer) | ✅ 運行中 |
+| **HTTP** | E2 Simulator → KPIMON（測試） | HTTP POST |  [DONE] 運行中 |
+| **RMR** | E2Term → KPIMON（生產） | RMR (RIC Message Router) |  [WARN] 已部署，待啟用 |
+| **SDL** | KPIMON ↔ 其他 xApps（數據共享） | Redis (Shared Data Layer) |  [DONE] 運行中 |
 
 ---
 
 ## 2. KPIMON 獲取資料的方式
 
-### 2.1 方式一：HTTP (當前使用) ✅
+### 2.1 方式一：HTTP (當前使用)  [DONE]
 
 **架構**:
 ```
@@ -113,14 +113,14 @@ def e2_indication():
 ```
 
 **優點**:
-- ✅ 簡單易用，適合開發測試
-- ✅ 無需複雜配置
-- ✅ 方便 debug（可直接用 curl 測試）
+-  [DONE] 簡單易用，適合開發測試
+-  [DONE] 無需複雜配置
+-  [DONE] 方便 debug（可直接用 curl 測試）
 
 **缺點**:
-- ❌ 不符合 O-RAN 標準（標準是 E2AP + RMR）
-- ❌ 無法接入真實 gNodeB
-- ❌ 擴展性有限
+-  [FAIL] 不符合 O-RAN 標準（標準是 E2AP + RMR）
+-  [FAIL] 無法接入真實 gNodeB
+-  [FAIL] 擴展性有限
 
 **適用場景**:
 - 開發測試環境
@@ -129,7 +129,7 @@ def e2_indication():
 
 ---
 
-### 2.2 方式二：RMR (標準方式，已部署) ⚠️
+### 2.2 方式二：RMR (標準方式，已部署)  [WARN]
 
 **架構**:
 ```
@@ -218,20 +218,20 @@ PlatformRoutes:
 ```
 
 **優點**:
-- ✅ 符合 O-RAN 標準
-- ✅ 可接入真實 gNodeB
-- ✅ 高性能（> 1000 msg/s）
-- ✅ 支援訂閱機制
-- ✅ RTMgr 動態路由
+-  [DONE] 符合 O-RAN 標準
+-  [DONE] 可接入真實 gNodeB
+-  [DONE] 高性能（> 1000 msg/s）
+-  [DONE] 支援訂閱機制
+-  [DONE] RTMgr 動態路由
 
 **缺點**:
-- ⚠️ 配置複雜（需要 RTMgr, E2Term）
-- ⚠️ Debug 較困難
+-  [WARN] 配置複雜（需要 RTMgr, E2Term）
+-  [WARN] Debug 較困難
 
 **當前狀態**:
-- ✅ RMR 基礎設施已部署（E2Term, RTMgr）
-- ✅ KPIMON 已支援 RMR handler
-- ⚠️ E2 Simulator 尚未啟用 E2AP（仍使用 HTTP）
+-  [DONE] RMR 基礎設施已部署（E2Term, RTMgr）
+-  [DONE] KPIMON 已支援 RMR handler
+-  [WARN] E2 Simulator 尚未啟用 E2AP（仍使用 HTTP）
 
 **啟用方式**:
 ```bash
@@ -331,16 +331,16 @@ def _handle_indication(self, payload):
 │ KPIMON 資料儲存架構（三層）                                 │
 └─────────────────────────────────────────────────────────────┘
 
-1️⃣ Redis (即時查詢，TTL 300s)
+1. Redis (即時查詢，TTL 300s)
    ├─ kpi:beam:5:cell:cell_003:L1-RSRP.beam  ← Beam Query API
    ├─ kpi:cell_003:L1-RSRP.beam:beam_5
    ├─ ue:beam:5:cell:cell_003:ue_015
    └─ kpi:timeline:cell_003:beam_5
 
-2️⃣ Prometheus (監控告警，保留 15 天)
+2. Prometheus (監控告警，保留 15 天)
    └─ kpimon_kpi_value{kpi_type="L1-RSRP.beam",cell_id="cell_003",beam_id="5"}
 
-3️⃣ InfluxDB (長期儲存，可選)
+3. InfluxDB (長期儲存，可選)
    └─ bucket: kpimon
       measurement: kpi_metrics
       tags: cell_id, beam_id, kpi_type
@@ -444,7 +444,7 @@ def _handle_indication(self, payload):
 **問題**:
 ```
 Browser (localhost:8888) → KPIMON API (localhost:8081)
-❌ CORS Error: No 'Access-Control-Allow-Origin' header
+ [FAIL] CORS Error: No 'Access-Control-Allow-Origin' header
 ```
 
 **解決方案**: **Proxy Server**
@@ -499,7 +499,7 @@ const API_BASE_URL = '';  // Empty string = same origin
   </div>
 
   <div class="stat-card">
-    <div class="stat-icon">📊</div>
+    <div class="stat-icon"> </div>
     <div class="stat-value" id="avgSinr">21.57 dB</div>
     <div class="stat-label">Average SINR</div>
     <span class="quality-badge excellent">Excellent</span>
@@ -544,7 +544,7 @@ KPI_TYPE=${2:-all}
 API_URL="http://localhost:8081"
 QUERY_URL="${API_URL}/api/beam/${BEAM_ID}/kpi?kpi_type=${KPI_TYPE}"
 
-echo "🔍 Querying Beam ${BEAM_ID} KPIs (type: ${KPI_TYPE})..."
+echo "  Querying Beam ${BEAM_ID} KPIs (type: ${KPI_TYPE})..."
 curl -s "${QUERY_URL}" | jq '.'
 ```
 
@@ -1031,23 +1031,23 @@ xapp.rmr_free(sbuf)
 
 | 通訊對象 | 方式 | 協議 | Port | 狀態 |
 |---------|------|------|------|------|
-| **E2 Sim → KPIMON** | HTTP | HTTP POST | 8081 | ✅ 運行中 |
-| **KPIMON → Redis** | TCP | Redis Protocol | 6379 | ✅ 運行中 |
-| **KPIMON → Prometheus** | HTTP | Pull (Scrape) | 8080 | ✅ 運行中 |
-| **KPIMON → InfluxDB** | HTTP | InfluxDB Line Protocol | 8086 | ⚠️ 可選 |
-| **Web UI → KPIMON** | HTTP (via Proxy) | HTTP GET | 8888→8081 | ✅ 運行中 |
-| **CLI → KPIMON** | HTTP | HTTP GET | 8081 | ✅ 運行中 |
-| **Grafana → Prometheus** | HTTP | PromQL | 9090 | ✅ 運行中 |
-| **Traffic Steering → KPIMON** | SDL | Redis Protocol | 6379 | ✅ 運行中 |
-| **QoE Predictor → KPIMON** | SDL | Redis Protocol | 6379 | ✅ 運行中 |
+| **E2 Sim → KPIMON** | HTTP | HTTP POST | 8081 |  [DONE] 運行中 |
+| **KPIMON → Redis** | TCP | Redis Protocol | 6379 |  [DONE] 運行中 |
+| **KPIMON → Prometheus** | HTTP | Pull (Scrape) | 8080 |  [DONE] 運行中 |
+| **KPIMON → InfluxDB** | HTTP | InfluxDB Line Protocol | 8086 |  [WARN] 可選 |
+| **Web UI → KPIMON** | HTTP (via Proxy) | HTTP GET | 8888→8081 |  [DONE] 運行中 |
+| **CLI → KPIMON** | HTTP | HTTP GET | 8081 |  [DONE] 運行中 |
+| **Grafana → Prometheus** | HTTP | PromQL | 9090 |  [DONE] 運行中 |
+| **Traffic Steering → KPIMON** | SDL | Redis Protocol | 6379 |  [DONE] 運行中 |
+| **QoE Predictor → KPIMON** | SDL | Redis Protocol | 6379 |  [DONE] 運行中 |
 
 ### 6.2 未來遷移計畫（RMR）
 
 | 通訊對象 | 當前 | 未來 | 遷移複雜度 |
 |---------|------|------|-----------|
-| **E2 Sim → KPIMON** | HTTP | E2AP + RMR | ⭐⭐⭐⭐ |
-| **KPIMON → Redis** | Direct | Via SDL (DBaaS) | ⭐⭐ |
-| **xApp ↔ xApp** | SDL | RMR | ⭐⭐⭐ |
+| **E2 Sim → KPIMON** | HTTP | E2AP + RMR |  |
+| **KPIMON → Redis** | Direct | Via SDL (DBaaS) |  |
+| **xApp ↔ xApp** | SDL | RMR |  |
 
 ### 6.3 性能指標
 
@@ -1070,36 +1070,36 @@ xapp.rmr_free(sbuf)
 │ KPIMON xApp 三種主要通訊方式                                 │
 └─────────────────────────────────────────────────────────────┘
 
-1️⃣ 數據接收（Input）
+1. 數據接收（Input）
    HTTP (當前)    E2 Simulator → KPIMON Flask API (port 8081)
    RMR (未來)     E2Term → KPIMON RMR Handler (port 4560)
 
-2️⃣ 數據儲存（Storage）
+2. 數據儲存（Storage）
    Redis          KPIMON → Redis Cluster (4 層 key 結構)
    Prometheus     KPIMON → Prometheus (Metrics export)
    InfluxDB       KPIMON → InfluxDB (可選，長期儲存)
 
-3️⃣ 數據查詢（Output）
+3. 數據查詢（Output）
    Web UI         Browser → proxy-server.py → KPIMON API
    CLI            Bash → curl → KPIMON API
    Grafana        Grafana → PromQL → Prometheus
 
-4️⃣ xApp 互動（Inter-xApp）
+4. xApp 互動（Inter-xApp）
    SDL (當前)     xApps ↔ Redis (via ricxappframe.xapp_sdl)
    RMR (未來)     xApps ↔ RTMgr → RMR routing
 ```
 
 ### 關鍵設計
 
-- ✅ **雙接口支援**: HTTP (測試) + RMR (生產)
-- ✅ **多層儲存**: Redis (即時) + Prometheus (監控) + InfluxDB (長期)
-- ✅ **SDL 互動**: 透過 Redis 與其他 xApp 共享 KPI
-- ✅ **CORS 解決**: proxy-server.py 解決前端跨域問題
-- ✅ **向後相容**: beam_id 預設值 'n/a'
+-  [DONE] **雙接口支援**: HTTP (測試) + RMR (生產)
+-  [DONE] **多層儲存**: Redis (即時) + Prometheus (監控) + InfluxDB (長期)
+-  [DONE] **SDL 互動**: 透過 Redis 與其他 xApp 共享 KPI
+-  [DONE] **CORS 解決**: proxy-server.py 解決前端跨域問題
+-  [DONE] **向後相容**: beam_id 預設值 'n/a'
 
 ---
 
-**文檔完成！** 🎉
+**文檔完成！**  
 
 **下一步**:
 - 啟用 RMR 模式: `kubectl set env deployment/kpimon ENABLE_RMR=true`
