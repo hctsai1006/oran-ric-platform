@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Traffic Steering xApp
-Implements policy-based handover decisions for O-RAN
+Traffic Steering xApp - O-RAN SC Release J
+Implements policy-based handover decisions with dual-path redundancy (RMR + HTTP)
 """
 
+import sys
+import os
 import json
 import time
 import logging
@@ -12,10 +14,16 @@ from dataclasses import dataclass
 from threading import Thread
 from flask import Flask, jsonify, Response, request
 
-from ricxappframe.xapp_frame import RMRXapp, rmr
+# Add common library path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../common'))
+
+from ricxappframe.xapp_frame import rmr
 from ricxappframe.xapp_sdl import SDLWrapper
 from mdclogpy import Logger
 from prometheus_client import Counter, Gauge, generate_latest, CONTENT_TYPE_LATEST
+
+# Import dual-path messenger
+from dual_path_messenger import DualPathMessenger, EndpointConfig, CommunicationPath
 
 # Configure logging
 logger = Logger(name="traffic_steering_xapp")
@@ -79,14 +87,28 @@ class HandoverPolicy:
 
 class TrafficSteeringXapp:
     """
-    Traffic Steering xApp implementation
+    Traffic Steering xApp implementation - O-RAN SC Release J
+    Features:
+    - Dual-path communication (RMR primary, HTTP fallback)
+    - Automatic failover and recovery
+    - Comprehensive monitoring and logging
     """
 
     def __init__(self, config_path: str = "/app/config/config.json"):
         """Initialize xApp"""
         self.config = self._load_config(config_path)
-        self.xapp = None
         self.running = False
+
+        # Initialize dual-path messenger
+        self.messenger = DualPathMessenger(
+            xapp_name="traffic-steering",
+            rmr_port=self.config.get('rmr_port', 4560),
+            message_handler=self._handle_message_internal,
+            config=self.config.get('dual_path', {})
+        )
+
+        # Register HTTP fallback endpoints for other xApps
+        self._register_endpoints()
 
         # Initialize SDL
         self.sdl = SDLWrapper(use_fake_sdl=False)
@@ -110,7 +132,35 @@ class TrafficSteeringXapp:
         self.app = Flask(__name__)
         self._setup_routes()
 
-        logger.info("Traffic Steering xApp initialized")
+        logger.info("Traffic Steering xApp initialized with dual-path communication")
+
+    def _register_endpoints(self):
+        """Register HTTP fallback endpoints for peer xApps"""
+        # Register QoE Predictor endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="qoe-predictor",
+            namespace="ricxapp",
+            http_port=8090,
+            rmr_port=4570
+        ))
+
+        # Register RC xApp endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="ran-control",
+            namespace="ricxapp",
+            http_port=8100,
+            rmr_port=4580
+        ))
+
+        # Register E2 Term endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="service-ricplt-e2term-rmr-alpha",
+            namespace="ricplt",
+            http_port=38000,
+            rmr_port=38000
+        ))
+
+        logger.info("Registered HTTP fallback endpoints")
 
     def _load_config(self, config_path: str) -> dict:
         """Load configuration from file"""
@@ -138,7 +188,22 @@ class TrafficSteeringXapp:
 
         @self.app.route('/ric/v1/health/ready', methods=['GET'])
         def health_ready():
-            return jsonify({"status": "ready"}), 200
+            # Include dual-path health in readiness
+            health_summary = self.messenger.get_health_summary()
+            rmr_healthy = health_summary['rmr']['status'] == 'healthy'
+            http_available = health_summary['http']['status'] in ['healthy', 'degraded']
+
+            ready = rmr_healthy or http_available
+
+            return jsonify({
+                "status": "ready" if ready else "not_ready",
+                "communication_health": health_summary
+            }), 200 if ready else 503
+
+        @self.app.route('/ric/v1/health/paths', methods=['GET'])
+        def health_paths():
+            """Detailed communication path health status"""
+            return jsonify(self.messenger.get_health_summary()), 200
 
         @self.app.route('/ric/v1/metrics', methods=['GET'])
         def metrics():
@@ -164,10 +229,9 @@ class TrafficSteeringXapp:
                 logger.error(f"Error processing E2 indication: {e}")
                 return jsonify({"error": str(e)}), 500
 
-    def _handle_message(self, summary: dict, sbuf):
-        """Handle incoming RMR messages"""
-
-        mtype = summary['message type']
+    def _handle_message_internal(self, xapp, summary: dict, sbuf):
+        """Internal message handler for DualPathMessenger"""
+        mtype = summary.get(rmr.RMR_MS_MSG_TYPE, summary.get('message type', 0))
         logger.debug(f"Received message type: {mtype}")
 
         try:
@@ -191,9 +255,14 @@ class TrafficSteeringXapp:
 
         # Parse E2SM-KPM indication
         try:
-            payload = json.loads(summary['payload'])
-        except:
-            logger.error("Failed to parse indication payload")
+            # Extract payload from RMR buffer
+            if sbuf:
+                payload_bytes = rmr.get_payload(sbuf)
+                payload = json.loads(payload_bytes.decode('utf-8'))
+            else:
+                payload = json.loads(summary.get('payload', '{}'))
+        except Exception as e:
+            logger.error(f"Failed to parse indication payload: {e}")
             return
 
         # Extract UE metrics
@@ -330,7 +399,7 @@ class TrafficSteeringXapp:
     def _get_target_cell(self, metrics: UEMetrics) -> Optional[str]:
         """Query QoE Predictor for best target cell"""
 
-        # Send RMR message to QoE Predictor xApp
+        # Send message to QoE Predictor xApp (with HTTP fallback)
         request = {
             "ue_id": metrics.ue_id,
             "serving_cell": metrics.serving_cell,
@@ -340,7 +409,11 @@ class TrafficSteeringXapp:
         # Message type for QoE prediction request
         QOE_PRED_REQ = 30000
 
-        self._send_message(QOE_PRED_REQ, json.dumps(request))
+        self._send_message(
+            QOE_PRED_REQ,
+            json.dumps(request),
+            destination="qoe-predictor"
+        )
 
         # For now, return a mock target cell
         # In production, this would parse the QoE Predictor response
@@ -357,9 +430,13 @@ class TrafficSteeringXapp:
             "action": "handover"
         }
 
-        # Send to RC xApp
+        # Send to RC xApp (with HTTP fallback)
         RC_XAPP_REQ = 40000
-        self._send_message(RC_XAPP_REQ, json.dumps(control_msg))
+        self._send_message(
+            RC_XAPP_REQ,
+            json.dumps(control_msg),
+            destination="ran-control"
+        )
         logger.info(f"Handover command sent for UE {ue_id} to {target_cell}")
 
     def _handle_subscription_response(self, summary: dict, sbuf):
@@ -425,12 +502,26 @@ class TrafficSteeringXapp:
 
         self._send_message(A1_POLICY_RESP, json.dumps(response))
 
-    def _send_message(self, msg_type: int, payload: str):
-        """Send RMR message"""
-        if self.xapp:
-            success = self.xapp.rmr_send(payload.encode(), msg_type)
-            if not success:
-                logger.error(f"Failed to send message type {msg_type}")
+    def _send_message(self, msg_type: int, payload: str, destination: Optional[str] = None):
+        """
+        Send message via dual-path (RMR primary, HTTP fallback)
+
+        Args:
+            msg_type: RMR message type
+            payload: Message payload (JSON string or dict)
+            destination: Destination service name (for HTTP fallback)
+        """
+        success = self.messenger.send_message(
+            msg_type=msg_type,
+            payload=payload,
+            destination=destination
+        )
+
+        if not success:
+            logger.error(
+                f"Failed to send message type {msg_type} to {destination or 'routed'} "
+                f"via both paths"
+            )
 
     def create_subscriptions(self):
         """Create E2 subscriptions for KPM metrics"""
@@ -479,41 +570,56 @@ class TrafficSteeringXapp:
             logger.info(f"Active UEs: {len(self.ue_metrics)}, Policies: {len(self.policies)}")
 
     def start(self):
-        """Start the xApp"""
+        """Start the xApp with dual-path communication"""
 
-        logger.info("Starting Traffic Steering xApp")
+        logger.info("Starting Traffic Steering xApp (Release J - Dual-Path)")
         self.running = True
 
         # Start Flask health check server in background thread
-        flask_thread = Thread(target=lambda: self.app.run(host='0.0.0.0', port=8081))
+        http_port = self.config.get('http_port', 8081)
+        flask_thread = Thread(
+            target=lambda: self.app.run(host='0.0.0.0', port=http_port)
+        )
         flask_thread.daemon = True
         flask_thread.start()
 
-        # Initialize RMR xApp
-        self.xapp = RMRXapp(self._handle_message,
-                            rmr_port=4560,
-                            use_fake_sdl=False)
+        # Initialize RMR through DualPathMessenger
+        rmr_initialized = self.messenger.initialize_rmr(use_fake_sdl=False)
+
+        if not rmr_initialized:
+            logger.warning(
+                "RMR initialization failed, will rely on HTTP fallback path"
+            )
+
+        # Start dual-path messenger (includes health checks)
+        self.messenger.start()
 
         # Start health check thread
         health_thread = Thread(target=self._health_check_loop)
         health_thread.daemon = True
         health_thread.start()
 
-        # Small delay to ensure RMR is ready
+        # Small delay to ensure messenger is ready
         time.sleep(2)
 
         # Create E2 subscriptions
         self.create_subscriptions()
 
-        # Start RMR message loop
-        self.xapp.run()
+        # Start RMR message loop if available
+        if self.messenger.rmr_xapp:
+            logger.info("Starting RMR message loop")
+            self.messenger.rmr_xapp.run()
+        else:
+            logger.info("Running in HTTP-only mode")
+            # Keep main thread alive
+            while self.running:
+                time.sleep(1)
 
     def stop(self):
         """Stop the xApp"""
         logger.info("Stopping Traffic Steering xApp...")
         self.running = False
-        if self.xapp:
-            self.xapp.stop()
+        self.messenger.stop()
         logger.info("Traffic Steering xApp stopped")
 
 def main():

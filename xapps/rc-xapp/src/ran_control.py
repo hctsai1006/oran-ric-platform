@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
 RAN Control xApp - RAN Control and Optimization Application
-O-RAN Release J compliant implementation
-Version: 1.0.0
+O-RAN Release J compliant implementation with dual-path redundancy (RMR + HTTP)
+Version: 1.1.0
 """
 
+import sys
+import os
 import json
 import time
 import logging
@@ -15,11 +17,18 @@ from datetime import datetime
 from dataclasses import dataclass
 from enum import Enum
 import numpy as np
-from ricxappframe.xapp_frame import RMRXapp, rmr
+
+# Add common library path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../common'))
+
+from ricxappframe.xapp_frame import rmr
 from mdclogpy import Logger
 from flask import Flask, request, jsonify, Response
 import redis
 from prometheus_client import Counter, Gauge, generate_latest, CONTENT_TYPE_LATEST
+
+# Import dual-path messenger
+from dual_path_messenger import DualPathMessenger, EndpointConfig, CommunicationPath
 
 # Configure logging
 logger = Logger(name="RAN_CONTROL")
@@ -76,23 +85,37 @@ class ControlAction:
 
 class RANController:
     """
-    RAN Control xApp implementation
+    RAN Control xApp implementation - O-RAN Release J
     Performs RAN control actions via E2SM-RC v2.0
+    Features:
+    - Dual-path communication (RMR primary, HTTP fallback)
+    - Automatic failover and recovery
+    - Comprehensive monitoring and logging
     """
-    
+
     def __init__(self, config_path: str = "/app/config/config.json"):
         """Initialize RAN Control xApp"""
         self.config = self._load_config(config_path)
-        self.xapp = None
         self.running = False
         self.control_queue = []
         self.active_controls = {}
         self.control_policies = {}
         self.network_state = {}
-        
+
+        # Initialize dual-path messenger
+        self.messenger = DualPathMessenger(
+            xapp_name="ran-control",
+            rmr_port=self.config.get('rmr_port', 4580),
+            message_handler=self._handle_message_internal,
+            config=self.config.get('dual_path', {})
+        )
+
+        # Register HTTP fallback endpoints
+        self._register_endpoints()
+
         # Initialize Redis connection
         self._init_redis()
-        
+
         # Control optimization algorithms
         self.optimizers = {
             'handover': self._optimize_handover,
@@ -101,7 +124,7 @@ class RANController:
             'slice': self._optimize_slice_allocation,
             'power': self._optimize_power_control
         }
-        
+
         # Performance metrics
         self.metrics = {
             'control_actions_sent': 0,
@@ -111,9 +134,37 @@ class RANController:
             'resource_optimizations': 0,
             'slice_reconfigurations': 0
         }
-        
-        logger.info(f"RAN Control xApp initialized with config: {self.config}")
-    
+
+        logger.info(f"RAN Control xApp initialized with dual-path communication")
+
+    def _register_endpoints(self):
+        """Register HTTP fallback endpoints for peer components"""
+        # Register E2 Term endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="service-ricplt-e2term-rmr-alpha",
+            namespace="ricplt",
+            http_port=38000,
+            rmr_port=38000
+        ))
+
+        # Register Traffic Steering endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="traffic-steering",
+            namespace="ricxapp",
+            http_port=8081,
+            rmr_port=4560
+        ))
+
+        # Register KPIMON endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="kpimon",
+            namespace="ricxapp",
+            http_port=8080,
+            rmr_port=4560
+        ))
+
+        logger.info("Registered HTTP fallback endpoints")
+
     def _load_config(self, config_path: str) -> Dict:
         """Load configuration from JSON file"""
         try:
@@ -187,72 +238,80 @@ class RANController:
             self.redis_client = None
     
     def start(self):
-        """Start the xApp"""
-        logger.info("Starting RAN Control xApp...")
-        
-        # Initialize RMR xApp
-        # Fixed: Changed from RmrXapp to RMRXapp (correct class name per official docs)
-        # Added use_fake_sdl parameter as required by ricxappframe 3.2.2
-        self.xapp = RMRXapp(self._handle_message,
-                            rmr_port=self.config.get('rmr_port', 4580),
-                            use_fake_sdl=False)
+        """Start the xApp with dual-path communication"""
+        logger.info("Starting RAN Control xApp (Release J - Dual-Path)...")
         self.running = True
-        
+
+        # Initialize RMR through DualPathMessenger
+        rmr_initialized = self.messenger.initialize_rmr(use_fake_sdl=False)
+
+        if not rmr_initialized:
+            logger.warning(
+                "RMR initialization failed, will rely on HTTP fallback path"
+            )
+
+        # Start dual-path messenger (includes health checks)
+        self.messenger.start()
+
         # Start control processor thread
         control_thread = threading.Thread(target=self._control_processor)
         control_thread.daemon = True
         control_thread.start()
-        
+
         # Start optimization thread
         optimization_thread = threading.Thread(target=self._optimization_loop)
         optimization_thread.daemon = True
         optimization_thread.start()
-        
+
         # Start policy manager thread
         policy_thread = threading.Thread(target=self._policy_manager)
         policy_thread.daemon = True
         policy_thread.start()
-        
+
         # Start Flask API in separate thread
         api_thread = threading.Thread(target=self._start_api)
         api_thread.daemon = True
         api_thread.start()
-        
+
         # Run the xApp
         logger.info("RAN Control xApp started successfully")
-        self.xapp.run(thread=True)
-        
+
+        # Start RMR message loop if available
+        if self.messenger.rmr_xapp:
+            logger.info("Starting RMR message loop")
+            self.messenger.rmr_xapp.run(thread=True)
+        else:
+            logger.info("Running in HTTP-only mode")
+
         # Keep main thread alive
         while self.running:
             time.sleep(1)
     
-    def _handle_message(self, rmr_xapp, summary, sbuf):
-        """Handle incoming RMR messages
+    def _handle_message_internal(self, xapp, summary, sbuf):
+        """Internal message handler for DualPathMessenger"""
+        msg_type = summary.get(rmr.RMR_MS_MSG_TYPE, summary.get('message type', 0))
 
-        Fixed: Updated function signature to match ricxappframe 3.2.2 API
-        - Changed xapp -> rmr_xapp (per official docs)
-        - Changed payload -> sbuf (message buffer)
-        - Added rmr_free() to properly release buffer
-        """
-        msg_type = summary[rmr.RMR_MS_MSG_TYPE]
-
-        # Extract payload from buffer (returns bytes, need to decode)
-        payload_bytes = rmr.get_payload(sbuf)
-        payload = payload_bytes.decode('utf-8') if payload_bytes else ""
-
-        if msg_type == RIC_CONTROL_ACK:
-            self._handle_control_ack(payload)
-        elif msg_type == RIC_CONTROL_FAILURE:
-            self._handle_control_failure(payload)
-        elif msg_type == RIC_INDICATION:
-            self._handle_indication(payload)
-        elif msg_type == A1_POLICY_REQ:
-            self._handle_policy_request(summary, payload)
+        # Extract payload from buffer
+        if sbuf:
+            payload_bytes = rmr.get_payload(sbuf)
+            payload = payload_bytes.decode('utf-8') if payload_bytes else ""
         else:
-            logger.debug(f"Received message type: {msg_type}")
+            payload = summary.get('payload', '{}')
 
-        # Free the message buffer (required by ricxappframe API)
-        rmr_xapp.rmr_free(sbuf)
+        try:
+            if msg_type == RIC_CONTROL_ACK:
+                self._handle_control_ack(payload)
+            elif msg_type == RIC_CONTROL_FAILURE:
+                self._handle_control_failure(payload)
+            elif msg_type == RIC_INDICATION:
+                self._handle_indication(payload)
+            elif msg_type == A1_POLICY_REQ:
+                self._handle_policy_request(summary, payload)
+            else:
+                logger.debug(f"Received message type: {msg_type}")
+
+        except Exception as e:
+            logger.error(f"Error handling message: {e}")
     
     def _handle_control_ack(self, payload):
         """Handle control acknowledgment"""
@@ -746,23 +805,52 @@ class RANController:
                 logger.error(f"Error in policy manager: {e}")
                 time.sleep(10)
     
-    def _send_message(self, msg_type: int, payload: str):
-        """Send RMR message"""
-        if self.xapp:
-            success = self.xapp.rmr_send(payload.encode(), msg_type)
-            if not success:
-                logger.error(f"Failed to send message type {msg_type}")
+    def _send_message(self, msg_type: int, payload: str, destination: Optional[str] = None):
+        """
+        Send message via dual-path (RMR primary, HTTP fallback)
+
+        Args:
+            msg_type: RMR message type
+            payload: Message payload (JSON string or dict)
+            destination: Destination service name (for HTTP fallback)
+        """
+        success = self.messenger.send_message(
+            msg_type=msg_type,
+            payload=payload,
+            destination=destination
+        )
+
+        if not success:
+            logger.error(
+                f"Failed to send message type {msg_type} to {destination or 'routed'} "
+                f"via both paths"
+            )
     
     def _start_api(self):
         """Start Flask REST API"""
-        
+
         @app.route('/health/alive', methods=['GET'])
         def health_alive():
             return jsonify({'status': 'alive'}), 200
-        
+
         @app.route('/health/ready', methods=['GET'])
         def health_ready():
-            return jsonify({'status': 'ready'}), 200
+            # Include dual-path health in readiness
+            health_summary = self.messenger.get_health_summary()
+            rmr_healthy = health_summary['rmr']['status'] == 'healthy'
+            http_available = health_summary['http']['status'] in ['healthy', 'degraded']
+
+            ready = rmr_healthy or http_available
+
+            return jsonify({
+                "status": "ready" if ready else "not_ready",
+                "communication_health": health_summary
+            }), 200 if ready else 503
+
+        @app.route('/health/paths', methods=['GET'])
+        def health_paths():
+            """Detailed communication path health status"""
+            return jsonify(self.messenger.get_health_summary()), 200
         
         @app.route('/control/trigger', methods=['POST'])
         def trigger_control():

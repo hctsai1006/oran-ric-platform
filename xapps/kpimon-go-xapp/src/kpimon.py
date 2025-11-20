@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
 KPIMON xApp - KPI Monitoring Application
-O-RAN Release J compliant implementation
-Version: 1.0.0
+O-RAN Release J compliant implementation with dual-path redundancy (RMR + HTTP)
+Version: 1.1.0
 """
 
+import sys
+import os
 import json
 import time
 import logging
@@ -14,12 +16,19 @@ from datetime import datetime
 import redis
 import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
-from ricxappframe.xapp_frame import RMRXapp, rmr
+
+# Add common library path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../common'))
+
+from ricxappframe.xapp_frame import rmr
 from ricxappframe.xapp_sdl import SDLWrapper
 from mdclogpy import Logger
 from prometheus_client import Counter, Gauge, Histogram, start_http_server
 from flask import Flask, jsonify, request
 import numpy as np
+
+# Import dual-path messenger
+from dual_path_messenger import DualPathMessenger, EndpointConfig, CommunicationPath
 
 # Import beam query API
 from beam_query_api import beam_api, init_beam_service
@@ -43,19 +52,33 @@ RIC_SUB_DEL_RESP = 12013
 
 class KPIMonitor:
     """
-    KPI Monitor xApp implementation
+    KPI Monitor xApp implementation - O-RAN Release J
     Collects and analyzes KPIs from E2 nodes via E2SM-KPM v3.0
+    Features:
+    - Dual-path communication (RMR primary, HTTP fallback)
+    - Automatic failover and recovery
+    - Comprehensive monitoring and logging
     """
-    
+
     def __init__(self, config_path: str = "/app/config/config.json"):
         """Initialize KPIMON xApp"""
         self.config = self._load_config(config_path)
-        self.xapp = None
         self.sdl = SDLWrapper(use_fake_sdl=False)
         self.running = False
         self.subscriptions = {}
         self.kpi_buffer = []
-        
+
+        # Initialize dual-path messenger
+        self.messenger = DualPathMessenger(
+            xapp_name="kpimon",
+            rmr_port=self.config.get('rmr_port', 4560),
+            message_handler=self._handle_message_internal,
+            config=self.config.get('dual_path', {})
+        )
+
+        # Register HTTP fallback endpoints
+        self._register_endpoints()
+
         # Initialize data stores
         self._init_redis()
         self._init_influxdb()
@@ -94,8 +117,20 @@ class KPIMonitor:
         # Register beam query API blueprint
         self.flask_app.register_blueprint(beam_api)
 
-        logger.info(f"KPIMON xApp initialized with config: {self.config}")
-    
+        logger.info(f"KPIMON xApp initialized with dual-path communication")
+
+    def _register_endpoints(self):
+        """Register HTTP fallback endpoints"""
+        # Register E2 Term endpoint
+        self.messenger.register_endpoint(EndpointConfig(
+            service_name="service-ricplt-e2term-rmr-alpha",
+            namespace="ricplt",
+            http_port=38000,
+            rmr_port=38000
+        ))
+
+        logger.info("Registered HTTP fallback endpoints")
+
     def _load_config(self, config_path: str) -> Dict:
         """Load configuration from JSON file"""
         try:
@@ -164,9 +199,22 @@ class KPIMonitor:
 
         @self.flask_app.route('/health/ready', methods=['GET'])
         def health_ready():
-            # Simplified: if Flask is running, the xApp is ready
-            # This follows the pattern used in Traffic Steering and other xApps
-            return jsonify({"status": "ready"}), 200
+            # Include dual-path health in readiness
+            health_summary = self.messenger.get_health_summary()
+            rmr_healthy = health_summary['rmr']['status'] == 'healthy'
+            http_available = health_summary['http']['status'] in ['healthy', 'degraded']
+
+            ready = rmr_healthy or http_available
+
+            return jsonify({
+                "status": "ready" if ready else "not_ready",
+                "communication_health": health_summary
+            }), 200 if ready else 503
+
+        @self.flask_app.route('/health/paths', methods=['GET'])
+        def health_paths():
+            """Detailed communication path health status"""
+            return jsonify(self.messenger.get_health_summary()), 200
 
         @self.flask_app.route('/e2/indication', methods=['POST'])
         def e2_indication():
@@ -195,8 +243,9 @@ class KPIMonitor:
                 return jsonify({"error": str(e)}), 500
 
     def start(self):
-        """Start the xApp"""
-        logger.info("Starting KPIMON xApp...")
+        """Start the xApp with dual-path communication"""
+        logger.info("Starting KPIMON xApp (Release J - Dual-Path)...")
+        self.running = True
 
         # Initialize beam query service
         init_beam_service(
@@ -222,63 +271,70 @@ class KPIMonitor:
         flask_thread.start()
         logger.info("Flask server started on port 8081 (health checks + beam query API)")
 
-        # Initialize RMR xApp
-        # Fixed: Changed from RmrXapp to RMRXapp (correct class name per official docs)
-        # Added use_fake_sdl parameter as required by ricxappframe 3.2.2
-        self.xapp = RMRXapp(self._handle_message,
-                            rmr_port=self.config.get('rmr_port', 4560),
-                            use_fake_sdl=False)
-        self.running = True
-        
+        # Initialize RMR through DualPathMessenger
+        rmr_initialized = self.messenger.initialize_rmr(use_fake_sdl=False)
+
+        if not rmr_initialized:
+            logger.warning(
+                "RMR initialization failed, will rely on HTTP fallback path"
+            )
+
+        # Start dual-path messenger
+        self.messenger.start()
+
         # Start subscription thread
         sub_thread = threading.Thread(target=self._subscription_manager)
         sub_thread.daemon = True
         sub_thread.start()
-        
+
         # Start KPI processor thread
         processor_thread = threading.Thread(target=self._kpi_processor)
         processor_thread.daemon = True
         processor_thread.start()
-        
+
         # Run the xApp
         logger.info("KPIMON xApp started successfully")
-        self.xapp.run(thread=True)
-        
+
+        # Start RMR message loop if available
+        if self.messenger.rmr_xapp:
+            logger.info("Starting RMR message loop")
+            self.messenger.rmr_xapp.run(thread=True)
+        else:
+            logger.info("Running in HTTP-only mode")
+
         # Keep main thread alive
         while self.running:
             time.sleep(1)
     
-    def _handle_message(self, rmr_xapp, summary, sbuf):
-        """Handle incoming RMR messages
-
-        Fixed: Updated function signature to match ricxappframe 3.2.2 API
-        - Changed xapp -> rmr_xapp (per official docs)
-        - Changed payload -> sbuf (message buffer)
-        - Added rmr_free() to properly release buffer
-        """
+    def _handle_message_internal(self, xapp, summary, sbuf):
+        """Internal message handler for DualPathMessenger"""
         MESSAGES_RECEIVED.inc()
 
-        msg_type = summary[rmr.RMR_MS_MSG_TYPE]
+        msg_type = summary.get(rmr.RMR_MS_MSG_TYPE, summary.get('message type', 0))
         logger.debug(f"Received message type: {msg_type}")
 
-        # Extract payload from buffer (returns bytes, need to decode)
-        payload_bytes = rmr.get_payload(sbuf)
-        payload = payload_bytes.decode('utf-8') if payload_bytes else ""
+        # Extract payload from buffer
+        if sbuf:
+            payload_bytes = rmr.get_payload(sbuf)
+            payload = payload_bytes.decode('utf-8') if payload_bytes else ""
+        else:
+            payload = summary.get('payload', '{}')
 
-        with PROCESSING_TIME.time():
-            if msg_type == RIC_INDICATION:
-                self._handle_indication(payload)
-            elif msg_type == RIC_SUB_RESP:
-                self._handle_subscription_response(payload)
-            elif msg_type == RIC_SUB_DEL_RESP:
-                self._handle_subscription_delete_response(payload)
-            else:
-                logger.warning(f"Unknown message type: {msg_type}")
+        try:
+            with PROCESSING_TIME.time():
+                if msg_type == RIC_INDICATION:
+                    self._handle_indication(payload)
+                elif msg_type == RIC_SUB_RESP:
+                    self._handle_subscription_response(payload)
+                elif msg_type == RIC_SUB_DEL_RESP:
+                    self._handle_subscription_delete_response(payload)
+                else:
+                    logger.warning(f"Unknown message type: {msg_type}")
 
-        MESSAGES_PROCESSED.inc()
+            MESSAGES_PROCESSED.inc()
 
-        # Free the message buffer (required by ricxappframe API)
-        rmr_xapp.rmr_free(sbuf)
+        except Exception as e:
+            logger.error(f"Error handling message: {e}")
     
     def _handle_indication(self, payload):
         """Handle RIC Indication messages containing KPIs with beam_id support"""
@@ -556,12 +612,19 @@ class KPIMonitor:
 
         logger.warning(f"Anomaly detected in cell {cell_id}, beam {beam_id}: {anomalies}")
     
-    def _send_message(self, msg_type: int, payload: str):
-        """Send RMR message"""
-        if self.xapp:
-            success = self.xapp.rmr_send(payload.encode(), msg_type)
-            if not success:
-                logger.error(f"Failed to send message type {msg_type}")
+    def _send_message(self, msg_type: int, payload: str, destination: str = None):
+        """Send message via dual-path (RMR primary, HTTP fallback)"""
+        success = self.messenger.send_message(
+            msg_type=msg_type,
+            payload=payload,
+            destination=destination
+        )
+
+        if not success:
+            logger.error(
+                f"Failed to send message type {msg_type} to {destination or 'routed'} "
+                f"via both paths"
+            )
     
     def stop(self):
         """Stop the xApp"""

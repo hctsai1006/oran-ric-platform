@@ -1,0 +1,194 @@
+# Prometheus Alert Rules for Dual-Path Communication
+# O-RAN SC Release J
+#
+# These alerts monitor the health and performance of the dual-path
+# communication system (RMR + HTTP redundancy)
+#
+# To apply these rules:
+#   kubectl create configmap dual-path-alerts \
+#     --from-file=dual-path-alerts.yml \
+#     -n ricplt
+#
+# Then configure Prometheus to load this ConfigMap
+
+groups:
+  - name: dual_path_communication
+    interval: 30s
+    rules:
+      # Alert when failover happens too frequently
+      - alert: FrequentDualPathFailover
+        expr: increase(dual_path_failover_events_total[5m]) > 3
+        for: 5m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "頻繁的雙路徑故障切換"
+          description: "xApp {{ $labels.app }} ({{ $labels.xapp_name }}) 在 5 分鐘內發生了 {{ $value }} 次路徑切換，可能存在網絡或配置問題"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+
+      # Alert when stuck on HTTP path for too long
+      - alert: DualPathStuckOnHTTP
+        expr: dual_path_active_path == 1
+        for: 15m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "長時間使用 HTTP 備用路徑"
+          description: "xApp {{ $labels.app }} ({{ $labels.xapp_name }}) 已使用 HTTP 路徑超過 15 分鐘，RMR 主路徑可能存在問題"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查 RMR 路由服務和網絡連接"
+
+      # Alert on high message failure rate
+      - alert: HighMessageFailureRate
+        expr: |
+          100 * (
+            rate(dual_path_messages_sent_total{result="failure"}[5m]) /
+            rate(dual_path_messages_sent_total[5m])
+          ) > 10
+        for: 5m
+        labels:
+          severity: critical
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "消息失敗率過高"
+          description: "xApp {{ $labels.app }} 在 {{ $labels.path }} 路徑上的消息失敗率為 {{ $value | humanize }}%，遠超正常水平"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查目標服務的健康狀態和網絡連接"
+
+      # Alert when RMR path is unhealthy
+      - alert: RMRPathUnhealthy
+        expr: dual_path_rmr_health_status == 0
+        for: 5m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "RMR 主路徑不健康"
+          description: "xApp {{ $labels.app }} 的 RMR 路徑處於不健康狀態超過 5 分鐘"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查 RMR 路由服務 (rtmgr) 和 RMR 端口連接"
+
+      # Alert when HTTP path is also unhealthy (critical - both paths down)
+      - alert: HTTPPathUnhealthy
+        expr: dual_path_http_health_status == 0
+        for: 5m
+        labels:
+          severity: critical
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "HTTP 備用路徑不健康"
+          description: "xApp {{ $labels.app }} 的 HTTP 路徑處於不健康狀態超過 5 分鐘"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查目標服務的 HTTP 端點和網絡連接"
+
+      # Alert when both paths are unhealthy (catastrophic)
+      - alert: BothPathsUnhealthy
+        expr: |
+          (dual_path_rmr_health_status == 0) and
+          (dual_path_http_health_status == 0)
+        for: 2m
+        labels:
+          severity: critical
+          component: dual-path-communication
+          team: ric-platform
+          oncall: "true"
+        annotations:
+          summary: "⚠️ 雙路徑全部失效"
+          description: "xApp {{ $labels.app }} 的 RMR 和 HTTP 路徑同時處於不健康狀態，無法進行通訊！"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "立即檢查網絡連接、目標服務狀態和 xApp 日誌"
+
+      # Alert on high latency
+      - alert: HighMessageLatency
+        expr: |
+          (
+            rate(dual_path_message_latency_seconds_sum[5m]) /
+            rate(dual_path_message_latency_seconds_count[5m])
+          ) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "消息延遲過高"
+          description: "xApp {{ $labels.app }} 在 {{ $labels.path }} 路徑上的平均延遲為 {{ $value | humanize }}s，超過正常水平"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查網絡延遲和目標服務性能"
+
+      # Alert when consecutive failures are high (approaching failover threshold)
+      - alert: ApproachingFailoverThreshold
+        expr: dual_path_consecutive_failures >= 2
+        for: 1m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "接近故障切換閾值"
+          description: "xApp {{ $labels.app }} 在 {{ $labels.path }} 路徑上已有 {{ $value }} 次連續失敗（閾值：3）"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "監控狀態，可能即將觸發路徑切換"
+
+      # Alert when no endpoints are registered
+      - alert: NoEndpointsRegistered
+        expr: dual_path_registered_endpoints == 0
+        for: 5m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "未註冊任何端點"
+          description: "xApp {{ $labels.app }} 未註冊任何通訊端點，可能無法正常工作"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查 xApp 配置和啟動日誌"
+
+      # Alert when message throughput drops to zero
+      - alert: NoMessageThroughput
+        expr: |
+          rate(dual_path_messages_sent_total[5m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+          component: dual-path-communication
+          team: ric-platform
+        annotations:
+          summary: "消息吞吐量為零"
+          description: "xApp {{ $labels.app }} 在過去 10 分鐘內沒有發送任何消息"
+          dashboard: "http://grafana.ricplt/d/oran-dual-path"
+          recommended_action: "檢查 xApp 是否正常運行，是否有工作負載"
+
+  # Recording rules for better query performance
+  - name: dual_path_recording_rules
+    interval: 30s
+    rules:
+      # Pre-calculate success rate
+      - record: dual_path:message_success_rate:rate5m
+        expr: |
+          100 * (
+            rate(dual_path_messages_sent_total{result="success"}[5m]) /
+            (rate(dual_path_messages_sent_total{result="success"}[5m]) +
+             rate(dual_path_messages_sent_total{result="failure"}[5m]))
+          )
+
+      # Pre-calculate average latency
+      - record: dual_path:message_latency:avg5m
+        expr: |
+          rate(dual_path_message_latency_seconds_sum[5m]) /
+          rate(dual_path_message_latency_seconds_count[5m])
+
+      # Pre-calculate failover rate
+      - record: dual_path:failover_rate:rate5m
+        expr: rate(dual_path_failover_events_total[5m])
+
+      # Pre-calculate total throughput
+      - record: dual_path:message_throughput:rate5m
+        expr: rate(dual_path_messages_sent_total[5m])
