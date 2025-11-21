@@ -12,7 +12,7 @@ import urllib.error
 
 # Configuration
 STATIC_DIR = os.path.dirname(os.path.abspath(__file__))
-BACKEND_API_URL = "http://localhost:8081"
+BACKEND_API_URL = "http://kpimon-beam-api:8081"
 
 
 def application(environ, start_response):

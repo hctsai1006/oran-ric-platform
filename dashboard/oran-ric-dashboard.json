@@ -1,0 +1,520 @@
+{
+  "dashboard": {
+    "title": "O-RAN RIC Platform Overview",
+    "tags": ["oran", "ric", "platform"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Total Pods (ricplt)",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(kube_pod_info{namespace=\"ricplt\"})",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "none"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "stat",
+        "title": "Total Pods (ricxapp)",
+        "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(kube_pod_info{namespace=\"ricxapp\"})",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "none"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "Running Pods (ricplt)",
+        "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(kube_pod_status_phase{namespace=\"ricplt\",phase=\"Running\"})",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "none"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": null, "color": "red"},
+                {"value": 10, "color": "green"}
+              ]
+            },
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Running Pods (ricxapp)",
+        "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "count(kube_pod_status_phase{namespace=\"ricxapp\",phase=\"Running\"})",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "none"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": null, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            },
+            "unit": "short"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "type": "table",
+        "title": "RIC Platform Pods Status (ricplt)",
+        "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "kube_pod_status_phase{namespace=\"ricplt\"}",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "options": {
+          "showHeader": true,
+          "sortBy": [{"displayName": "pod", "desc": false}]
+        },
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": [
+            {
+              "matcher": {"id": "byName", "options": "Value"},
+              "properties": [
+                {
+                  "id": "custom.cellOptions",
+                  "value": {
+                    "type": "color-text"
+                  }
+                },
+                {
+                  "id": "mappings",
+                  "value": [
+                    {"type": "value", "options": {"1": {"text": "Running", "color": "green"}}},
+                    {"type": "value", "options": {"0": {"text": "Not Running", "color": "red"}}}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "instance": true,
+                "job": true,
+                "namespace": true,
+                "phase": false,
+                "uid": true
+              },
+              "indexByName": {},
+              "renameByName": {
+                "pod": "Pod Name",
+                "phase": "Status",
+                "Value": "Running"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "type": "table",
+        "title": "xApps Status (ricxapp)",
+        "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "kube_pod_status_phase{namespace=\"ricxapp\"}",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "options": {
+          "showHeader": true,
+          "sortBy": [{"displayName": "pod", "desc": false}]
+        },
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": [
+            {
+              "matcher": {"id": "byName", "options": "Value"},
+              "properties": [
+                {
+                  "id": "custom.cellOptions",
+                  "value": {
+                    "type": "color-text"
+                  }
+                },
+                {
+                  "id": "mappings",
+                  "value": [
+                    {"type": "value", "options": {"1": {"text": "Running", "color": "green"}}},
+                    {"type": "value", "options": {"0": {"text": "Not Running", "color": "red"}}}
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "__name__": true,
+                "instance": true,
+                "job": true,
+                "namespace": true,
+                "phase": false,
+                "uid": true
+              },
+              "indexByName": {},
+              "renameByName": {
+                "pod": "Pod Name",
+                "phase": "Status",
+                "Value": "Running"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "type": "timeseries",
+        "title": "CPU Usage by Pod (ricplt)",
+        "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"ricplt\",pod!=\"\",container!=\"\"}[5m])) by (pod)",
+            "refId": "A",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "options": {
+          "tooltip": {"mode": "multi"},
+          "legend": {"displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"]}
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "percentunit",
+            "custom": {
+              "axisPlacement": "auto",
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "showPoints": "never",
+              "fillOpacity": 10
+            }
+          }
+        }
+      },
+      {
+        "id": 8,
+        "type": "timeseries",
+        "title": "Memory Usage by Pod (ricplt)",
+        "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(container_memory_working_set_bytes{namespace=\"ricplt\",pod!=\"\",container!=\"\"}) by (pod)",
+            "refId": "A",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "options": {
+          "tooltip": {"mode": "multi"},
+          "legend": {"displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"]}
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "bytes",
+            "custom": {
+              "axisPlacement": "auto",
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "showPoints": "never",
+              "fillOpacity": 10
+            }
+          }
+        }
+      },
+      {
+        "id": 9,
+        "type": "timeseries",
+        "title": "CPU Usage by xApp (ricxapp)",
+        "gridPos": {"x": 0, "y": 20, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"ricxapp\",pod!=\"\",container!=\"\"}[5m])) by (pod)",
+            "refId": "A",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "options": {
+          "tooltip": {"mode": "multi"},
+          "legend": {"displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"]}
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "percentunit",
+            "custom": {
+              "axisPlacement": "auto",
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "showPoints": "never",
+              "fillOpacity": 10
+            }
+          }
+        }
+      },
+      {
+        "id": 10,
+        "type": "timeseries",
+        "title": "Memory Usage by xApp (ricxapp)",
+        "gridPos": {"x": 12, "y": 20, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "sum(container_memory_working_set_bytes{namespace=\"ricxapp\",pod!=\"\",container!=\"\"}) by (pod)",
+            "refId": "A",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "options": {
+          "tooltip": {"mode": "multi"},
+          "legend": {"displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"]}
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "bytes",
+            "custom": {
+              "axisPlacement": "auto",
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "showPoints": "never",
+              "fillOpacity": 10
+            }
+          }
+        }
+      },
+      {
+        "id": 11,
+        "type": "timeseries",
+        "title": "Pod Restart Count (All Namespaces)",
+        "gridPos": {"x": 0, "y": 28, "w": 24, "h": 8},
+        "targets": [
+          {
+            "expr": "kube_pod_container_status_restarts_total{namespace=~\"ricplt|ricxapp\"}",
+            "refId": "A",
+            "legendFormat": "{{namespace}}/{{pod}}/{{container}}"
+          }
+        ],
+        "options": {
+          "tooltip": {"mode": "multi"},
+          "legend": {"displayMode": "table", "placement": "right", "calcs": ["lastNotNull", "max"]}
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "unit": "short",
+            "custom": {
+              "axisPlacement": "auto",
+              "drawStyle": "line",
+              "lineInterpolation": "stepAfter",
+              "showPoints": "never",
+              "fillOpacity": 0
+            }
+          }
+        }
+      },
+      {
+        "id": 12,
+        "type": "stat",
+        "title": "Network Receive (ricplt)",
+        "gridPos": {"x": 0, "y": 36, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"ricplt\"}[5m]))",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "area"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "unit": "Bps"
+          }
+        }
+      },
+      {
+        "id": 13,
+        "type": "stat",
+        "title": "Network Transmit (ricplt)",
+        "gridPos": {"x": 6, "y": 36, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(container_network_transmit_bytes_total{namespace=\"ricplt\"}[5m]))",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "area"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "unit": "Bps"
+          }
+        }
+      },
+      {
+        "id": 14,
+        "type": "stat",
+        "title": "Network Receive (ricxapp)",
+        "gridPos": {"x": 12, "y": 36, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"ricxapp\"}[5m]))",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "area"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "unit": "Bps"
+          }
+        }
+      },
+      {
+        "id": 15,
+        "type": "stat",
+        "title": "Network Transmit (ricxapp)",
+        "gridPos": {"x": 18, "y": 36, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(container_network_transmit_bytes_total{namespace=\"ricxapp\"}[5m]))",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "area"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "unit": "Bps"
+          }
+        }
+      }
+    ]
+  },
+  "folderId": 0,
+  "overwrite": true
+}

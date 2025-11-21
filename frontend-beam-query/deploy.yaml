@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beam-query-ui
+  namespace: ricxapp
+  labels:
+    app: beam-query-ui
+    component: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: beam-query-ui
+  template:
+    metadata:
+      labels:
+        app: beam-query-ui
+        component: ui
+    spec:
+      containers:
+      - name: beam-query-ui
+        image: localhost:5000/beam-query-ui:1.0.1
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8888
+          protocol: TCP
+        env:
+        - name: BACKEND_API_URL
+          value: "http://kpimon:8081"
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8888
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: beam-query-ui
+  namespace: ricxapp
+  labels:
+    app: beam-query-ui
+spec:
+  type: NodePort
+  selector:
+    app: beam-query-ui
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8888
+    targetPort: 8888
+    nodePort: 30888

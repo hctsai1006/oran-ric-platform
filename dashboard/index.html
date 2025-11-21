@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O-RAN RIC Platform Dashboard</title>
+
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-color: #326ce5;
+            --secondary-color: #0d47a1;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --info-color: #2196f3;
+            --dark-bg: #1a1a2e;
+            --card-bg: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-primary);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background: var(--dark-bg);
+            color: white;
+            padding: 20px 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-header .material-icons {
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .nav-link .material-icons {
+            font-size: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 20px;
+            margin: -20px -20px 20px -20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .card-header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 10px 0 5px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-running {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .status-error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Tables */
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background: #f5f7fa;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 6px;
+            padding: 8px 20px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Loading Spinner */
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-250px);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 200px);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>
+                <span class="material-icons">dashboard</span>
+                O-RAN RIC
+            </h3>
+            <small style="color: rgba(255,255,255,0.5); font-size: 12px;">Platform Dashboard</small>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link active" data-tab="overview">
+                    <span class="material-icons">home</span>
+                    <span>Overview</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="monitoring">
+                    <span class="material-icons">bar_chart</span>
+                    <span>Monitoring</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="beam-kpi">
+                    <span class="material-icons">signal_cellular_alt</span>
+                    <span>Beam KPI</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="xapps">
+                    <span class="material-icons">apps</span>
+                    <span>xApps</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="logs">
+                    <span class="material-icons">description</span>
+                    <span>Logs</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="platform">
+                    <span class="material-icons">cloud</span>
+                    <span>Platform</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="top-bar">
+            <div>
+                <h1 id="page-title">Platform Overview</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">Home</a></li>
+                        <li class="breadcrumb-item active" id="breadcrumb-current">Overview</li>
+                    </ol>
+                </nav>
+            </div>
+            <div>
+                <span class="badge bg-success">Platform Online</span>
+            </div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon material-icons" style="color: var(--success-color);">cloud_done</div>
+                        <div class="stat-value" id="stat-platform-pods">0</div>
+                        <div class="stat-label">Platform Pods</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon material-icons" style="color: var(--primary-color);">apps</div>
+                        <div class="stat-value" id="stat-xapps">0</div>
+                        <div class="stat-label">xApps Running</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon material-icons" style="color: var(--info-color);">settings_ethernet</div>
+                        <div class="stat-value" id="stat-services">0</div>
+                        <div class="stat-label">Services</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="stat-icon material-icons" style="color: var(--warning-color);">timeline</div>
+                        <div class="stat-value" id="stat-uptime">--</div>
+                        <div class="stat-label">Platform Uptime</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Platform Components Status</span>
+                            <button class="btn btn-sm btn-primary" onclick="refreshOverview()">
+                                <span class="material-icons" style="font-size: 16px;">refresh</span>
+                                Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="components-list" class="spinner-container">
+                                <div class="spinner-border text-primary" role="status"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitoring Tab -->
+        <div id="monitoring" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span>Grafana Monitoring Dashboard</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="iframe-container">
+                        <iframe id="grafana-frame" src="about:blank"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beam KPI Tab -->
+        <div id="beam-kpi" class="tab-content">
+            <div class="iframe-container">
+                <iframe src="http://192.168.10.65:30888"></iframe>
+            </div>
+        </div>
+
+        <!-- xApps Tab -->
+        <div id="xapps" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span>Deployed xApps</span>
+                    <button class="btn btn-sm btn-primary" onclick="refreshXapps()">
+                        <span class="material-icons" style="font-size: 16px;">refresh</span>
+                        Refresh
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="xapps-list" class="spinner-container">
+                        <div class="spinner-border text-primary" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logs Tab -->
+        <div id="logs" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span>Real-time Logs</span>
+                    <div>
+                        <select class="form-select form-select-sm d-inline-block w-auto me-2" id="log-namespace">
+                            <option value="ricxapp">ricxapp</option>
+                            <option value="ricplt">ricplt</option>
+                        </select>
+                        <select class="form-select form-select-sm d-inline-block w-auto" id="log-pod">
+                            <option value="">Select Pod...</option>
+                        </select>
+                        <button class="btn btn-sm btn-primary ms-2" onclick="viewLogs()">View Logs</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <pre id="logs-content" style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 4px; max-height: 600px; overflow-y: auto; font-size: 12px; font-family: 'Courier New', monospace;"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Tab -->
+        <div id="platform" class="tab-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Namespaces</div>
+                        <div class="card-body" id="namespaces-list"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Helm Releases</div>
+                        <div class="card-body" id="helm-releases"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

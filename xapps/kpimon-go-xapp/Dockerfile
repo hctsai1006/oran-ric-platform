@@ -43,13 +43,16 @@ ENV PYTHONUNBUFFERED=1
 # Install Python dependencies
 # Install ricsdl 3.0.2 first to ensure compatibility with redis 4.x
 # (ricxappframe 3.2.2 depends on ricsdl>=3.0.0,<4.0.0, which might pull 3.0.0)
-COPY requirements.txt .
+COPY kpimon-go-xapp/requirements.txt .
 RUN pip install --no-cache-dir ricsdl==3.0.2 && \
     pip install --no-cache-dir -r requirements.txt
 
+# Copy common libraries
+COPY common/ ./common/
+
 # Copy application code
-COPY src/ ./src/
-COPY config/ ./config/
+COPY kpimon-go-xapp/src/ ./src/
+COPY kpimon-go-xapp/config/ ./config/
 
 # Create health check script
 RUN echo '#!/bin/bash\ncurl -f http://localhost:8080/health/alive || exit 1' > /usr/local/bin/health_check.sh && \

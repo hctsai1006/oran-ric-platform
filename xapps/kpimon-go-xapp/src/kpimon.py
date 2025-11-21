@@ -18,7 +18,7 @@ import influxdb_client
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 # Add common library path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../common'))
+sys.path.insert(0, '/app/common')
 
 from ricxappframe.xapp_frame import rmr
 from ricxappframe.xapp_sdl import SDLWrapper

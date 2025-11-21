@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ns-oran-bridge
+  namespace: ricxapp
+  labels:
+    app: ns-oran-bridge
+    component: bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ns-oran-bridge
+  template:
+    metadata:
+      labels:
+        app: ns-oran-bridge
+        component: bridge
+    spec:
+      containers:
+      - name: ns-oran-bridge
+        image: localhost:5000/ns-oran-bridge:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+        env:
+        - name: LOG_LEVEL
+          value: "INFO"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ns-oran-bridge
+  namespace: ricxapp
+  labels:
+    app: ns-oran-bridge
+spec:
+  selector:
+    app: ns-oran-bridge
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+  type: ClusterIP

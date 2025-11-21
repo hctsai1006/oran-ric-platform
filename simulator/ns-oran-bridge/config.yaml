@@ -1,0 +1,30 @@
+# ns-O-RAN Bridge Configuration
+
+# E2-Simulator connection settings
+e2_simulator:
+  host: "e2-simulator.ricxapp.svc.cluster.local"
+  port: 8080
+  timeout: 5
+
+# Bridge API settings
+bridge:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false
+
+# Logging settings
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# UAV configuration defaults
+uav_defaults:
+  max_altitude_m: 500
+  max_speed_ms: 20
+  update_interval_s: 5
+
+# Supported ns-O-RAN event types
+event_types:
+  - uav_position_update
+  - uav_mission
+  - network_config
