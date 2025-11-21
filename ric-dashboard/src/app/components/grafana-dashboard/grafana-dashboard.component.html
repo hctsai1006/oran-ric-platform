@@ -1,0 +1,76 @@
+<div class="monitoring-page">
+  <div class="toolbar">
+    <h2>Monitoring & Analytics</h2>
+  </div>
+
+  <div class="monitoring-grid">
+    <!-- Prometheus Metrics -->
+    <div class="section">
+      <div class="section-header">
+        <h3>Prometheus Metrics</h3>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">CPU Usage</div>
+          <div class="metric-value">-</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Memory Usage</div>
+          <div class="metric-value">-</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Network I/O</div>
+          <div class="metric-value">-</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Active Pods</div>
+          <div class="metric-value">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grafana Dashboard -->
+    <div class="section grafana-section">
+      <div class="section-header">
+        <h3>Grafana Dashboard</h3>
+        <button mat-icon-button (click)="openGrafana()" matTooltip="在新視窗打開">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </div>
+      <div class="grafana-iframe-container">
+        <iframe
+          [src]="grafanaUrl"
+          frameborder="0"
+          width="100%"
+          height="600px"
+          allow="fullscreen">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Cluster Status -->
+    <div class="section">
+      <div class="section-header">
+        <h3>Cluster Resources</h3>
+      </div>
+      <div class="cluster-stats">
+        <div class="cluster-row">
+          <span class="label">Nodes</span>
+          <span class="value">{{ clusterStats.nodes }}</span>
+        </div>
+        <div class="cluster-row">
+          <span class="label">Pods Running</span>
+          <span class="value">{{ clusterStats.pods }}</span>
+        </div>
+        <div class="cluster-row">
+          <span class="label">Services</span>
+          <span class="value">{{ clusterStats.services }}</span>
+        </div>
+        <div class="cluster-row">
+          <span class="label">Deployments</span>
+          <span class="value">{{ clusterStats.deployments }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

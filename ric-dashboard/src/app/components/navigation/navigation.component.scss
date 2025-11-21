@@ -1,0 +1,129 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #2c3e50;
+  border-right: 1px solid #1a252f;
+}
+
+.header-toolbar {
+  height: 64px;
+  background: #34495e;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  border-bottom: 1px solid #1a252f;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.logo-text {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #ecf0f1;
+}
+
+.logo-subtitle {
+  font-size: 10px;
+  color: #bdc3c7;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+.version-badge {
+  background: rgba(52, 152, 219, 0.2);
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 11px;
+  color: #3498db;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-menu {
+  padding: 16px 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  color: #bdc3c7;
+  transition: all 0.2s ease;
+  margin: 0;
+  height: 48px;
+  border-left: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(52, 152, 219, 0.1);
+    color: #ecf0f1;
+  }
+
+  &.active-link {
+    background: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+    border-left-color: #3498db;
+
+    mat-icon {
+      color: #3498db;
+    }
+
+    .nav-label {
+      color: #3498db;
+    }
+  }
+
+  mat-icon {
+    color: #95a5a6;
+    margin-right: 16px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .nav-label {
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+}
+
+.footer-info {
+  margin-top: auto;
+  text-align: center;
+  padding: 16px;
+  border-top: 1px solid #1a252f;
+  background: #34495e;
+}
+
+.info-text {
+  margin: 4px 0;
+  font-size: 11px;
+  color: #95a5a6;
+  font-weight: 400;
+  letter-spacing: 0;
+
+  &.small {
+    font-size: 10px;
+    color: #7f8c8d;
+  }
+}

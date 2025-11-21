@@ -1,0 +1,20 @@
+<div class="page">
+  <div class="toolbar">
+    <h2>Beam KPI Monitoring</h2>
+    <button mat-icon-button (click)="refresh()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <div class="iframe-container">
+    <iframe
+      #beamIframe
+      [src]="beamUrl"
+      frameborder="0"
+      width="100%"
+      height="100%"
+      allow="fullscreen"
+      title="Beam KPI Query Dashboard">
+    </iframe>
+  </div>
+</div>

@@ -1,0 +1,179 @@
+<div class="dual-path-page">
+  <div class="toolbar">
+    <h2>Dual-Path Communication Monitor</h2>
+    <div class="legend">
+      <span class="legend-item">
+        <span class="legend-color rmr"></span>
+        <span>RMR Path</span>
+      </span>
+      <span class="legend-item">
+        <span class="legend-color http"></span>
+        <span>HTTP Path</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Path Metrics Overview -->
+  <div class="metrics-row">
+    <div class="metric-card rmr-card">
+      <div class="metric-header">
+        <mat-icon>flash_on</mat-icon>
+        <h3>RMR Communication Path</h3>
+      </div>
+      <div class="metric-status" [style.color]="getStatusColor(pathMetrics.rmr.status)">
+        {{ pathMetrics.rmr.status }}
+      </div>
+      <div class="metric-grid">
+        <div class="metric-item">
+          <span class="label">Messages/sec</span>
+          <span class="value">{{ pathMetrics.rmr.messagesPerSec }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Avg Latency</span>
+          <span class="value">{{ pathMetrics.rmr.avgLatency }} ms</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Error Rate</span>
+          <span class="value">{{ pathMetrics.rmr.errorRate }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="metric-card http-card">
+      <div class="metric-header">
+        <mat-icon>http</mat-icon>
+        <h3>HTTP Communication Path</h3>
+      </div>
+      <div class="metric-status" [style.color]="getStatusColor(pathMetrics.http.status)">
+        {{ pathMetrics.http.status }}
+      </div>
+      <div class="metric-grid">
+        <div class="metric-item">
+          <span class="label">Requests/sec</span>
+          <span class="value">{{ pathMetrics.http.requestsPerSec }}</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Avg Latency</span>
+          <span class="value">{{ pathMetrics.http.avgLatency }} ms</span>
+        </div>
+        <div class="metric-item">
+          <span class="label">Error Rate</span>
+          <span class="value">{{ pathMetrics.http.errorRate }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Network Topology -->
+  <div class="topology-section">
+    <div class="section-header">
+      <h3>Network Topology</h3>
+      <span class="refresh-indicator">
+        <mat-icon>refresh</mat-icon>
+        <span>Live</span>
+      </span>
+    </div>
+
+    <div class="topology-container">
+      <svg width="800" height="500" viewBox="0 0 800 500">
+        <!-- Links (drawn first, so they appear behind nodes) -->
+        <g class="links">
+          <g *ngFor="let link of links" class="link-group">
+            <path
+              [attr.d]="getLinkPath(link)"
+              [attr.stroke]="getLinkColor(link)"
+              [attr.stroke-width]="link.status === 'active' ? 2 : 1"
+              [attr.stroke-dasharray]="link.type === 'http' ? '5,5' : '0'"
+              fill="none"
+              [class.animated]="link.status === 'active'"
+            />
+            <title>{{ link.type.toUpperCase() }}: {{ link.latency }}ms</title>
+          </g>
+        </g>
+
+        <!-- Nodes -->
+        <g class="nodes">
+          <g *ngFor="let node of nodes" class="node-group">
+            <!-- Node circle -->
+            <circle
+              [attr.cx]="node.x"
+              [attr.cy]="node.y"
+              [attr.r]="node.type === 'platform' ? 35 : 30"
+              [attr.fill]="getNodeColor(node)"
+              [class.pulse]="node.status === 'healthy'"
+              stroke="#fff"
+              stroke-width="3"
+            />
+
+            <!-- Status indicator -->
+            <circle
+              [attr.cx]="node.x + 20"
+              [attr.cy]="node.y - 20"
+              r="6"
+              [attr.fill]="node.status === 'healthy' ? '#4caf50' : '#f44336'"
+              stroke="#fff"
+              stroke-width="2"
+            />
+
+            <!-- Node label -->
+            <text
+              [attr.x]="node.x"
+              [attr.y]="node.y + (node.type === 'platform' ? 50 : 45)"
+              text-anchor="middle"
+              class="node-label"
+            >
+              {{ node.label }}
+            </text>
+
+            <!-- Node type badge -->
+            <text
+              [attr.x]="node.x"
+              [attr.y]="node.y + (node.type === 'platform' ? 65 : 60)"
+              text-anchor="middle"
+              class="node-type"
+            >
+              {{ node.type.toUpperCase() }}
+            </text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Connection Details -->
+  <div class="details-section">
+    <div class="section-header">
+      <h3>Active Connections</h3>
+    </div>
+    <div class="connections-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Target</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Latency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let link of links" [class.active]="link.status === 'active'">
+            <td>{{ link.source }}</td>
+            <td>{{ link.target }}</td>
+            <td>
+              <span class="type-badge" [class.rmr]="link.type === 'rmr'" [class.http]="link.type === 'http'">
+                {{ link.type.toUpperCase() }}
+              </span>
+            </td>
+            <td>
+              <span class="status-badge" [class]="link.status">
+                {{ link.status }}
+              </span>
+            </td>
+            <td>{{ link.latency ? link.latency + ' ms' : '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

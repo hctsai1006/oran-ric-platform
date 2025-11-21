@@ -1,0 +1,75 @@
+<div class="dashboard">
+  <div class="toolbar">
+    <h2>Overview</h2>
+    <button mat-icon-button (click)="refresh()" [disabled]="loading">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="error" class="error-banner">{{ error }}</div>
+
+  <div *ngIf="!error" class="stats">
+    <div class="stat-item">
+      <div class="stat-label">xApps</div>
+      <div class="stat-value">{{ stats.totalXApps }}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Healthy</div>
+      <div class="stat-value">{{ stats.healthyXApps }}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Replicas</div>
+      <div class="stat-value">{{ stats.readyReplicas }}/{{ stats.totalReplicas }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="!error" class="table-section">
+    <div class="section-header">
+      <h3>xApps</h3>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <table *ngIf="!loading" mat-table [dataSource]="xapps" class="data-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let xapp">{{ xapp.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let xapp">
+          <span class="status" [class.running]="xapp.status === 'Running'">
+            {{ xapp.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="replicas">
+        <th mat-header-cell *matHeaderCellDef>Replicas</th>
+        <td mat-cell *matCellDef="let xapp">{{ xapp.ready_replicas }}/{{ xapp.replicas }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="version">
+        <th mat-header-cell *matHeaderCellDef>Version</th>
+        <td mat-cell *matCellDef="let xapp">{{ xapp.version }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="health">
+        <th mat-header-cell *matHeaderCellDef>Health</th>
+        <td mat-cell *matCellDef="let xapp">
+          <span class="health" [class.healthy]="xapp.health.alive && xapp.health.ready">
+            {{ xapp.health.alive && xapp.health.ready ? 'Healthy' : 'Unhealthy' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/xapps', row.name]"></tr>
+    </table>
+
+    <div *ngIf="!loading && xapps.length === 0" class="empty">No xApps</div>
+  </div>
+</div>

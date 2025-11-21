@@ -1,0 +1,108 @@
+<div class="alerts-page">
+  <div class="toolbar">
+    <div class="toolbar-header">
+      <h2>Alerts & Notifications</h2>
+      <span class="alert-count">{{ alerts.length }} {{ alerts.length === 1 ? 'Alert' : 'Alerts' }}</span>
+    </div>
+    <div class="toolbar-actions">
+      <button mat-button class="filter-btn">
+        <mat-icon>filter_list</mat-icon>
+        <span>All Types</span>
+      </button>
+      <button mat-icon-button (click)="refresh()" matTooltip="Refresh alerts">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Alert Statistics -->
+  <div class="alert-stats">
+    <div class="stat-card critical">
+      <div class="stat-icon">
+        <mat-icon>error</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ getCriticalCount() }}</div>
+        <div class="stat-label">Critical</div>
+      </div>
+    </div>
+    <div class="stat-card warning">
+      <div class="stat-icon">
+        <mat-icon>warning</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ getWarningCount() }}</div>
+        <div class="stat-label">Warning</div>
+      </div>
+    </div>
+    <div class="stat-card info">
+      <div class="stat-icon">
+        <mat-icon>info</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ getInfoCount() }}</div>
+        <div class="stat-label">Info</div>
+      </div>
+    </div>
+    <div class="stat-card success">
+      <div class="stat-icon">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <div class="stat-info">
+        <div class="stat-value">{{ getHealthyCount() }}</div>
+        <div class="stat-label">Healthy</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alerts List -->
+  <div class="alerts-section">
+    <div class="section-header">
+      <h3>Recent Alerts</h3>
+      <span class="last-updated">Last updated: {{ lastUpdate | date:'medium' }}</span>
+    </div>
+
+    <div class="alerts-list">
+      <div *ngFor="let alert of alerts" class="alert-item" [class.severity-critical]="alert.severity === 'critical'" [class.severity-warning]="alert.severity === 'warning'" [class.severity-info]="alert.severity === 'info'">
+        <div class="alert-indicator"></div>
+        <div class="alert-icon-wrapper">
+          <mat-icon class="alert-icon">{{ getAlertIcon(alert.severity) }}</mat-icon>
+        </div>
+        <div class="alert-details">
+          <div class="alert-header">
+            <h4 class="alert-title">{{ alert.title }}</h4>
+            <span class="severity-badge" [class]="alert.severity">{{ alert.severity }}</span>
+          </div>
+          <p class="alert-message">{{ alert.message }}</p>
+          <div class="alert-meta">
+            <span class="meta-item">
+              <mat-icon>schedule</mat-icon>
+              <span>{{ alert.timestamp | date:'short' }}</span>
+            </span>
+            <span class="meta-item">
+              <mat-icon>source</mat-icon>
+              <span>{{ alert.source }}</span>
+            </span>
+          </div>
+        </div>
+        <div class="alert-actions">
+          <button mat-icon-button matTooltip="Acknowledge">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="More options">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="alerts.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <mat-icon>check_circle_outline</mat-icon>
+    </div>
+    <h3>No Alerts</h3>
+    <p>All systems are running normally. Great job!</p>
+  </div>
+</div>
