@@ -1,0 +1,39 @@
+\begin{table}[htbp]
+\centering
+\caption{System Configuration}
+\label{tab:system_configuration}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Component} & \textbf{Parameter} & \textbf{Value} \\
+\midrule
+\multicolumn{3}{l}{\textit{O-RAN Near-RT RIC}} \\
+ & Platform & OSC Near-RT RIC (I-release) \\
+ & E2 Interface & E2AP v2.0 \\
+ & A1 Interface & A1AP v2.0 \\
+ & Database & SDL (Redis) \\
+\midrule
+\multicolumn{3}{l}{\textit{xApp Configuration}} \\
+ & xApp Framework & Python SDK \\
+ & Decision Algorithm & RSRP-based reactive \\
+ & Communication & RMR + HTTP REST \\
+ & Metrics Export & Prometheus/Grafana \\
+\midrule
+\multicolumn{3}{l}{\textit{Resource Management}} \\
+ & Baseline PRB & 10 \\
+ & Total PRBs & 100 \\
+ & Dynamic Range & 5--15 PRBs \\
+ & Slice Type & eMBB \\
+\midrule
+\multicolumn{3}{l}{\textit{Thresholds}} \\
+ & RSRP Handover & -110 dBm \\
+ & RSRP Critical & -120 dBm \\
+ & SINR Minimum & 3.0 dB \\
+\midrule
+\multicolumn{3}{l}{\textit{ns-3 Simulator}} \\
+ & Version & ns-3.36+ \\
+ & LTE Module & LENA \\
+ & Mobility Model & ConstantVelocity \\
+ & Integration & CSV-based data exchange \\
+\bottomrule
+\end{tabular}
+\end{table}

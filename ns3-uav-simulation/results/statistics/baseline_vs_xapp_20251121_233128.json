@@ -1,0 +1,234 @@
+{
+  "timestamp": "20251121_233128",
+  "analysis_type": "baseline_vs_xapp",
+  "tests": [
+    {
+      "test_name": "Paired t-test (Throughput)",
+      "statistic": 1.8818210380067317,
+      "p_value": 0.13300105254513706,
+      "significance": "n.s.",
+      "effect_size": 1.1901681257847117,
+      "effect_size_interpretation": "large",
+      "ci_lower": -0.6291190923201022,
+      "ci_upper": 3.275794018150868,
+      "sample_size_1": 5,
+      "sample_size_2": 5,
+      "mean_1": 7.848620629806431,
+      "mean_2": 6.5252831668910485,
+      "std_1": 8.881784197001252e-16,
+      "std_2": 1.4064434780866224
+    },
+    {
+      "test_name": "Paired t-test (RSRP)",
+      "statistic": null,
+      "p_value": null,
+      "significance": "n.s.",
+      "effect_size": 0.0,
+      "effect_size_interpretation": "negligible",
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "sample_size_1": 5,
+      "sample_size_2": 5,
+      "mean_1": -110.51987012987013,
+      "mean_2": -110.51987012987013,
+      "std_1": 0.0,
+      "std_2": 0.0
+    },
+    {
+      "test_name": "Paired t-test (SINR)",
+      "statistic": null,
+      "p_value": null,
+      "significance": "n.s.",
+      "effect_size": 0.0,
+      "effect_size_interpretation": "negligible",
+      "ci_lower": 0.0,
+      "ci_upper": 0.0,
+      "sample_size_1": 5,
+      "sample_size_2": 5,
+      "mean_1": 12.7187012987013,
+      "mean_2": 12.7187012987013,
+      "std_1": 0.0,
+      "std_2": 0.0
+    },
+    {
+      "test_name": "Paired t-test (Handover Delay)",
+      "statistic": Infinity,
+      "p_value": 0.0,
+      "significance": "***",
+      "effect_size": 0.0,
+      "effect_size_interpretation": "negligible",
+      "ci_lower": 40.0,
+      "ci_upper": 40.0,
+      "sample_size_1": 5,
+      "sample_size_2": 5,
+      "mean_1": 100.0,
+      "mean_2": 60.0,
+      "std_1": 0.0,
+      "std_2": 0.0
+    },
+    {
+      "test_name": "Independent t-test (RSRP (samples))",
+      "statistic": 0.0,
+      "p_value": 1.0,
+      "significance": "n.s.",
+      "effect_size": 0.0,
+      "effect_size_interpretation": "negligible",
+      "ci_lower": -111.77539413473814,
+      "ci_upper": -109.38829007578816,
+      "sample_size_1": 76,
+      "sample_size_2": 76,
+      "mean_1": -110.58184210526315,
+      "mean_2": -110.58184210526315,
+      "std_1": 5.188721754801799,
+      "std_2": 5.188721754801799
+    },
+    {
+      "test_name": "Mann-Whitney U (RSRP (samples))",
+      "statistic": 2888.0,
+      "p_value": 1.0,
+      "significance": "n.s.",
+      "effect_size": 0.0,
+      "effect_size_interpretation": "negligible",
+      "ci_lower": null,
+      "ci_upper": null,
+      "sample_size_1": 76,
+      "sample_size_2": 76,
+      "mean_1": -110.37,
+      "mean_2": -110.37,
+      "std_1": null,
+      "std_2": null
+    },
+    {
+      "test_name": "Independent t-test (SINR (samples))",
+      "statistic": 0.0,
+      "p_value": 1.0,
+      "significance": "n.s.",
+      "effect_size": 0.0,
+      "effect_size_interpretation": "negligible",
+      "ci_lower": 11.463242633380197,
+      "ci_upper": 13.850178419251385,
+      "sample_size_1": 76,
+      "sample_size_2": 76,
+      "mean_1": 12.656710526315791,
+      "mean_2": 12.656710526315791,
+      "std_1": 5.188355988516344,
+      "std_2": 5.188355988516344
+    }
+  ],
+  "metrics_summary": {
+    "Throughput": {
+      "baseline_mean": 7.848620629806431,
+      "baseline_std": 8.881784197001252e-16,
+      "baseline_ci": [
+        7.8486206298064305,
+        7.848620629806432
+      ],
+      "xapp_mean": 6.5252831668910485,
+      "xapp_std": 1.4064434780866224,
+      "xapp_ci": [
+        4.572826611655564,
+        8.477739722126534
+      ]
+    },
+    "RSRP": {
+      "baseline_mean": -110.51987012987013,
+      "baseline_std": 0.0,
+      "baseline_ci": [
+        -110.51987012987013,
+        -110.51987012987013
+      ],
+      "xapp_mean": -110.51987012987013,
+      "xapp_std": 0.0,
+      "xapp_ci": [
+        -110.51987012987013,
+        -110.51987012987013
+      ]
+    },
+    "SINR": {
+      "baseline_mean": 12.7187012987013,
+      "baseline_std": 0.0,
+      "baseline_ci": [
+        12.7187012987013,
+        12.7187012987013
+      ],
+      "xapp_mean": 12.7187012987013,
+      "xapp_std": 0.0,
+      "xapp_ci": [
+        12.7187012987013,
+        12.7187012987013
+      ]
+    },
+    "Handover Delay": {
+      "baseline_mean": 100.0,
+      "baseline_std": 0.0,
+      "baseline_ci": [
+        100.0,
+        100.0
+      ],
+      "xapp_mean": 60.0,
+      "xapp_std": 0.0,
+      "xapp_ci": [
+        60.0,
+        60.0
+      ]
+    }
+  },
+  "assumptions_tests": [
+    {
+      "test": "Shapiro-Wilk",
+      "data": "Baseline Throughput",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "xApp Throughput",
+      "statistic": 0.7504605650901794,
+      "p_value": 0.03005668707191944,
+      "is_normal": false
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "Baseline RSRP",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "xApp RSRP",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "Baseline SINR",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "xApp SINR",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "Baseline Handover Delay",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    },
+    {
+      "test": "Shapiro-Wilk",
+      "data": "xApp Handover Delay",
+      "statistic": 1.0,
+      "p_value": 1.0,
+      "is_normal": true
+    }
+  ]
+}

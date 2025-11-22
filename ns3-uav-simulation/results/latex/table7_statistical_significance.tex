@@ -1,0 +1,24 @@
+% Table 7: Statistical Significance Analysis
+\begin{table}[htbp]
+\centering
+\caption{Statistical Significance of xApp Performance Improvements}
+\label{tab:statistical_significance}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Test} & \textbf{p-value} & \textbf{Effect Size} & \textbf{Significance} \\
+\midrule
+\multicolumn{5}{l}{\textit{Baseline vs xApp (Paired Tests)}} \\
+Throughput & t-test & 0.133 & 1.19 (large) & n.s. \\
+RSRP & t-test & -- & 0.00 & n.s. \\
+SINR & t-test & -- & 0.00 & n.s. \\
+Handover Delay & t-test & $<$0.001 & -- & *** \\
+\midrule
+\multicolumn{5}{l}{\textit{Multi-Scenario Analysis (ANOVA)}} \\
+RSRP & One-way ANOVA & 1.000 & 0.00 & n.s. \\
+SINR & One-way ANOVA & 1.000 & 0.00 & n.s. \\
+RSRP & Kruskal-Wallis & 1.000 & -0.01 & n.s. \\
+SINR & Kruskal-Wallis & 1.000 & -0.01 & n.s. \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize n.s. = not significant; * $p<0.05$; ** $p<0.01$; *** $p<0.001$} \\
+\end{tabular}
+\end{table}

@@ -1,0 +1,112 @@
+{
+  "timestamp": "20251121_233348",
+  "scenarios_compared": 3,
+  "scenarios": [
+    {
+      "name": "2uav_coordination",
+      "description": "2 UAV Coordination - Different trajectories, shared resources",
+      "num_uavs": 2,
+      "total_samples": 142,
+      "avg_prb_utilization": 0.46710526315789475,
+      "peak_prb_utilization": 0.5,
+      "avg_system_throughput_mbps": 17.884995450418646,
+      "total_interference_events": 0,
+      "uav_summary": [
+        {
+          "uav_id": "uav-001",
+          "avg_rsrp": -110.58184210526316,
+          "avg_throughput_mbps": 19.38876197353413,
+          "qos_satisfaction_rate": 0.5,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-002",
+          "avg_rsrp": -114.79176339667612,
+          "avg_throughput_mbps": 16.153385514709907,
+          "qos_satisfaction_rate": 0.7878787878787878,
+          "handover_count": 2
+        }
+      ]
+    },
+    {
+      "name": "3uav_formation",
+      "description": "3 UAV Formation Flight - Triangle formation, centralized load",
+      "num_uavs": 3,
+      "total_samples": 228,
+      "avg_prb_utilization": 0.75,
+      "peak_prb_utilization": 0.75,
+      "avg_system_throughput_mbps": 18.414686962950473,
+      "total_interference_events": 0,
+      "uav_summary": [
+        {
+          "uav_id": "uav-lead",
+          "avg_rsrp": -110.58184210526316,
+          "avg_throughput_mbps": 18.82077605659426,
+          "qos_satisfaction_rate": 0.5,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-wing1",
+          "avg_rsrp": -111.99605566763626,
+          "avg_throughput_mbps": 18.21164241612858,
+          "qos_satisfaction_rate": 0.9210526315789473,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-wing2",
+          "avg_rsrp": -111.99605566763626,
+          "avg_throughput_mbps": 18.21164241612858,
+          "qos_satisfaction_rate": 0.9210526315789473,
+          "handover_count": 2
+        }
+      ]
+    },
+    {
+      "name": "5uav_dense",
+      "description": "5 UAV Dense Deployment - Resource competition, congestion testing",
+      "num_uavs": 5,
+      "total_samples": 655,
+      "avg_prb_utilization": 0.8762913907284768,
+      "peak_prb_utilization": 0.99,
+      "avg_system_throughput_mbps": 13.840241169697977,
+      "total_interference_events": 0,
+      "uav_summary": [
+        {
+          "uav_id": "uav-alpha",
+          "avg_rsrp": -110.58258278145695,
+          "avg_throughput_mbps": 14.922606544496249,
+          "qos_satisfaction_rate": 0.48344370860927155,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-beta",
+          "avg_rsrp": -112.98375886524823,
+          "avg_throughput_mbps": 14.013403808898154,
+          "qos_satisfaction_rate": 0.8936170212765957,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-gamma",
+          "avg_rsrp": -113.16984732824427,
+          "avg_throughput_mbps": 13.47150978273187,
+          "qos_satisfaction_rate": 0.8854961832061069,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-delta",
+          "avg_rsrp": -112.66472215059487,
+          "avg_throughput_mbps": 13.201471847048156,
+          "qos_satisfaction_rate": 0.8842975206611571,
+          "handover_count": 2
+        },
+        {
+          "uav_id": "uav-epsilon",
+          "avg_rsrp": -111.95407960722505,
+          "avg_throughput_mbps": 13.279356449080183,
+          "qos_satisfaction_rate": 0.9369369369369369,
+          "handover_count": 1
+        }
+      ]
+    }
+  ]
+}

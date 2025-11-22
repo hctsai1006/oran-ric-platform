@@ -1,0 +1,44 @@
+% Statistical Analysis Results
+% Generated: 20251121_233128
+
+\begin{table}[htbp]
+\centering
+\caption{Statistical Significance Test Results}
+\label{tab:statistical_results}
+\begin{tabular}{lcccccc}
+\toprule
+Test & Statistic & p-value & Sig. & Effect Size & CI (95\%) \\
+\midrule
+Paired t-test (Throughput) & 1.882 & 0.1330 & n.s. & 1.190 & [-0.629, 3.276] \\
+Paired t-test (RSRP) & N/A & N/A & n.s. & 0.000 & [0.000, 0.000] \\
+Paired t-test (SINR) & N/A & N/A & n.s. & 0.000 & [0.000, 0.000] \\
+Paired t-test (Handover Delay) & N/A & $<$0.001 & *** & 0.000 & [40.000, 40.000] \\
+Independent t-test (RSRP (samples)) & 0.000 & 1.0000 & n.s. & 0.000 & [-111.775, -109.388] \\
+Mann-Whitney U (RSRP (samples)) & 2888.000 & 1.0000 & n.s. & 0.000 & N/A \\
+Independent t-test (SINR (samples)) & 0.000 & 1.0000 & n.s. & 0.000 & [11.463, 13.850] \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: * p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001, n.s. = not significant
+\item Effect size: Cohen's d (small: 0.2, medium: 0.5, large: 0.8)
+\end{tablenotes}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Descriptive Statistics Summary}
+\label{tab:descriptive_stats}
+\begin{tabular}{lccccc}
+\toprule
+Metric & \multicolumn{2}{c}{Baseline} & \multicolumn{2}{c}{xApp} & Improvement \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & Mean $\pm$ SD & 95\% CI & Mean $\pm$ SD & 95\% CI & (\%) \\
+\midrule
+Throughput & 7.85 $\pm$ 0.00 & [7.85, 7.85] & 6.53 $\pm$ 1.41 & [4.57, 8.48] & -16.9\% \\
+RSRP & -110.52 & [-110.52, -110.52] & -110.52 & [-110.52, -110.52] & +0.0\% \\
+SINR & 12.72 & [12.72, 12.72] & 12.72 & [12.72, 12.72] & +0.0\% \\
+Handover Delay & 100.00 & [100.00, 100.00] & 60.00 & [60.00, 60.00] & -40.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}

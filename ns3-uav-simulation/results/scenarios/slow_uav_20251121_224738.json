@@ -1,0 +1,765 @@
+{
+  "scenario_name": "slow_uav",
+  "total_samples": 75,
+  "avg_rsrp": -110.58333333333333,
+  "min_rsrp": -120.23,
+  "max_rsrp": -102.86,
+  "rsrp_std": 5.24070562954031,
+  "handover_count": 0,
+  "maintain_count": 75,
+  "error_count": 0,
+  "handover_rate": 0.0,
+  "simulation_duration": 150.0,
+  "decisions": [
+    {
+      "time": 1.0,
+      "cell_id": 1,
+      "rsrp": -114.11,
+      "sinr": 9.13,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 3.0,
+      "cell_id": 1,
+      "rsrp": -112.86,
+      "sinr": 10.38,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 5.0,
+      "cell_id": 1,
+      "rsrp": -111.54,
+      "sinr": 11.7,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 7.0,
+      "cell_id": 1,
+      "rsrp": -110.14,
+      "sinr": 13.1,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 9.0,
+      "cell_id": 1,
+      "rsrp": -108.69,
+      "sinr": 14.55,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 11.0,
+      "cell_id": 1,
+      "rsrp": -107.21,
+      "sinr": 16.03,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 13.0,
+      "cell_id": 1,
+      "rsrp": -105.76,
+      "sinr": 17.47,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 15.0,
+      "cell_id": 1,
+      "rsrp": -104.46,
+      "sinr": 18.78,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 17.0,
+      "cell_id": 1,
+      "rsrp": -103.43,
+      "sinr": 19.81,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 19.0,
+      "cell_id": 1,
+      "rsrp": -102.86,
+      "sinr": 20.38,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 21.0,
+      "cell_id": 1,
+      "rsrp": -102.86,
+      "sinr": 20.38,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 23.0,
+      "cell_id": 1,
+      "rsrp": -103.42,
+      "sinr": 19.81,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 25.0,
+      "cell_id": 1,
+      "rsrp": -104.44,
+      "sinr": 18.79,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 27.0,
+      "cell_id": 1,
+      "rsrp": -105.75,
+      "sinr": 17.49,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 29.0,
+      "cell_id": 1,
+      "rsrp": -107.19,
+      "sinr": 16.04,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 31.0,
+      "cell_id": 1,
+      "rsrp": -108.67,
+      "sinr": 14.57,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 33.0,
+      "cell_id": 1,
+      "rsrp": -110.13,
+      "sinr": 13.11,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 35.0,
+      "cell_id": 1,
+      "rsrp": -111.52,
+      "sinr": 11.72,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 37.0,
+      "cell_id": 1,
+      "rsrp": -112.85,
+      "sinr": 10.39,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 39.0,
+      "cell_id": 1,
+      "rsrp": -114.1,
+      "sinr": 9.14,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 41.0,
+      "cell_id": 1,
+      "rsrp": -115.28,
+      "sinr": 7.96,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 43.0,
+      "cell_id": 1,
+      "rsrp": -116.39,
+      "sinr": 6.85,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 45.0,
+      "cell_id": 1,
+      "rsrp": -117.43,
+      "sinr": 5.8,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 47.0,
+      "cell_id": 1,
+      "rsrp": -118.42,
+      "sinr": 4.82,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 49.0,
+      "cell_id": 1,
+      "rsrp": -119.35,
+      "sinr": 3.89,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 51.0,
+      "cell_id": 1,
+      "rsrp": -120.23,
+      "sinr": 3.0,
+      "action": "MAINTAIN",
+      "target_cell": "1",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 53.0,
+      "cell_id": 2,
+      "rsrp": -118.43,
+      "sinr": 4.81,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 55.0,
+      "cell_id": 2,
+      "rsrp": -117.44,
+      "sinr": 5.79,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 57.0,
+      "cell_id": 2,
+      "rsrp": -116.4,
+      "sinr": 6.84,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 59.0,
+      "cell_id": 2,
+      "rsrp": -115.29,
+      "sinr": 7.95,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 61.0,
+      "cell_id": 2,
+      "rsrp": -114.11,
+      "sinr": 9.13,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 63.0,
+      "cell_id": 2,
+      "rsrp": -112.86,
+      "sinr": 10.38,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 65.0,
+      "cell_id": 2,
+      "rsrp": -111.54,
+      "sinr": 11.7,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 67.0,
+      "cell_id": 2,
+      "rsrp": -110.14,
+      "sinr": 13.1,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 69.0,
+      "cell_id": 2,
+      "rsrp": -108.69,
+      "sinr": 14.55,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 71.0,
+      "cell_id": 2,
+      "rsrp": -107.21,
+      "sinr": 16.03,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 73.0,
+      "cell_id": 2,
+      "rsrp": -105.76,
+      "sinr": 17.47,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 75.0,
+      "cell_id": 2,
+      "rsrp": -104.46,
+      "sinr": 18.78,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 77.0,
+      "cell_id": 2,
+      "rsrp": -103.43,
+      "sinr": 19.81,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 79.0,
+      "cell_id": 2,
+      "rsrp": -102.86,
+      "sinr": 20.38,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 81.0,
+      "cell_id": 2,
+      "rsrp": -102.86,
+      "sinr": 20.38,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 83.0,
+      "cell_id": 2,
+      "rsrp": -103.42,
+      "sinr": 19.81,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 85.0,
+      "cell_id": 2,
+      "rsrp": -104.44,
+      "sinr": 18.79,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 87.0,
+      "cell_id": 2,
+      "rsrp": -105.75,
+      "sinr": 17.49,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 89.0,
+      "cell_id": 2,
+      "rsrp": -107.19,
+      "sinr": 16.04,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 91.0,
+      "cell_id": 2,
+      "rsrp": -107.87,
+      "sinr": 15.37,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 93.0,
+      "cell_id": 2,
+      "rsrp": -108.03,
+      "sinr": 15.21,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 95.0,
+      "cell_id": 2,
+      "rsrp": -108.58,
+      "sinr": 14.66,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 97.0,
+      "cell_id": 2,
+      "rsrp": -109.43,
+      "sinr": 13.81,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 99.0,
+      "cell_id": 2,
+      "rsrp": -110.49,
+      "sinr": 12.75,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 101.0,
+      "cell_id": 2,
+      "rsrp": -111.67,
+      "sinr": 11.57,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 103.0,
+      "cell_id": 2,
+      "rsrp": -112.9,
+      "sinr": 10.34,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 105.0,
+      "cell_id": 2,
+      "rsrp": -114.13,
+      "sinr": 9.11,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 107.0,
+      "cell_id": 2,
+      "rsrp": -115.33,
+      "sinr": 7.91,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 109.0,
+      "cell_id": 2,
+      "rsrp": -116.49,
+      "sinr": 6.74,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 111.0,
+      "cell_id": 2,
+      "rsrp": -117.61,
+      "sinr": 5.63,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 113.0,
+      "cell_id": 2,
+      "rsrp": -118.67,
+      "sinr": 4.57,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 115.0,
+      "cell_id": 2,
+      "rsrp": -119.69,
+      "sinr": 3.55,
+      "action": "MAINTAIN",
+      "target_cell": "2",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 117.0,
+      "cell_id": 3,
+      "rsrp": -119.37,
+      "sinr": 3.87,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 119.0,
+      "cell_id": 3,
+      "rsrp": -118.27,
+      "sinr": 4.97,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 121.0,
+      "cell_id": 3,
+      "rsrp": -117.2,
+      "sinr": 6.04,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 123.0,
+      "cell_id": 3,
+      "rsrp": -116.16,
+      "sinr": 7.08,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 125.0,
+      "cell_id": 3,
+      "rsrp": -115.07,
+      "sinr": 8.17,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 127.0,
+      "cell_id": 3,
+      "rsrp": -113.92,
+      "sinr": 9.32,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 129.0,
+      "cell_id": 3,
+      "rsrp": -112.71,
+      "sinr": 10.53,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 131.0,
+      "cell_id": 3,
+      "rsrp": -111.45,
+      "sinr": 11.79,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 133.0,
+      "cell_id": 3,
+      "rsrp": -110.14,
+      "sinr": 13.1,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 135.0,
+      "cell_id": 3,
+      "rsrp": -108.82,
+      "sinr": 14.42,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 137.0,
+      "cell_id": 3,
+      "rsrp": -107.53,
+      "sinr": 15.71,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 139.0,
+      "cell_id": 3,
+      "rsrp": -106.34,
+      "sinr": 16.9,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 141.0,
+      "cell_id": 3,
+      "rsrp": -105.35,
+      "sinr": 17.89,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 143.0,
+      "cell_id": 3,
+      "rsrp": -104.69,
+      "sinr": 18.55,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 145.0,
+      "cell_id": 3,
+      "rsrp": -104.45,
+      "sinr": 18.79,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 147.0,
+      "cell_id": 3,
+      "rsrp": -104.68,
+      "sinr": 18.56,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    },
+    {
+      "time": 149.0,
+      "cell_id": 3,
+      "rsrp": -105.34,
+      "sinr": 17.9,
+      "action": "MAINTAIN",
+      "target_cell": "3",
+      "prb_quota": 5,
+      "confidence": "N/A"
+    }
+  ]
+}

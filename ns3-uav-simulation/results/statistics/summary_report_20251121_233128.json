@@ -1,0 +1,13 @@
+{
+  "total_tests": 11,
+  "significant_tests": 1,
+  "highly_significant_tests": 1,
+  "key_findings": [
+    {
+      "test": "Paired t-test (Handover Delay)",
+      "p_value": 0.0,
+      "significance": "***",
+      "effect_size": 0.0
+    }
+  ]
+}

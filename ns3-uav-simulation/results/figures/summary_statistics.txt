@@ -1,0 +1,18 @@
+============================================================
+ns-3 UAV LTE + xApp Integration Test Summary
+============================================================
+
+Simulation Duration                : 75 seconds
+Total Samples                      : 77
+Average RSRP                       : -110.52 dBm
+Min RSRP                           : -120.17 dBm
+Max RSRP                           : -102.78 dBm
+Average SINR                       : 12.72 dB
+Handover Events                    : 2
+xApp Maintain Decisions            : 77
+xApp Handover Recommendations      : 0
+PRB Quota (constant)               : 5
+Slice Type                         : EMBB
+
+============================================================
+Generated: 2025-11-21T22:34:38.033271

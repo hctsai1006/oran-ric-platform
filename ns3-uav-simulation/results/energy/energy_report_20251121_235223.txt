@@ -1,0 +1,193 @@
+====================================================================================================
+ENERGY EFFICIENCY ANALYSIS REPORT - UAV xApp
+====================================================================================================
+
+ANALYSIS CONFIGURATION:
+--------------------------------------------------
+  PRB Power:             0.5 W per PRB
+  eNB Power per PRB:     1.0 W
+  eNB Static Power:      50.0 W
+  UAV Max Tx Power:      23.0 dBm
+  UAV Battery Capacity:  100.0 Wh
+  UAV Flight Power:      150.0 W
+
+ENERGY METRICS COMPARISON:
+----------------------------------------------------------------------------------------------------
+Algorithm               Avg PRB   Throughput   PRB Energy     Efficiency    Battery
+                                      (Mbps)          (J)      (Mbits/J)  Usage (%)
+----------------------------------------------------------------------------------------------------
+Baseline (Fixed)           10.0         7.85        385.0           1.51      3.255
+xApp (Adaptive)             8.8         5.97        338.0           1.30      3.255
+Greedy                     13.4        11.24        515.5           1.63      3.255
+Conservative                8.6         6.52        332.0           1.44      3.255
+Energy-Optimal              6.3         4.43        242.0           1.32      3.255
+
+====================================================================================================
+DETAILED ENERGY BREAKDOWN:
+====================================================================================================
+
+[ Baseline (Fixed) ]
+------------------------------------------------------------
+  Samples:                    77
+  Simulation Duration:        77.0 s
+
+  PRB Energy Model:
+    Average PRB Allocation:   10.00
+    Total PRB Energy:         385.00 J
+    Avg PRB Energy/Sample:    5.000 J
+
+  UAV Battery Impact:
+    Average Tx Power:         23.00 dBm (199.53 mW)
+    Total Tx Energy:          15.364 J
+    Battery Usage:            3.2554 %
+    Flight Time Extension:    +0.00 %
+
+  Network (eNB) Energy:
+    Total eNB Energy:         4620.0 J
+    Average eNB Power:        60.0 W
+
+  Throughput Performance:
+    Total Throughput:         604.34 MB
+    Average Throughput:       7.85 Mbps
+
+  Energy Efficiency:
+    Efficiency (bits/J):      1509488
+    Efficiency (Mbits/J):     1.51
+    Efficiency (MB/J):        1.51
+
+[ xApp (Adaptive) ]
+------------------------------------------------------------
+  Samples:                    77
+  Simulation Duration:        77.0 s
+
+  PRB Energy Model:
+    Average PRB Allocation:   8.78
+    Total PRB Energy:         338.00 J
+    Avg PRB Energy/Sample:    4.390 J
+
+  UAV Battery Impact:
+    Average Tx Power:         23.00 dBm (199.53 mW)
+    Total Tx Energy:          15.364 J
+    Battery Usage:            3.2554 %
+    Flight Time Extension:    +0.00 %
+
+  Network (eNB) Energy:
+    Total eNB Energy:         4526.0 J
+    Average eNB Power:        58.8 W
+
+  Throughput Performance:
+    Total Throughput:         460.03 MB
+    Average Throughput:       5.97 Mbps
+
+  Energy Efficiency:
+    Efficiency (bits/J):      1301861
+    Efficiency (Mbits/J):     1.30
+    Efficiency (MB/J):        1.30
+
+[ Greedy ]
+------------------------------------------------------------
+  Samples:                    77
+  Simulation Duration:        77.0 s
+
+  PRB Energy Model:
+    Average PRB Allocation:   13.39
+    Total PRB Energy:         515.50 J
+    Avg PRB Energy/Sample:    6.695 J
+
+  UAV Battery Impact:
+    Average Tx Power:         23.00 dBm (199.53 mW)
+    Total Tx Energy:          15.364 J
+    Battery Usage:            3.2554 %
+    Flight Time Extension:    +0.00 %
+
+  Network (eNB) Energy:
+    Total eNB Energy:         4881.0 J
+    Average eNB Power:        63.4 W
+
+  Throughput Performance:
+    Total Throughput:         865.46 MB
+    Average Throughput:       11.24 Mbps
+
+  Energy Efficiency:
+    Efficiency (bits/J):      1630288
+    Efficiency (Mbits/J):     1.63
+    Efficiency (MB/J):        1.63
+
+[ Conservative ]
+------------------------------------------------------------
+  Samples:                    77
+  Simulation Duration:        77.0 s
+
+  PRB Energy Model:
+    Average PRB Allocation:   8.62
+    Total PRB Energy:         332.00 J
+    Avg PRB Energy/Sample:    4.312 J
+
+  UAV Battery Impact:
+    Average Tx Power:         23.00 dBm (199.53 mW)
+    Total Tx Energy:          15.364 J
+    Battery Usage:            3.2554 %
+    Flight Time Extension:    +0.00 %
+
+  Network (eNB) Energy:
+    Total eNB Energy:         4514.0 J
+    Average eNB Power:        58.6 W
+
+  Throughput Performance:
+    Total Throughput:         501.70 MB
+    Average Throughput:       6.52 Mbps
+
+  Energy Efficiency:
+    Efficiency (bits/J):      1444296
+    Efficiency (Mbits/J):     1.44
+    Efficiency (MB/J):        1.44
+
+[ Energy-Optimal ]
+------------------------------------------------------------
+  Samples:                    77
+  Simulation Duration:        77.0 s
+
+  PRB Energy Model:
+    Average PRB Allocation:   6.29
+    Total PRB Energy:         242.00 J
+    Avg PRB Energy/Sample:    3.143 J
+
+  UAV Battery Impact:
+    Average Tx Power:         23.00 dBm (199.53 mW)
+    Total Tx Energy:          15.364 J
+    Battery Usage:            3.2554 %
+    Flight Time Extension:    +0.00 %
+
+  Network (eNB) Energy:
+    Total eNB Energy:         4334.0 J
+    Average eNB Power:        56.3 W
+
+  Throughput Performance:
+    Total Throughput:         341.00 MB
+    Average Throughput:       4.43 Mbps
+
+  Energy Efficiency:
+    Efficiency (bits/J):      1324967
+    Efficiency (Mbits/J):     1.32
+    Efficiency (MB/J):        1.32
+
+====================================================================================================
+COMPARISON SUMMARY:
+====================================================================================================
+
+xApp vs Baseline Improvements:
+--------------------------------------------------
+  Energy Efficiency:          -13.8%
+  PRB Energy Savings:         +12.2%
+  Battery Usage Reduction:    +0.0000 percentage points
+  Network Energy Savings:     +2.0%
+  Throughput Change:          -23.9%
+
+Best Performing Algorithms:
+--------------------------------------------------
+  Highest Energy Efficiency:  Greedy (1.63 Mbits/J)
+  Lowest PRB Energy:          Energy-Optimal (242.0 J)
+  Best Battery Life:          Baseline (Fixed) (3.2554%)
+
+====================================================================================================
+Generated: 2025-11-21T23:52:22.761336

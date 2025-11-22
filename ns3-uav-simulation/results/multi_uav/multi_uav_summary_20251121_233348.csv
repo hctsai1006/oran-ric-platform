@@ -1,0 +1,4 @@
+Scenario,NumUAVs,TotalSamples,AvgPRBUtil,PeakPRBUtil,AvgSystemThroughput,InterferenceEvents
+2uav_coordination,2,142,0.4671,0.5000,17.88,0
+3uav_formation,3,228,0.7500,0.7500,18.41,0
+5uav_dense,5,655,0.8763,0.9900,13.84,0

@@ -1,0 +1,57 @@
+{
+  "timestamp": "20251121_224738",
+  "scenarios": [
+    {
+      "name": "baseline",
+      "total_samples": 76,
+      "avg_rsrp": -110.58184210526316,
+      "min_rsrp": -120.17,
+      "max_rsrp": -102.78,
+      "rsrp_std": 5.223198690592146,
+      "handover_count": 0,
+      "maintain_count": 76,
+      "error_count": 0,
+      "handover_rate": 0.0,
+      "simulation_duration": 75.0
+    },
+    {
+      "name": "fast_uav",
+      "total_samples": 76,
+      "avg_rsrp": -110.58184210526316,
+      "min_rsrp": -120.17,
+      "max_rsrp": -102.78,
+      "rsrp_std": 5.223198690592146,
+      "handover_count": 0,
+      "maintain_count": 76,
+      "error_count": 0,
+      "handover_rate": 0.0,
+      "simulation_duration": 37.5
+    },
+    {
+      "name": "slow_uav",
+      "total_samples": 75,
+      "avg_rsrp": -110.58333333333333,
+      "min_rsrp": -120.23,
+      "max_rsrp": -102.86,
+      "rsrp_std": 5.24070562954031,
+      "handover_count": 0,
+      "maintain_count": 75,
+      "error_count": 0,
+      "handover_rate": 0.0,
+      "simulation_duration": 150.0
+    },
+    {
+      "name": "high_load",
+      "total_samples": 76,
+      "avg_rsrp": -110.58184210526316,
+      "min_rsrp": -120.17,
+      "max_rsrp": -102.78,
+      "rsrp_std": 5.223198690592146,
+      "handover_count": 0,
+      "maintain_count": 76,
+      "error_count": 0,
+      "handover_rate": 0.0,
+      "simulation_duration": 75.0
+    }
+  ]
+}

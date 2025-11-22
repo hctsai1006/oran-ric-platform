@@ -1,0 +1,1514 @@
+{
+  "scenario_name": "3uav_formation",
+  "description": "3 UAV Formation Flight - Triangle formation, centralized load",
+  "num_uavs": 3,
+  "total_samples": 228,
+  "simulation_duration": 75.0,
+  "timestamp": "2025-11-21T23:33:45.429168",
+  "total_prb_utilization": 5700,
+  "avg_prb_utilization": 0.75,
+  "peak_prb_utilization": 0.75,
+  "total_interference_events": 0,
+  "avg_system_throughput_mbps": 18.414686962950473,
+  "uav_metrics": [
+    {
+      "uav_id": "uav-lead",
+      "total_samples": 76,
+      "avg_rsrp": -110.58184210526316,
+      "min_rsrp": -120.17,
+      "max_rsrp": -102.78,
+      "std_rsrp": 5.223198690592146,
+      "avg_sinr": 12.65671052631579,
+      "avg_throughput_mbps": 18.82077605659426,
+      "avg_prb_allocated": 25,
+      "handover_count": 2,
+      "maintain_count": 74,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.5,
+      "samples_below_threshold": 38,
+      "avg_interference": 0.12863572071557175
+    },
+    {
+      "uav_id": "uav-wing1",
+      "total_samples": 76,
+      "avg_rsrp": -111.99605566763626,
+      "min_rsrp": -121.5842135623731,
+      "max_rsrp": -104.1942135623731,
+      "std_rsrp": 5.223198690592146,
+      "avg_sinr": 11.949603745129242,
+      "avg_throughput_mbps": 18.21164241612858,
+      "avg_prb_allocated": 25,
+      "handover_count": 2,
+      "maintain_count": 74,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.9210526315789473,
+      "samples_below_threshold": 44,
+      "avg_interference": 0.06431786035778587
+    },
+    {
+      "uav_id": "uav-wing2",
+      "total_samples": 76,
+      "avg_rsrp": -111.99605566763626,
+      "min_rsrp": -121.5842135623731,
+      "max_rsrp": -104.1942135623731,
+      "std_rsrp": 5.223198690592146,
+      "avg_sinr": 11.949603745129242,
+      "avg_throughput_mbps": 18.21164241612858,
+      "avg_prb_allocated": 25,
+      "handover_count": 2,
+      "maintain_count": 74,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.9210526315789473,
+      "samples_below_threshold": 44,
+      "avg_interference": 0.06431786035778587
+    }
+  ],
+  "prb_utilization_timeline": [
+    {
+      "time": 0.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 1.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 2.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 3.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 4.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 5.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 6.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 7.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 8.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 9.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 10.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 11.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 12.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 13.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 14.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 15.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 16.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 17.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 18.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 19.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 20.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 21.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 22.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 23.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 24.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 25.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 26.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 27.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 28.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 29.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 30.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 31.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 32.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 33.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 34.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 35.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 36.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 37.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 38.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 39.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 40.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 41.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 42.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 43.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 44.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 45.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 46.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 47.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 48.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 49.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 50.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 51.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 52.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 53.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 54.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 55.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 56.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 57.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 58.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 59.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 60.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 61.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 62.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 63.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 64.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 65.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 66.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 67.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 68.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 69.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 70.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 71.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 72.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 73.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 74.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    },
+    {
+      "time": 75.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-lead": 25,
+        "uav-wing1": 25,
+        "uav-wing2": 25
+      }
+    }
+  ],
+  "interference_timeline": [
+    {
+      "time": 0.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 1.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 2.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 3.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 4.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 5.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 6.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 7.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 8.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 9.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 10.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 11.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 12.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 13.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 14.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 15.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 16.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 17.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 18.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 19.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 20.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 21.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 22.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 23.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 24.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 25.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 26.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 27.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 28.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 29.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 30.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 31.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 32.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 33.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 34.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 35.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 36.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 37.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 38.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 39.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 40.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 41.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 42.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 43.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 44.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 45.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 46.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 47.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 48.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 49.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 50.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 51.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 52.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 53.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 54.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 55.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 56.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 57.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 58.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 59.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 60.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 61.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 62.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 63.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 64.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 65.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 66.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 67.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 68.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 69.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 70.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 71.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 72.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 73.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 74.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    },
+    {
+      "time": 75.0,
+      "total_interference": 0.2572714414311435,
+      "per_uav": {
+        "uav-lead": 0.12863572071557175,
+        "uav-wing1": 0.06431786035778587,
+        "uav-wing2": 0.06431786035778587
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+[console_scripts]
+uav-policy = uav_policy.main:main
+

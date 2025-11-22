@@ -1,0 +1,1399 @@
+{
+  "start_time": "2025-11-21T22:04:25.660736",
+  "csv_path": "/tmp/ns3-uav-full.csv",
+  "total_samples": 77,
+  "xapp_decisions": [
+    {
+      "time": 0.0,
+      "cell_id": 1,
+      "rsrp": -114.71,
+      "sinr": 8.53,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.661740",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 1.0,
+      "cell_id": 1,
+      "rsrp": -113.5,
+      "sinr": 9.74,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.663901",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 2.0,
+      "cell_id": 1,
+      "rsrp": -112.21,
+      "sinr": 11.03,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.666058",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 3.0,
+      "cell_id": 1,
+      "rsrp": -110.85,
+      "sinr": 12.39,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.668132",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 4.0,
+      "cell_id": 1,
+      "rsrp": -109.42,
+      "sinr": 13.82,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.670255",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 5.0,
+      "cell_id": 1,
+      "rsrp": -107.95,
+      "sinr": 15.29,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.672120",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 6.0,
+      "cell_id": 1,
+      "rsrp": -106.48,
+      "sinr": 16.76,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.673998",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 7.0,
+      "cell_id": 1,
+      "rsrp": -105.09,
+      "sinr": 18.15,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.675998",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 8.0,
+      "cell_id": 1,
+      "rsrp": -103.9,
+      "sinr": 19.34,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.677941",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 9.0,
+      "cell_id": 1,
+      "rsrp": -103.08,
+      "sinr": 20.16,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.679928",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 10.0,
+      "cell_id": 1,
+      "rsrp": -102.78,
+      "sinr": 20.45,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.681921",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 11.0,
+      "cell_id": 1,
+      "rsrp": -103.07,
+      "sinr": 20.16,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.683827",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 12.0,
+      "cell_id": 1,
+      "rsrp": -103.89,
+      "sinr": 19.35,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.685735",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 13.0,
+      "cell_id": 1,
+      "rsrp": -105.07,
+      "sinr": 18.17,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.687607",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 14.0,
+      "cell_id": 1,
+      "rsrp": -106.46,
+      "sinr": 16.78,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.689643",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 15.0,
+      "cell_id": 1,
+      "rsrp": -107.93,
+      "sinr": 15.3,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.691519",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 16.0,
+      "cell_id": 1,
+      "rsrp": -109.41,
+      "sinr": 13.83,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.693394",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 17.0,
+      "cell_id": 1,
+      "rsrp": -110.83,
+      "sinr": 12.41,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.695254",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 18.0,
+      "cell_id": 1,
+      "rsrp": -112.2,
+      "sinr": 11.04,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.697125",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 19.0,
+      "cell_id": 1,
+      "rsrp": -113.49,
+      "sinr": 9.75,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.699091",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 20.0,
+      "cell_id": 1,
+      "rsrp": -114.7,
+      "sinr": 8.54,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.701173",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 21.0,
+      "cell_id": 1,
+      "rsrp": -115.84,
+      "sinr": 7.4,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.703100",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 22.0,
+      "cell_id": 1,
+      "rsrp": -116.92,
+      "sinr": 6.32,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.705018",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 23.0,
+      "cell_id": 1,
+      "rsrp": -117.93,
+      "sinr": 5.3,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.706862",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 24.0,
+      "cell_id": 1,
+      "rsrp": -118.89,
+      "sinr": 4.35,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.708843",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 25.0,
+      "cell_id": 1,
+      "rsrp": -119.8,
+      "sinr": 3.44,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "1",
+        "timestamp": "2025-11-21T22:04:25.710896",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 26.0,
+      "cell_id": 2,
+      "rsrp": -118.9,
+      "sinr": 4.34,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.712844",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 27.0,
+      "cell_id": 2,
+      "rsrp": -117.94,
+      "sinr": 5.29,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.714668",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 28.0,
+      "cell_id": 2,
+      "rsrp": -116.93,
+      "sinr": 6.31,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.716686",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 29.0,
+      "cell_id": 2,
+      "rsrp": -115.85,
+      "sinr": 7.38,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.718943",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 30.0,
+      "cell_id": 2,
+      "rsrp": -114.71,
+      "sinr": 8.53,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.720887",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 31.0,
+      "cell_id": 2,
+      "rsrp": -113.5,
+      "sinr": 9.74,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.722711",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 32.0,
+      "cell_id": 2,
+      "rsrp": -112.21,
+      "sinr": 11.03,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.724615",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 33.0,
+      "cell_id": 2,
+      "rsrp": -110.85,
+      "sinr": 12.39,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.726661",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 34.0,
+      "cell_id": 2,
+      "rsrp": -109.42,
+      "sinr": 13.82,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.728826",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 35.0,
+      "cell_id": 2,
+      "rsrp": -107.95,
+      "sinr": 15.29,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.730871",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 36.0,
+      "cell_id": 2,
+      "rsrp": -106.48,
+      "sinr": 16.76,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.732772",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 37.0,
+      "cell_id": 2,
+      "rsrp": -105.09,
+      "sinr": 18.15,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.734649",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 38.0,
+      "cell_id": 2,
+      "rsrp": -103.9,
+      "sinr": 19.34,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.736630",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 39.0,
+      "cell_id": 2,
+      "rsrp": -103.08,
+      "sinr": 20.16,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.738778",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 40.0,
+      "cell_id": 2,
+      "rsrp": -102.78,
+      "sinr": 20.45,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.740616",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 41.0,
+      "cell_id": 2,
+      "rsrp": -103.07,
+      "sinr": 20.16,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.742535",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 42.0,
+      "cell_id": 2,
+      "rsrp": -103.89,
+      "sinr": 19.35,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.744429",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 43.0,
+      "cell_id": 2,
+      "rsrp": -105.07,
+      "sinr": 18.17,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.746397",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 44.0,
+      "cell_id": 2,
+      "rsrp": -106.46,
+      "sinr": 16.78,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.748454",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 45.0,
+      "cell_id": 2,
+      "rsrp": -107.93,
+      "sinr": 15.3,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.750511",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 46.0,
+      "cell_id": 2,
+      "rsrp": -107.9,
+      "sinr": 15.34,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.752550",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 47.0,
+      "cell_id": 2,
+      "rsrp": -108.26,
+      "sinr": 14.98,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.754472",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 48.0,
+      "cell_id": 2,
+      "rsrp": -108.97,
+      "sinr": 14.27,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.756319",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 49.0,
+      "cell_id": 2,
+      "rsrp": -109.94,
+      "sinr": 13.3,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.758385",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 50.0,
+      "cell_id": 2,
+      "rsrp": -111.07,
+      "sinr": 12.17,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.760317",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 51.0,
+      "cell_id": 2,
+      "rsrp": -112.28,
+      "sinr": 10.96,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.762301",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 52.0,
+      "cell_id": 2,
+      "rsrp": -113.51,
+      "sinr": 9.73,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.764214",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 53.0,
+      "cell_id": 2,
+      "rsrp": -114.73,
+      "sinr": 8.51,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.766060",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 54.0,
+      "cell_id": 2,
+      "rsrp": -115.92,
+      "sinr": 7.32,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.768309",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 55.0,
+      "cell_id": 2,
+      "rsrp": -117.06,
+      "sinr": 6.18,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.770343",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 56.0,
+      "cell_id": 2,
+      "rsrp": -118.15,
+      "sinr": 5.09,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.772429",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 57.0,
+      "cell_id": 2,
+      "rsrp": -119.19,
+      "sinr": 4.05,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.774487",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 58.0,
+      "cell_id": 2,
+      "rsrp": -120.17,
+      "sinr": 3.07,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "2",
+        "timestamp": "2025-11-21T22:04:25.776368",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 59.0,
+      "cell_id": 3,
+      "rsrp": -118.83,
+      "sinr": 4.41,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.778304",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 60.0,
+      "cell_id": 3,
+      "rsrp": -117.69,
+      "sinr": 5.54,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.780165",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 61.0,
+      "cell_id": 3,
+      "rsrp": -116.69,
+      "sinr": 6.55,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.781976",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 62.0,
+      "cell_id": 3,
+      "rsrp": -115.62,
+      "sinr": 7.62,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.784003",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 63.0,
+      "cell_id": 3,
+      "rsrp": -114.5,
+      "sinr": 8.74,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.786052",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 64.0,
+      "cell_id": 3,
+      "rsrp": -113.32,
+      "sinr": 9.92,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.788109",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 65.0,
+      "cell_id": 3,
+      "rsrp": -112.08,
+      "sinr": 11.16,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.790016",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 66.0,
+      "cell_id": 3,
+      "rsrp": -110.8,
+      "sinr": 12.44,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.791807",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 67.0,
+      "cell_id": 3,
+      "rsrp": -109.48,
+      "sinr": 13.76,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.793676",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 68.0,
+      "cell_id": 3,
+      "rsrp": -108.17,
+      "sinr": 15.07,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.795642",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 69.0,
+      "cell_id": 3,
+      "rsrp": -106.92,
+      "sinr": 16.32,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.797691",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 70.0,
+      "cell_id": 3,
+      "rsrp": -105.81,
+      "sinr": 17.43,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.799546",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 71.0,
+      "cell_id": 3,
+      "rsrp": -104.97,
+      "sinr": 18.27,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.801480",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 72.0,
+      "cell_id": 3,
+      "rsrp": -104.51,
+      "sinr": 18.73,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.803362",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 73.0,
+      "cell_id": 3,
+      "rsrp": -104.51,
+      "sinr": 18.73,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.805321",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 74.0,
+      "cell_id": 3,
+      "rsrp": -104.96,
+      "sinr": 18.27,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.807472",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 75.0,
+      "cell_id": 3,
+      "rsrp": -105.8,
+      "sinr": 17.44,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.809365",
+        "uav_id": "uav-001"
+      }
+    },
+    {
+      "time": 76.0,
+      "cell_id": 3,
+      "rsrp": -105.81,
+      "sinr": 17.43,
+      "decision": {
+        "prb_quota": 5,
+        "reason": "No active flight-plan segment; using reactive policy only. Staying on serving cell (not overloaded or neighbors not clearly better). Using UAV slice_id=embb. No ServiceProfile provided; using base quota from flight-plan or default.",
+        "slice_id": "embb",
+        "target_cell_id": "3",
+        "timestamp": "2025-11-21T22:04:25.811325",
+        "uav_id": "uav-001"
+      }
+    }
+  ],
+  "handover_recommendations": 0,
+  "maintain_decisions": 77,
+  "avg_rsrp": -110.51987012987007,
+  "rsrp_samples": [
+    {
+      "time": 0.0,
+      "rsrp": -114.71
+    },
+    {
+      "time": 1.0,
+      "rsrp": -113.5
+    },
+    {
+      "time": 2.0,
+      "rsrp": -112.21
+    },
+    {
+      "time": 3.0,
+      "rsrp": -110.85
+    },
+    {
+      "time": 4.0,
+      "rsrp": -109.42
+    },
+    {
+      "time": 5.0,
+      "rsrp": -107.95
+    },
+    {
+      "time": 6.0,
+      "rsrp": -106.48
+    },
+    {
+      "time": 7.0,
+      "rsrp": -105.09
+    },
+    {
+      "time": 8.0,
+      "rsrp": -103.9
+    },
+    {
+      "time": 9.0,
+      "rsrp": -103.08
+    },
+    {
+      "time": 10.0,
+      "rsrp": -102.78
+    },
+    {
+      "time": 11.0,
+      "rsrp": -103.07
+    },
+    {
+      "time": 12.0,
+      "rsrp": -103.89
+    },
+    {
+      "time": 13.0,
+      "rsrp": -105.07
+    },
+    {
+      "time": 14.0,
+      "rsrp": -106.46
+    },
+    {
+      "time": 15.0,
+      "rsrp": -107.93
+    },
+    {
+      "time": 16.0,
+      "rsrp": -109.41
+    },
+    {
+      "time": 17.0,
+      "rsrp": -110.83
+    },
+    {
+      "time": 18.0,
+      "rsrp": -112.2
+    },
+    {
+      "time": 19.0,
+      "rsrp": -113.49
+    },
+    {
+      "time": 20.0,
+      "rsrp": -114.7
+    },
+    {
+      "time": 21.0,
+      "rsrp": -115.84
+    },
+    {
+      "time": 22.0,
+      "rsrp": -116.92
+    },
+    {
+      "time": 23.0,
+      "rsrp": -117.93
+    },
+    {
+      "time": 24.0,
+      "rsrp": -118.89
+    },
+    {
+      "time": 25.0,
+      "rsrp": -119.8
+    },
+    {
+      "time": 26.0,
+      "rsrp": -118.9
+    },
+    {
+      "time": 27.0,
+      "rsrp": -117.94
+    },
+    {
+      "time": 28.0,
+      "rsrp": -116.93
+    },
+    {
+      "time": 29.0,
+      "rsrp": -115.85
+    },
+    {
+      "time": 30.0,
+      "rsrp": -114.71
+    },
+    {
+      "time": 31.0,
+      "rsrp": -113.5
+    },
+    {
+      "time": 32.0,
+      "rsrp": -112.21
+    },
+    {
+      "time": 33.0,
+      "rsrp": -110.85
+    },
+    {
+      "time": 34.0,
+      "rsrp": -109.42
+    },
+    {
+      "time": 35.0,
+      "rsrp": -107.95
+    },
+    {
+      "time": 36.0,
+      "rsrp": -106.48
+    },
+    {
+      "time": 37.0,
+      "rsrp": -105.09
+    },
+    {
+      "time": 38.0,
+      "rsrp": -103.9
+    },
+    {
+      "time": 39.0,
+      "rsrp": -103.08
+    },
+    {
+      "time": 40.0,
+      "rsrp": -102.78
+    },
+    {
+      "time": 41.0,
+      "rsrp": -103.07
+    },
+    {
+      "time": 42.0,
+      "rsrp": -103.89
+    },
+    {
+      "time": 43.0,
+      "rsrp": -105.07
+    },
+    {
+      "time": 44.0,
+      "rsrp": -106.46
+    },
+    {
+      "time": 45.0,
+      "rsrp": -107.93
+    },
+    {
+      "time": 46.0,
+      "rsrp": -107.9
+    },
+    {
+      "time": 47.0,
+      "rsrp": -108.26
+    },
+    {
+      "time": 48.0,
+      "rsrp": -108.97
+    },
+    {
+      "time": 49.0,
+      "rsrp": -109.94
+    },
+    {
+      "time": 50.0,
+      "rsrp": -111.07
+    },
+    {
+      "time": 51.0,
+      "rsrp": -112.28
+    },
+    {
+      "time": 52.0,
+      "rsrp": -113.51
+    },
+    {
+      "time": 53.0,
+      "rsrp": -114.73
+    },
+    {
+      "time": 54.0,
+      "rsrp": -115.92
+    },
+    {
+      "time": 55.0,
+      "rsrp": -117.06
+    },
+    {
+      "time": 56.0,
+      "rsrp": -118.15
+    },
+    {
+      "time": 57.0,
+      "rsrp": -119.19
+    },
+    {
+      "time": 58.0,
+      "rsrp": -120.17
+    },
+    {
+      "time": 59.0,
+      "rsrp": -118.83
+    },
+    {
+      "time": 60.0,
+      "rsrp": -117.69
+    },
+    {
+      "time": 61.0,
+      "rsrp": -116.69
+    },
+    {
+      "time": 62.0,
+      "rsrp": -115.62
+    },
+    {
+      "time": 63.0,
+      "rsrp": -114.5
+    },
+    {
+      "time": 64.0,
+      "rsrp": -113.32
+    },
+    {
+      "time": 65.0,
+      "rsrp": -112.08
+    },
+    {
+      "time": 66.0,
+      "rsrp": -110.8
+    },
+    {
+      "time": 67.0,
+      "rsrp": -109.48
+    },
+    {
+      "time": 68.0,
+      "rsrp": -108.17
+    },
+    {
+      "time": 69.0,
+      "rsrp": -106.92
+    },
+    {
+      "time": 70.0,
+      "rsrp": -105.81
+    },
+    {
+      "time": 71.0,
+      "rsrp": -104.97
+    },
+    {
+      "time": 72.0,
+      "rsrp": -104.51
+    },
+    {
+      "time": 73.0,
+      "rsrp": -104.51
+    },
+    {
+      "time": 74.0,
+      "rsrp": -104.96
+    },
+    {
+      "time": 75.0,
+      "rsrp": -105.8
+    },
+    {
+      "time": 76.0,
+      "rsrp": -105.81
+    }
+  ],
+  "end_time": "2025-11-21T22:04:25.811677"
+}

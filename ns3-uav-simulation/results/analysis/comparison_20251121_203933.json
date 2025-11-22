@@ -1,0 +1,27 @@
+{
+  "baseline": {
+    "simulation_time": 75.0,
+    "elapsed_time": 0.0019516944885253906,
+    "total_handovers": 0,
+    "avg_rsrp_dbm": -52.62239335276083,
+    "avg_throughput_mbps": 127.49861544099072,
+    "samples_collected": 151,
+    "xapp_controlled": false
+  },
+  "xapp_controlled": {
+    "simulation_time": 75.0,
+    "elapsed_time": 0.1623520851135254,
+    "total_handovers": 0,
+    "avg_rsrp_dbm": -51.87015282580274,
+    "avg_throughput_mbps": 129.5122989904598,
+    "samples_collected": 151,
+    "xapp_controlled": true
+  },
+  "improvements": {
+    "handover_diff": 0,
+    "rsrp_improvement_db": 0.7522405269580901,
+    "throughput_improvement_mbps": 2.013683549469093,
+    "throughput_improvement_pct": 1.5793767975473205
+  },
+  "timestamp": "20251121_203933"
+}

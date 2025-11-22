@@ -1,0 +1,48 @@
+{
+  "tractor": {
+    "ue": {
+      "rsrp": {
+        "min": -66.0,
+        "max": -65.0,
+        "avg": -65.52235772357723,
+        "count": 492
+      },
+      "snr": {
+        "min": 14.0,
+        "max": 15.0,
+        "avg": 14.128048780487806,
+        "count": 492
+      },
+      "dl_throughput_bps": {
+        "min": 0.0,
+        "max": 2320928.0,
+        "avg": 1091237.50338224,
+        "count": 492
+      },
+      "ul_throughput_bps": {
+        "min": 0.0,
+        "max": 85280.0,
+        "avg": 20877.16723831301,
+        "count": 492
+      },
+      "total_samples": 500,
+      "valid_samples": 492,
+      "attached_ratio": 0.984
+    },
+    "bs": {
+      "total_samples": 500,
+      "avg_ul_sinr": 31.544964788732408,
+      "avg_dl_cqi": 6.91680488,
+      "unique_ues": 1
+    },
+    "enb": {
+      "total_samples": 500,
+      "active_samples": 249,
+      "max_concurrent_ues": 12
+    }
+  },
+  "simulation": null,
+  "comparison": {
+    "rsrp_in_realistic_range": true
+  }
+}

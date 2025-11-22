@@ -1,0 +1,243 @@
+%% LaTeX Tables for O-RAN UAV Simulation Results
+%% Generated: 2025-11-21
+%%
+%% Required packages:
+%%   \usepackage{booktabs}
+%%   \usepackage{array}
+%%
+%% Usage: \input{tables.tex} or copy individual tables
+
+% =============================================================================
+% Table 1: Simulation Parameters
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{Simulation Parameters}
+\label{tab:simulation_parameters}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
+\midrule
+\multicolumn{3}{l}{\textit{Network Configuration}} \\
+Number of eNBs & 3 & LTE base stations \\
+Number of UAVs & 1 & Unmanned aerial vehicle \\
+Carrier Frequency & 2.1 GHz & LTE Band 1 \\
+Bandwidth & 20 MHz & System bandwidth \\
+Total PRBs & 100 & Physical resource blocks \\
+\midrule
+\multicolumn{3}{l}{\textit{UAV Parameters}} \\
+Flight Altitude & 100 m & Above ground level \\
+UAV Speed (Baseline) & 20 m/s & Default velocity \\
+UAV Speed (Fast) & 40 m/s & High-speed scenario \\
+UAV Speed (Slow) & 10 m/s & Low-speed scenario \\
+Flight Pattern & Linear & Point-to-point trajectory \\
+\midrule
+\multicolumn{3}{l}{\textit{Channel Model}} \\
+Path Loss Model & Cost231 & Urban propagation \\
+Fading Model & Nakagami & Multipath fading \\
+Shadow Fading & 8 dB & Log-normal std. dev. \\
+\midrule
+\multicolumn{3}{l}{\textit{Handover Parameters}} \\
+RSRP Threshold & $-110$ dBm & Handover trigger \\
+Critical Threshold & $-120$ dBm & Service degradation \\
+TTT (Time-to-Trigger) & 256 ms & Handover delay \\
+Hysteresis & 3 dB & Ping-pong prevention \\
+\midrule
+\multicolumn{3}{l}{\textit{Simulation Settings}} \\
+Duration & 75 s & Total simulation time \\
+Sampling Interval & 1 s & Measurement period \\
+Slice Type & eMBB & Enhanced mobile broadband \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% Table 2: Multi-Scenario Performance Comparison
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{Multi-Scenario Performance Comparison}
+\label{tab:multi_scenario_performance}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+\textbf{Scenario} & \textbf{Samples} & \textbf{Avg RSRP} & \textbf{Min RSRP} & \textbf{Max RSRP} & \textbf{Std Dev} & \textbf{Duration} & \textbf{Handovers} \\
+ & & (dBm) & (dBm) & (dBm) & (dB) & (s) & \\
+\midrule
+Baseline & 76 & -110.58 & -120.17 & -102.78 & 5.22 & 75.0 & 0 \\
+Fast Uav & 76 & -110.58 & -120.17 & -102.78 & 5.22 & 37.5 & 0 \\
+Slow Uav & 75 & -110.58 & -120.23 & -102.86 & 5.24 & 150.0 & 0 \\
+High Load & 76 & -110.58 & -120.17 & -102.78 & 5.22 & 75.0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% Table 3: Baseline vs xApp Performance Improvement
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{Baseline vs xApp Performance Comparison}
+\label{tab:performance_improvement}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Baseline} & \textbf{xApp} & \textbf{Improvement} \\
+\midrule
+\multicolumn{4}{l}{\textit{Signal Quality}} \\
+Average RSRP (dBm) & -110.52 & -110.52 & 0.00\% \\
+Min RSRP (dBm) & -120.17 & -120.17 & -- \\
+Max RSRP (dBm) & -102.78 & -102.78 & -- \\
+RSRP Std Dev (dB) & 5.22 & 5.22 & -- \\
+\midrule
+\multicolumn{4}{l}{\textit{Channel Quality}} \\
+Average SINR (dB) & 12.72 & 12.72 & 0.00\% \\
+Min SINR (dB) & 3.07 & 3.07 & -- \\
+Max SINR (dB) & 20.45 & 20.45 & -- \\
+\midrule
+\multicolumn{4}{l}{\textit{Throughput \& Efficiency}} \\
+Avg Throughput (Mbps) & 7.85 & 7.52 & -4.17\% \\
+Resource Efficiency & 0.78 & 0.78 & 0.00\% \\
+PRB Utilization & 10.00\\% & 10.71\\% & -7.14\% \\
+\midrule
+\multicolumn{4}{l}{\textit{Handover Performance}} \\
+Handover Count & 2 & 2 & -- \\
+Total HO Delay (ms) & 100 & 60 & +40.00\% \\
+Avg PRB Allocation & 10.00 & 10.71 & -7.14\% \\
+\midrule
+\multicolumn{4}{l}{\textit{Quality Indicators}} \\
+Samples Below Threshold & 38 & 38 & -- \\
+Critical Samples & 1 & 1 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% Table 4: System Configuration
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{System Configuration}
+\label{tab:system_configuration}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Component} & \textbf{Parameter} & \textbf{Value} \\
+\midrule
+\multicolumn{3}{l}{\textit{O-RAN Near-RT RIC}} \\
+ & Platform & OSC Near-RT RIC (I-release) \\
+ & E2 Interface & E2AP v2.0 \\
+ & A1 Interface & A1AP v2.0 \\
+ & Database & SDL (Redis) \\
+\midrule
+\multicolumn{3}{l}{\textit{xApp Configuration}} \\
+ & xApp Framework & Python SDK \\
+ & Decision Algorithm & RSRP-based reactive \\
+ & Communication & RMR + HTTP REST \\
+ & Metrics Export & Prometheus/Grafana \\
+\midrule
+\multicolumn{3}{l}{\textit{Resource Management}} \\
+ & Baseline PRB & 10 \\
+ & Total PRBs & 100 \\
+ & Dynamic Range & 5--15 PRBs \\
+ & Slice Type & eMBB \\
+\midrule
+\multicolumn{3}{l}{\textit{Thresholds}} \\
+ & RSRP Handover & -110 dBm \\
+ & RSRP Critical & -120 dBm \\
+ & SINR Minimum & 3.0 dB \\
+\midrule
+\multicolumn{3}{l}{\textit{ns-3 Simulator}} \\
+ & Version & ns-3.36+ \\
+ & LTE Module & LENA \\
+ & Mobility Model & ConstantVelocity \\
+ & Integration & CSV-based data exchange \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% Table 5: Multi-UAV Scenario Performance
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{Multi-UAV Scenario Performance Comparison}
+\label{tab:multi_uav_performance}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Scenario} & \textbf{UAVs} & \textbf{Samples} & \textbf{PRB Util.} & \textbf{Peak PRB} & \textbf{Throughput} & \textbf{QoS} \\
+ & & & (\%) & (\%) & (Mbps) & (\%) \\
+\midrule
+2-UAV Coordination & 2 & 142 & 46.7 & 50.0 & 17.88 & 64.4 \\
+3-UAV Formation & 3 & 228 & 75.0 & 75.0 & 18.41 & 78.1 \\
+5-UAV Dense & 5 & 655 & 87.6 & 99.0 & 13.84 & 81.7 \\
+\midrule
+\multicolumn{7}{l}{\textit{Scalability Analysis}} \\
+\multicolumn{7}{l}{PRB utilization increase (2$\rightarrow$5 UAVs): +87.6\%} \\
+\multicolumn{7}{l}{Per-UAV throughput degradation: -22.6\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% Table 6: Algorithm Comparison Results
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{Resource Allocation Algorithm Comparison}
+\label{tab:algorithm_comparison}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Rule-based} & \textbf{Random} & \textbf{Greedy} & \textbf{Conservative} \\
+ & \textbf{(xApp)} & \textbf{Baseline} & & \\
+\midrule
+\multicolumn{5}{l}{\textit{Throughput Performance}} \\
+Avg Throughput (Mbps) & 6.97 & 7.94 & \textbf{11.24} & 6.52 \\
+Min Throughput (Mbps) & \textbf{4.89} & 1.44 & 2.59 & 3.45 \\
+5th Percentile (Mbps) & \textbf{5.14} & 2.42 & 3.07 & 3.84 \\
+\midrule
+\multicolumn{5}{l}{\textit{Resource Efficiency}} \\
+Avg PRB Allocation & 9.9 & 10.1 & 13.4 & \textbf{8.6} \\
+PRB Efficiency (Mbps/PRB) & 0.700 & 0.784 & \textbf{0.839} & 0.756 \\
+\midrule
+\multicolumn{5}{l}{\textit{Handover Performance}} \\
+Handover Count & 11 & \textbf{4} & 42 & \textbf{4} \\
+Ping-Pong Handovers & 3 & \textbf{0} & 23 & \textbf{0} \\
+\midrule
+\multicolumn{5}{l}{\textit{QoS Metrics}} \\
+Service Continuity (\%) & \textbf{98.7} & 98.7 & 98.7 & 98.7 \\
+Fairness Index (Jain's) & \textbf{0.982} & 0.808 & 0.791 & 0.915 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% =============================================================================
+% Table 7: Statistical Significance Analysis
+% =============================================================================
+\begin{table}[htbp]
+\centering
+\caption{Statistical Significance of xApp Performance Improvements}
+\label{tab:statistical_significance}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Test} & \textbf{p-value} & \textbf{Effect Size} & \textbf{Significance} \\
+\midrule
+\multicolumn{5}{l}{\textit{Baseline vs xApp (Paired Tests)}} \\
+Throughput & t-test & 0.133 & 1.19 (large) & n.s. \\
+RSRP & t-test & -- & 0.00 & n.s. \\
+SINR & t-test & -- & 0.00 & n.s. \\
+Handover Delay & t-test & $<$0.001 & -- & *** \\
+\midrule
+\multicolumn{5}{l}{\textit{Multi-Scenario Analysis (ANOVA)}} \\
+RSRP & One-way ANOVA & 1.000 & 0.00 & n.s. \\
+SINR & One-way ANOVA & 1.000 & 0.00 & n.s. \\
+RSRP & Kruskal-Wallis & 1.000 & -0.01 & n.s. \\
+SINR & Kruskal-Wallis & 1.000 & -0.01 & n.s. \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize n.s. = not significant; * $p<0.05$; ** $p<0.01$; *** $p<0.001$} \\
+\end{tabular}
+\end{table}
+

@@ -1,0 +1,678 @@
+{
+  "timestamp": "2025-11-21T23:50:56.198857",
+  "confidence_level": 0.95,
+  "alpha": 0.050000000000000044,
+  "scenario_statistics": {
+    "baseline": {
+      "rsrp_dBm": {
+        "n": 76,
+        "mean": -110.58184210526315,
+        "std": 5.223198690592146,
+        "se": 0.5991419803769772,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 1.1935520294749873,
+        "ci_lower": -111.77539413473814,
+        "ci_upper": -109.38829007578816,
+        "ci_width": 2.387104058949973,
+        "min": -120.17,
+        "max": -102.78,
+        "median": -110.37,
+        "q1": -114.715,
+        "q3": -105.8075,
+        "iqr": 8.907499999999999,
+        "percentile_5": -118.8925,
+        "percentile_95": -103.0775
+      },
+      "sinr_dB": {
+        "n": 76,
+        "mean": 12.656710526315791,
+        "std": 5.222830493939187,
+        "se": 0.5990997453243035,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 1.1934678929355949,
+        "ci_lower": 11.463242633380197,
+        "ci_upper": 13.850178419251385,
+        "ci_width": 2.386935785871188,
+        "min": 3.07,
+        "max": 20.45,
+        "median": 12.870000000000001,
+        "q1": 8.524999999999999,
+        "q3": 17.4325,
+        "iqr": 8.907500000000002,
+        "percentile_5": 4.3475,
+        "percentile_95": 20.16
+      },
+      "prb_allocation": {
+        "n": 76,
+        "mean": 5.0,
+        "std": 0.0,
+        "se": 0.0,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 0.0,
+        "ci_lower": 5.0,
+        "ci_upper": 5.0,
+        "ci_width": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "median": 5.0,
+        "q1": 5.0,
+        "q3": 5.0,
+        "iqr": 0.0,
+        "percentile_5": 5.0,
+        "percentile_95": 5.0
+      },
+      "throughput_Mbps": {
+        "n": 76,
+        "mean": 43.41191964026764,
+        "std": 16.025912092346434,
+        "se": 1.8382981918053836,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 3.66207778701969,
+        "ci_lower": 39.74984185324795,
+        "ci_upper": 47.07399742728733,
+        "ci_width": 7.324155574039381,
+        "min": 15.982140286537835,
+        "max": 68.06291592857464,
+        "median": 43.482950202861176,
+        "q1": 30.21538312497551,
+        "q3": 58.16775654744603,
+        "iqr": 27.952373422470522,
+        "percentile_5": 18.95742657563758,
+        "percentile_95": 67.10845569550133
+      },
+      "handover_delay_ms": {
+        "n": 1,
+        "mean": 50.0,
+        "std": 0,
+        "se": 0,
+        "ci_lower": 0,
+        "ci_upper": 0,
+        "ci_width": 0,
+        "min": 50.0,
+        "max": 50.0,
+        "median": 50.0,
+        "q1": 0,
+        "q3": 0,
+        "iqr": 0,
+        "total_handovers": 0
+      }
+    },
+    "fast_uav": {
+      "rsrp_dBm": {
+        "n": 76,
+        "mean": -110.58184210526315,
+        "std": 5.223198690592146,
+        "se": 0.5991419803769772,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 1.1935520294749873,
+        "ci_lower": -111.77539413473814,
+        "ci_upper": -109.38829007578816,
+        "ci_width": 2.387104058949973,
+        "min": -120.17,
+        "max": -102.78,
+        "median": -110.37,
+        "q1": -114.715,
+        "q3": -105.8075,
+        "iqr": 8.907499999999999,
+        "percentile_5": -118.8925,
+        "percentile_95": -103.0775
+      },
+      "sinr_dB": {
+        "n": 76,
+        "mean": 12.656710526315791,
+        "std": 5.222830493939187,
+        "se": 0.5990997453243035,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 1.1934678929355949,
+        "ci_lower": 11.463242633380197,
+        "ci_upper": 13.850178419251385,
+        "ci_width": 2.386935785871188,
+        "min": 3.07,
+        "max": 20.45,
+        "median": 12.870000000000001,
+        "q1": 8.524999999999999,
+        "q3": 17.4325,
+        "iqr": 8.907500000000002,
+        "percentile_5": 4.3475,
+        "percentile_95": 20.16
+      },
+      "prb_allocation": {
+        "n": 76,
+        "mean": 5.0,
+        "std": 0.0,
+        "se": 0.0,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 0.0,
+        "ci_lower": 5.0,
+        "ci_upper": 5.0,
+        "ci_width": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "median": 5.0,
+        "q1": 5.0,
+        "q3": 5.0,
+        "iqr": 0.0,
+        "percentile_5": 5.0,
+        "percentile_95": 5.0
+      },
+      "throughput_Mbps": {
+        "n": 76,
+        "mean": 43.41191964026764,
+        "std": 16.025912092346434,
+        "se": 1.8382981918053836,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 3.66207778701969,
+        "ci_lower": 39.74984185324795,
+        "ci_upper": 47.07399742728733,
+        "ci_width": 7.324155574039381,
+        "min": 15.982140286537835,
+        "max": 68.06291592857464,
+        "median": 43.482950202861176,
+        "q1": 30.21538312497551,
+        "q3": 58.16775654744603,
+        "iqr": 27.952373422470522,
+        "percentile_5": 18.95742657563758,
+        "percentile_95": 67.10845569550133
+      },
+      "handover_delay_ms": {
+        "n": 1,
+        "mean": 50.0,
+        "std": 0,
+        "se": 0,
+        "ci_lower": 0,
+        "ci_upper": 0,
+        "ci_width": 0,
+        "min": 50.0,
+        "max": 50.0,
+        "median": 50.0,
+        "q1": 0,
+        "q3": 0,
+        "iqr": 0,
+        "total_handovers": 0
+      }
+    },
+    "high_load": {
+      "rsrp_dBm": {
+        "n": 76,
+        "mean": -110.58184210526315,
+        "std": 5.223198690592146,
+        "se": 0.5991419803769772,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 1.1935520294749873,
+        "ci_lower": -111.77539413473814,
+        "ci_upper": -109.38829007578816,
+        "ci_width": 2.387104058949973,
+        "min": -120.17,
+        "max": -102.78,
+        "median": -110.37,
+        "q1": -114.715,
+        "q3": -105.8075,
+        "iqr": 8.907499999999999,
+        "percentile_5": -118.8925,
+        "percentile_95": -103.0775
+      },
+      "sinr_dB": {
+        "n": 76,
+        "mean": 12.656710526315791,
+        "std": 5.222830493939187,
+        "se": 0.5990997453243035,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 1.1934678929355949,
+        "ci_lower": 11.463242633380197,
+        "ci_upper": 13.850178419251385,
+        "ci_width": 2.386935785871188,
+        "min": 3.07,
+        "max": 20.45,
+        "median": 12.870000000000001,
+        "q1": 8.524999999999999,
+        "q3": 17.4325,
+        "iqr": 8.907500000000002,
+        "percentile_5": 4.3475,
+        "percentile_95": 20.16
+      },
+      "prb_allocation": {
+        "n": 76,
+        "mean": 5.0,
+        "std": 0.0,
+        "se": 0.0,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 0.0,
+        "ci_lower": 5.0,
+        "ci_upper": 5.0,
+        "ci_width": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "median": 5.0,
+        "q1": 5.0,
+        "q3": 5.0,
+        "iqr": 0.0,
+        "percentile_5": 5.0,
+        "percentile_95": 5.0
+      },
+      "throughput_Mbps": {
+        "n": 76,
+        "mean": 43.41191964026764,
+        "std": 16.025912092346434,
+        "se": 1.8382981918053836,
+        "t_critical": 1.9921021536898653,
+        "margin_of_error": 3.66207778701969,
+        "ci_lower": 39.74984185324795,
+        "ci_upper": 47.07399742728733,
+        "ci_width": 7.324155574039381,
+        "min": 15.982140286537835,
+        "max": 68.06291592857464,
+        "median": 43.482950202861176,
+        "q1": 30.21538312497551,
+        "q3": 58.16775654744603,
+        "iqr": 27.952373422470522,
+        "percentile_5": 18.95742657563758,
+        "percentile_95": 67.10845569550133
+      },
+      "handover_delay_ms": {
+        "n": 1,
+        "mean": 50.0,
+        "std": 0,
+        "se": 0,
+        "ci_lower": 0,
+        "ci_upper": 0,
+        "ci_width": 0,
+        "min": 50.0,
+        "max": 50.0,
+        "median": 50.0,
+        "q1": 0,
+        "q3": 0,
+        "iqr": 0,
+        "total_handovers": 0
+      }
+    },
+    "slow_uav": {
+      "rsrp_dBm": {
+        "n": 75,
+        "mean": -110.58333333333333,
+        "std": 5.24070562954031,
+        "se": 0.605144561191737,
+        "t_critical": 1.99254349484682,
+        "margin_of_error": 1.2057768588445288,
+        "ci_lower": -111.78911019217786,
+        "ci_upper": -109.3775564744888,
+        "ci_width": 2.41155371768906,
+        "min": -120.23,
+        "max": -102.86,
+        "median": -110.14,
+        "q1": -115.175,
+        "q3": -105.755,
+        "iqr": 9.420000000000002,
+        "percentile_5": -118.874,
+        "percentile_95": -103.25200000000001
+      },
+      "sinr_dB": {
+        "n": 75,
+        "mean": 12.655066666666665,
+        "std": 5.240351332696128,
+        "se": 0.6051036505160646,
+        "t_critical": 1.99254349484682,
+        "margin_of_error": 1.2056953425438481,
+        "ci_lower": 11.449371324122817,
+        "ci_upper": 13.860762009210513,
+        "ci_width": 2.411390685087696,
+        "min": 3.0,
+        "max": 20.38,
+        "median": 13.1,
+        "q1": 8.065,
+        "q3": 17.479999999999997,
+        "iqr": 9.414999999999997,
+        "percentile_5": 4.3660000000000005,
+        "percentile_95": 19.980999999999998
+      },
+      "prb_allocation": {
+        "n": 75,
+        "mean": 5.0,
+        "std": 0.0,
+        "se": 0.0,
+        "t_critical": 1.99254349484682,
+        "margin_of_error": 0.0,
+        "ci_lower": 5.0,
+        "ci_upper": 5.0,
+        "ci_width": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "median": 5.0,
+        "q1": 5.0,
+        "q3": 5.0,
+        "iqr": 0.0,
+        "percentile_5": 5.0,
+        "percentile_95": 5.0
+      },
+      "throughput_Mbps": {
+        "n": 75,
+        "mean": 43.41289282382997,
+        "std": 16.07118210486204,
+        "se": 1.8557402628875188,
+        "t_critical": 1.99254349484682,
+        "margin_of_error": 3.697643188941853,
+        "ci_lower": 39.71524963488812,
+        "ci_upper": 47.110536012771824,
+        "ci_width": 7.395286377883707,
+        "min": 15.826823549115563,
+        "max": 67.83247538067467,
+        "median": 44.20710062812059,
+        "q1": 28.884940115650952,
+        "q3": 58.32276428356897,
+        "iqr": 29.43782416791802,
+        "percentile_5": 19.00974453340023,
+        "percentile_95": 66.51987708669958
+      },
+      "handover_delay_ms": {
+        "n": 1,
+        "mean": 50.0,
+        "std": 0,
+        "se": 0,
+        "ci_lower": 0,
+        "ci_upper": 0,
+        "ci_width": 0,
+        "min": 50.0,
+        "max": 50.0,
+        "median": 50.0,
+        "q1": 0,
+        "q3": 0,
+        "iqr": 0,
+        "total_handovers": 0
+      }
+    }
+  },
+  "algorithm_statistics": {
+    "Rule-based (xApp)": {
+      "throughput_Mbps": {
+        "n": 77,
+        "mean": 6.966891832218295,
+        "std": 0.9518760794477601,
+        "se": 0.10847634673200686,
+        "t_critical": 1.9916726093523487,
+        "margin_of_error": 0.21604936854874623,
+        "ci_lower": 6.7508424636695485,
+        "ci_upper": 7.182941200767041,
+        "ci_width": 0.43209873709749247,
+        "min": 4.890534927680578,
+        "max": 8.575927407000403,
+        "percentile_5": 5.137824140687367,
+        "percentile_95": 8.455665417633169
+      },
+      "prb_allocation": {
+        "n": 77,
+        "mean": 9.948051948051948,
+        "total_used": 766,
+        "efficiency": 0.7003272468417868
+      },
+      "handover_metrics": {
+        "total_handovers": 11,
+        "total_delay_ms": 550,
+        "ping_pong_count": 3
+      },
+      "rsrp_dBm": {
+        "mean": -110.51987012987013,
+        "samples_below_threshold": 38,
+        "samples_critical": 1
+      },
+      "sinr_dB": {
+        "mean": 12.7187012987013
+      },
+      "quality_metrics": {
+        "service_continuity": 98.7012987012987,
+        "fairness_index": 0.9819084181506257
+      }
+    },
+    "Random Baseline": {
+      "throughput_Mbps": {
+        "n": 77,
+        "mean": 7.938094451608138,
+        "std": 3.891853449502394,
+        "se": 0.44351786260172327,
+        "t_critical": 1.9916726093523487,
+        "margin_of_error": 0.8833423787023507,
+        "ci_lower": 7.054752072905787,
+        "ci_upper": 8.821436830310489,
+        "ci_width": 1.7666847574047013,
+        "min": 1.4383926257884052,
+        "max": 16.911330835266337,
+        "percentile_5": 2.4216138292530376,
+        "percentile_95": 15.348037647407201
+      },
+      "prb_allocation": {
+        "n": 77,
+        "mean": 10.12987012987013,
+        "total_used": 780,
+        "efficiency": 0.7836324009920854
+      },
+      "handover_metrics": {
+        "total_handovers": 4,
+        "total_delay_ms": 200,
+        "ping_pong_count": 0
+      },
+      "rsrp_dBm": {
+        "mean": -110.51987012987013,
+        "samples_below_threshold": 38,
+        "samples_critical": 1
+      },
+      "sinr_dB": {
+        "mean": 12.7187012987013
+      },
+      "quality_metrics": {
+        "service_continuity": 98.7012987012987,
+        "fairness_index": 0.808245132353262
+      }
+    },
+    "Greedy": {
+      "throughput_Mbps": {
+        "n": 77,
+        "mean": 11.239748303232915,
+        "std": 5.812178365259135,
+        "se": 0.6623591969911672,
+        "t_critical": 1.9916726093523487,
+        "margin_of_error": 1.3192026701999242,
+        "ci_lower": 9.92054563303299,
+        "ci_upper": 12.55895097343284,
+        "ci_width": 2.6384053403998484,
+        "min": 2.5891067264191294,
+        "max": 20.827252274143838,
+        "percentile_5": 3.0681520731494385,
+        "percentile_95": 20.535187442823407
+      },
+      "prb_allocation": {
+        "n": 77,
+        "mean": 13.38961038961039,
+        "total_used": 1031,
+        "efficiency": 0.839438040105659
+      },
+      "handover_metrics": {
+        "total_handovers": 42,
+        "total_delay_ms": 2100,
+        "ping_pong_count": 23
+      },
+      "rsrp_dBm": {
+        "mean": -110.51987012987013,
+        "samples_below_threshold": 38,
+        "samples_critical": 1
+      },
+      "sinr_dB": {
+        "mean": 12.7187012987013
+      },
+      "quality_metrics": {
+        "service_continuity": 98.7012987012987,
+        "fairness_index": 0.7911835108265247
+      }
+    },
+    "Conservative": {
+      "throughput_Mbps": {
+        "n": 77,
+        "mean": 6.5155285478484855,
+        "std": 1.9998469225176372,
+        "se": 0.22790370812114283,
+        "t_critical": 1.9916726093523487,
+        "margin_of_error": 0.4539095730347126,
+        "ci_lower": 6.061618974813773,
+        "ci_upper": 6.969438120883198,
+        "ci_width": 0.9078191460694252,
+        "min": 3.4521423018921724,
+        "max": 9.801059893714747,
+        "percentile_5": 3.836059943565729,
+        "percentile_95": 9.663617620152193
+      },
+      "prb_allocation": {
+        "n": 77,
+        "mean": 8.623376623376624,
+        "total_used": 664,
+        "efficiency": 0.7555658105185743
+      },
+      "handover_metrics": {
+        "total_handovers": 4,
+        "total_delay_ms": 200,
+        "ping_pong_count": 0
+      },
+      "rsrp_dBm": {
+        "mean": -110.51987012987013,
+        "samples_below_threshold": 38,
+        "samples_critical": 1
+      },
+      "sinr_dB": {
+        "mean": 12.7187012987013
+      },
+      "quality_metrics": {
+        "service_continuity": 98.7012987012987,
+        "fairness_index": 0.9149248910056627
+      }
+    }
+  },
+  "ci_overlap_analysis": {
+    "baseline_vs_fast_uav": {
+      "rsrp_dBm": {
+        "overlap": true,
+        "overlap_amount": 2.387104058949973,
+        "gap": 0,
+        "effect_size": 0.0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      },
+      "sinr_dB": {
+        "overlap": true,
+        "overlap_amount": 2.386935785871188,
+        "gap": 0,
+        "effect_size": 0.0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      },
+      "throughput_Mbps": {
+        "overlap": true,
+        "overlap_amount": 7.324155574039381,
+        "gap": 0,
+        "effect_size": 0.0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      },
+      "prb_allocation": {
+        "overlap": true,
+        "overlap_amount": 0.0,
+        "gap": 0,
+        "effect_size": 0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      }
+    },
+    "baseline_vs_high_load": {
+      "rsrp_dBm": {
+        "overlap": true,
+        "overlap_amount": 2.387104058949973,
+        "gap": 0,
+        "effect_size": 0.0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      },
+      "sinr_dB": {
+        "overlap": true,
+        "overlap_amount": 2.386935785871188,
+        "gap": 0,
+        "effect_size": 0.0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      },
+      "throughput_Mbps": {
+        "overlap": true,
+        "overlap_amount": 7.324155574039381,
+        "gap": 0,
+        "effect_size": 0.0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      },
+      "prb_allocation": {
+        "overlap": true,
+        "overlap_amount": 0.0,
+        "gap": 0,
+        "effect_size": 0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      }
+    },
+    "baseline_vs_slow_uav": {
+      "rsrp_dBm": {
+        "overlap": true,
+        "overlap_amount": 2.387104058949973,
+        "gap": 0,
+        "effect_size": 0.00028502286287091985,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": -0.001491228070179318,
+        "percent_difference": -0.001348528873989831
+      },
+      "sinr_dB": {
+        "overlap": true,
+        "overlap_amount": 2.386935785871188,
+        "gap": 0,
+        "effect_size": 0.00031421748597221797,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": -0.001643859649126611,
+        "percent_difference": -0.01298804808491672
+      },
+      "throughput_Mbps": {
+        "overlap": true,
+        "overlap_amount": 7.324155574039381,
+        "gap": 0,
+        "effect_size": 6.063991889099544e-05,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0009731835623298934,
+        "percent_difference": 0.002241742752668317
+      },
+      "prb_allocation": {
+        "overlap": true,
+        "overlap_amount": 0.0,
+        "gap": 0,
+        "effect_size": 0,
+        "effect_interpretation": "negligible",
+        "statistically_significant": false,
+        "mean_difference": 0.0,
+        "percent_difference": 0.0
+      }
+    }
+  },
+  "summary": {
+    "scenarios_analyzed": 4,
+    "algorithms_analyzed": 4,
+    "total_samples": 303
+  }
+}

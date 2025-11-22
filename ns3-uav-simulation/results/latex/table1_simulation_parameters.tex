@@ -1,0 +1,40 @@
+\begin{table}[htbp]
+\centering
+\caption{Simulation Parameters}
+\label{tab:simulation_parameters}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
+\midrule
+\multicolumn{3}{l}{\textit{Network Configuration}} \\
+Number of eNBs & 3 & LTE base stations \\
+Number of UAVs & 1 & Unmanned aerial vehicle \\
+Carrier Frequency & 2.1 GHz & LTE Band 1 \\
+Bandwidth & 20 MHz & System bandwidth \\
+Total PRBs & 100 & Physical resource blocks \\
+\midrule
+\multicolumn{3}{l}{\textit{UAV Parameters}} \\
+Flight Altitude & 100 m & Above ground level \\
+UAV Speed (Baseline) & 20 m/s & Default velocity \\
+UAV Speed (Fast) & 40 m/s & High-speed scenario \\
+UAV Speed (Slow) & 10 m/s & Low-speed scenario \\
+Flight Pattern & Linear & Point-to-point trajectory \\
+\midrule
+\multicolumn{3}{l}{\textit{Channel Model}} \\
+Path Loss Model & Cost231 & Urban propagation \\
+Fading Model & Nakagami & Multipath fading \\
+Shadow Fading & 8 dB & Log-normal std. dev. \\
+\midrule
+\multicolumn{3}{l}{\textit{Handover Parameters}} \\
+RSRP Threshold & $-110$ dBm & Handover trigger \\
+Critical Threshold & $-120$ dBm & Service degradation \\
+TTT (Time-to-Trigger) & 256 ms & Handover delay \\
+Hysteresis & 3 dB & Ping-pong prevention \\
+\midrule
+\multicolumn{3}{l}{\textit{Simulation Settings}} \\
+Duration & 75 s & Total simulation time \\
+Sampling Interval & 1 s & Measurement period \\
+Slice Type & eMBB & Enhanced mobile broadband \\
+\bottomrule
+\end{tabular}
+\end{table}

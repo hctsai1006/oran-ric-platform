@@ -1,0 +1,29 @@
+% Table 6: Algorithm Comparison Results
+\begin{table}[htbp]
+\centering
+\caption{Resource Allocation Algorithm Comparison}
+\label{tab:algorithm_comparison}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Rule-based} & \textbf{Random} & \textbf{Greedy} & \textbf{Conservative} \\
+ & \textbf{(xApp)} & \textbf{Baseline} & & \\
+\midrule
+\multicolumn{5}{l}{\textit{Throughput Performance}} \\
+Avg Throughput (Mbps) & 6.97 & 7.94 & \textbf{11.24} & 6.52 \\
+Min Throughput (Mbps) & \textbf{4.89} & 1.44 & 2.59 & 3.45 \\
+5th Percentile (Mbps) & \textbf{5.14} & 2.42 & 3.07 & 3.84 \\
+\midrule
+\multicolumn{5}{l}{\textit{Resource Efficiency}} \\
+Avg PRB Allocation & 9.9 & 10.1 & 13.4 & \textbf{8.6} \\
+PRB Efficiency (Mbps/PRB) & 0.700 & 0.784 & \textbf{0.839} & 0.756 \\
+\midrule
+\multicolumn{5}{l}{\textit{Handover Performance}} \\
+Handover Count & 11 & \textbf{4} & 42 & \textbf{4} \\
+Ping-Pong Handovers & 3 & \textbf{0} & 23 & \textbf{0} \\
+\midrule
+\multicolumn{5}{l}{\textit{QoS Metrics}} \\
+Service Continuity (\%) & \textbf{98.7} & 98.7 & 98.7 & 98.7 \\
+Fairness Index (Jain's) & \textbf{0.982} & 0.808 & 0.791 & 0.915 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,52 @@
+% Scenario Metrics with 95% Confidence Intervals
+\begin{table}[htbp]
+\centering
+\caption{Performance Metrics with 95\% Confidence Intervals}
+\label{tab:ci_metrics}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Scenario} & \textbf{Metric} & \textbf{Mean} & \textbf{95\% CI} & \textbf{SE} \\
+\hline
+baseline & rsrp dBm & -110.58 & [-111.78, -109.39] & 0.599 \\
+ & sinr dB & 12.66 & [11.46, 13.85] & 0.599 \\
+ & prb allocation & 5.00 & [5.00, 5.00] & 0.000 \\
+ & throughput Mbps & 43.41 & [39.75, 47.07] & 1.838 \\
+ & handover delay ms & 50.00 & [0.00, 0.00] & 0.000 \\
+\hline
+fast\_uav & rsrp dBm & -110.58 & [-111.78, -109.39] & 0.599 \\
+ & sinr dB & 12.66 & [11.46, 13.85] & 0.599 \\
+ & prb allocation & 5.00 & [5.00, 5.00] & 0.000 \\
+ & throughput Mbps & 43.41 & [39.75, 47.07] & 1.838 \\
+ & handover delay ms & 50.00 & [0.00, 0.00] & 0.000 \\
+\hline
+high\_load & rsrp dBm & -110.58 & [-111.78, -109.39] & 0.599 \\
+ & sinr dB & 12.66 & [11.46, 13.85] & 0.599 \\
+ & prb allocation & 5.00 & [5.00, 5.00] & 0.000 \\
+ & throughput Mbps & 43.41 & [39.75, 47.07] & 1.838 \\
+ & handover delay ms & 50.00 & [0.00, 0.00] & 0.000 \\
+\hline
+slow\_uav & rsrp dBm & -110.58 & [-111.79, -109.38] & 0.605 \\
+ & sinr dB & 12.66 & [11.45, 13.86] & 0.605 \\
+ & prb allocation & 5.00 & [5.00, 5.00] & 0.000 \\
+ & throughput Mbps & 43.41 & [39.72, 47.11] & 1.856 \\
+ & handover delay ms & 50.00 & [0.00, 0.00] & 0.000 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Algorithm Comparison with 95% Confidence Intervals
+\begin{table}[htbp]
+\centering
+\caption{Algorithm Throughput Comparison with 95\% CI}
+\label{tab:algo_ci}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Algorithm} & \textbf{Mean (Mbps)} & \textbf{Std} & \textbf{95\% CI} & \textbf{n} \\
+\hline
+Rule-based \(xApp\) & 6.97 & 0.95 & [6.75, 7.18] & 77 \\
+Random Baseline & 7.94 & 3.89 & [7.05, 8.82] & 77 \\
+Greedy & 11.24 & 5.81 & [9.92, 12.56] & 77 \\
+Conservative & 6.52 & 2.00 & [6.06, 6.97] & 77 \\
+\hline
+\end{tabular}
+\end{table}

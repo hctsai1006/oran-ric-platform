@@ -1,0 +1,35 @@
+\begin{table}[htbp]
+\centering
+\caption{Baseline vs xApp Performance Comparison}
+\label{tab:performance_improvement}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Metric} & \textbf{Baseline} & \textbf{xApp} & \textbf{Improvement} \\
+\midrule
+\multicolumn{4}{l}{\textit{Signal Quality}} \\
+Average RSRP (dBm) & -110.52 & -110.52 & 0.00\% \\
+Min RSRP (dBm) & -120.17 & -120.17 & -- \\
+Max RSRP (dBm) & -102.78 & -102.78 & -- \\
+RSRP Std Dev (dB) & 5.22 & 5.22 & -- \\
+\midrule
+\multicolumn{4}{l}{\textit{Channel Quality}} \\
+Average SINR (dB) & 12.72 & 12.72 & 0.00\% \\
+Min SINR (dB) & 3.07 & 3.07 & -- \\
+Max SINR (dB) & 20.45 & 20.45 & -- \\
+\midrule
+\multicolumn{4}{l}{\textit{Throughput \& Efficiency}} \\
+Avg Throughput (Mbps) & 7.85 & 7.52 & -4.17\% \\
+Resource Efficiency & 0.78 & 0.78 & 0.00\% \\
+PRB Utilization & 10.00\\% & 10.71\\% & -7.14\% \\
+\midrule
+\multicolumn{4}{l}{\textit{Handover Performance}} \\
+Handover Count & 2 & 2 & -- \\
+Total HO Delay (ms) & 100 & 60 & +40.00\% \\
+Avg PRB Allocation & 10.00 & 10.71 & -7.14\% \\
+\midrule
+\multicolumn{4}{l}{\textit{Quality Indicators}} \\
+Samples Below Threshold & 38 & 38 & -- \\
+Critical Samples & 1 & 1 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,5 @@
+Algorithm,Avg Throughput (Mbps),Min Throughput (Mbps),Max Throughput (Mbps),Avg PRB,PRB Efficiency,Handover Count,Ping-Pong Count,HO Delay (ms),Service Continuity (%),Fairness Index
+Rule-based (xApp),6.97,4.89,8.58,9.9,0.7003,11,3,550,98.7,0.9819
+Random Baseline,7.94,1.44,16.91,10.1,0.7836,4,0,200,98.7,0.8082
+Greedy,11.24,2.59,20.83,13.4,0.8394,42,23,2100,98.7,0.7912
+Conservative,6.52,3.45,9.80,8.6,0.7556,4,0,200,98.7,0.9149

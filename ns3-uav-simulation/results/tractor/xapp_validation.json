@@ -1,0 +1,173 @@
+{
+  "start_time": "2025-11-21T23:31:36.703122",
+  "total_samples": 20,
+  "xapp_decisions": [
+    {
+      "time": 1.992,
+      "cell_id": 1,
+      "rsrp": -66.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 3.237,
+      "cell_id": 1,
+      "rsrp": -66.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 4.482,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 5.727,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 6.972,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 8.217,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 9.462,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 10.707,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 11.952,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 13.197,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 14.442,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 15.687,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 16.932,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 18.177,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 19.422,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 20.667,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 21.912,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 23.157,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 24.402,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    },
+    {
+      "time": 25.647,
+      "cell_id": 1,
+      "rsrp": -65.0,
+      "sinr": 14.0,
+      "action": "MAINTAIN",
+      "prb_quota": 5
+    }
+  ],
+  "handover_recommendations": 0,
+  "maintain_decisions": 20,
+  "avg_rsrp": -65.1,
+  "decision_distribution": {
+    "MAINTAIN": 20
+  },
+  "end_time": "2025-11-21T23:31:36.726105"
+}

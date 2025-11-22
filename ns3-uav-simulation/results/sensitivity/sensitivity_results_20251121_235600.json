@@ -1,0 +1,538 @@
+{
+  "timestamp": "20251121_235600",
+  "base_data_file": "/tmp/ns3-uav-full.csv",
+  "base_data_samples": 75998,
+  "parameter_ranges": {
+    "rsrp_threshold_dbm": [
+      -105,
+      -110,
+      -115,
+      -120
+    ],
+    "ttt_ms": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "hysteresis_db": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "uav_speed_ms": [
+      5,
+      10,
+      20,
+      30,
+      40
+    ]
+  },
+  "results": {
+    "rsrp_threshold": [
+      {
+        "parameter_name": "RSRP Threshold",
+        "parameter_value": -105,
+        "metrics": {
+          "avg_throughput": 11.890309599146056,
+          "handover_count": 9,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.1113275,
+          "avg_rsrp": -125.37854161969,
+          "avg_sinr": 18.38758381943823,
+          "samples_below_threshold": 11528,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "RSRP Threshold",
+        "parameter_value": -110,
+        "metrics": {
+          "avg_throughput": 11.918675542519741,
+          "handover_count": 9,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11118916666666667,
+          "avg_rsrp": -125.30179643920319,
+          "avg_sinr": 18.454973576336712,
+          "samples_below_threshold": 11219,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "RSRP Threshold",
+        "parameter_value": -115,
+        "metrics": {
+          "avg_throughput": 11.932625542731463,
+          "handover_count": 10,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11156916666666668,
+          "avg_rsrp": -125.43228955394174,
+          "avg_sinr": 18.399383055145254,
+          "samples_below_threshold": 10847,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "RSRP Threshold",
+        "parameter_value": -120,
+        "metrics": {
+          "avg_throughput": 11.898205905599008,
+          "handover_count": 9,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11131916666666668,
+          "avg_rsrp": -125.38405958779772,
+          "avg_sinr": 18.398085798650204,
+          "samples_below_threshold": 10017,
+          "total_samples": 12000
+        }
+      }
+    ],
+    "ttt": [
+      {
+        "parameter_name": "TTT",
+        "parameter_value": 64,
+        "metrics": {
+          "avg_throughput": 11.908744904280432,
+          "handover_count": 12,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11123583333333333,
+          "avg_rsrp": -125.34527717668031,
+          "avg_sinr": 18.43243060578483,
+          "samples_below_threshold": 11223,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "TTT",
+        "parameter_value": 128,
+        "metrics": {
+          "avg_throughput": 11.927750026752815,
+          "handover_count": 10,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11148583333333333,
+          "avg_rsrp": -125.42121744402219,
+          "avg_sinr": 18.405940626477214,
+          "samples_below_threshold": 11250,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "TTT",
+        "parameter_value": 256,
+        "metrics": {
+          "avg_throughput": 11.938749004068109,
+          "handover_count": 9,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11137999999999999,
+          "avg_rsrp": -125.35649613596664,
+          "avg_sinr": 18.446271777652395,
+          "samples_below_threshold": 11242,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "TTT",
+        "parameter_value": 512,
+        "metrics": {
+          "avg_throughput": 11.92279552981664,
+          "handover_count": 7,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11137583333333334,
+          "avg_rsrp": -125.38596695070166,
+          "avg_sinr": 18.422631845021392,
+          "samples_below_threshold": 11224,
+          "total_samples": 12000
+        }
+      }
+    ],
+    "hysteresis": [
+      {
+        "parameter_name": "Hysteresis",
+        "parameter_value": 1,
+        "metrics": {
+          "avg_throughput": 11.922011056614918,
+          "handover_count": 11,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11144916666666667,
+          "avg_rsrp": -125.40798037192961,
+          "avg_sinr": 18.406103064238273,
+          "samples_below_threshold": 11235,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "Hysteresis",
+        "parameter_value": 2,
+        "metrics": {
+          "avg_throughput": 11.919083139900064,
+          "handover_count": 10,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11138916666666666,
+          "avg_rsrp": -125.40051547724832,
+          "avg_sinr": 18.413290093283997,
+          "samples_below_threshold": 11223,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "Hysteresis",
+        "parameter_value": 3,
+        "metrics": {
+          "avg_throughput": 11.89705304826757,
+          "handover_count": 9,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11129833333333333,
+          "avg_rsrp": -125.36735301211796,
+          "avg_sinr": 18.39996312681476,
+          "samples_below_threshold": 11231,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "Hysteresis",
+        "parameter_value": 4,
+        "metrics": {
+          "avg_throughput": 11.906245922024603,
+          "handover_count": 10,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11145916666666666,
+          "avg_rsrp": -125.43634307569909,
+          "avg_sinr": 18.376947944410567,
+          "samples_below_threshold": 11252,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "Hysteresis",
+        "parameter_value": 5,
+        "metrics": {
+          "avg_throughput": 11.921580191396762,
+          "handover_count": 10,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11146583333333333,
+          "avg_rsrp": -125.40276403157603,
+          "avg_sinr": 18.403346486470763,
+          "samples_below_threshold": 11231,
+          "total_samples": 12000
+        }
+      }
+    ],
+    "uav_speed": [
+      {
+        "parameter_name": "UAV Speed",
+        "parameter_value": 5,
+        "metrics": {
+          "avg_throughput": 11.84989244742453,
+          "handover_count": 5,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11201833333333333,
+          "avg_rsrp": -125.68009675177927,
+          "avg_sinr": 18.182244552834515,
+          "samples_below_threshold": 11264,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "UAV Speed",
+        "parameter_value": 10,
+        "metrics": {
+          "avg_throughput": 11.896591950963556,
+          "handover_count": 10,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.11126833333333334,
+          "avg_rsrp": -125.3617913163852,
+          "avg_sinr": 18.407030234783036,
+          "samples_below_threshold": 11220,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "UAV Speed",
+        "parameter_value": 20,
+        "metrics": {
+          "avg_throughput": 12.017091402431078,
+          "handover_count": 20,
+          "ping_pong_count": 0,
+          "service_continuity": 0.85,
+          "prb_utilization": 0.10940666666666667,
+          "avg_rsrp": -124.5877125163841,
+          "avg_sinr": 18.96130937256425,
+          "samples_below_threshold": 11150,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "UAV Speed",
+        "parameter_value": 30,
+        "metrics": {
+          "avg_throughput": 12.093344406918227,
+          "handover_count": 24,
+          "ping_pong_count": 3,
+          "service_continuity": 0.8175,
+          "prb_utilization": 0.10659666666666666,
+          "avg_rsrp": -123.44520977786715,
+          "avg_sinr": 19.65454565865907,
+          "samples_below_threshold": 10948,
+          "total_samples": 12000
+        }
+      },
+      {
+        "parameter_name": "UAV Speed",
+        "parameter_value": 40,
+        "metrics": {
+          "avg_throughput": 12.066121891349955,
+          "handover_count": 16,
+          "ping_pong_count": 7,
+          "service_continuity": 0.80625,
+          "prb_utilization": 0.1031925,
+          "avg_rsrp": -122.16474772932729,
+          "avg_sinr": 20.318480138187663,
+          "samples_below_threshold": 10666,
+          "total_samples": 12000
+        }
+      }
+    ]
+  },
+  "heatmap_data": {
+    "ttt_values": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "hysteresis_values": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "handover_matrix": [
+      [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        10.0
+      ],
+      [
+        10.0,
+        9.0,
+        9.0,
+        9.0,
+        10.0
+      ],
+      [
+        9.0,
+        9.0,
+        10.0,
+        9.0,
+        10.0
+      ],
+      [
+        9.0,
+        9.0,
+        9.0,
+        9.0,
+        9.0
+      ]
+    ],
+    "pingpong_matrix": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "throughput_matrix": [
+      [
+        11.91226235957789,
+        11.917708008825919,
+        11.919735745299448,
+        11.885808408310435,
+        11.929129345203915
+      ],
+      [
+        11.917565911958768,
+        11.910250158898672,
+        11.907043391753385,
+        11.916188552655687,
+        11.910068611452573
+      ],
+      [
+        11.893970091596392,
+        11.923860847005104,
+        11.910827279682973,
+        11.924639691156022,
+        11.905110332311633
+      ],
+      [
+        11.914992381310666,
+        11.93030701487525,
+        11.914268602951287,
+        11.922710419789988,
+        11.904697724768573
+      ]
+    ],
+    "continuity_matrix": [
+      [
+        85.0,
+        85.0,
+        85.0,
+        85.0,
+        85.0
+      ],
+      [
+        85.0,
+        85.0,
+        85.0,
+        85.0,
+        85.0
+      ],
+      [
+        85.0,
+        85.0,
+        85.0,
+        85.0,
+        85.0
+      ],
+      [
+        85.0,
+        85.0,
+        85.0,
+        85.0,
+        85.0
+      ]
+    ]
+  },
+  "summary": {
+    "rsrp_threshold": {
+      "handover_range": [
+        9,
+        10
+      ],
+      "handover_sensitivity": 0.09999000099990002,
+      "throughput_range": [
+        11.890309599146056,
+        11.932625542731463
+      ],
+      "throughput_sensitivity": 0.0035459419632268654,
+      "pingpong_range": [
+        0,
+        0
+      ],
+      "continuity_range": [
+        0.85,
+        0.85
+      ],
+      "optimal_value": -115,
+      "optimal_score": 0.955
+    },
+    "ttt": {
+      "handover_range": [
+        7,
+        12
+      ],
+      "handover_sensitivity": 0.41663194733772185,
+      "throughput_range": [
+        11.908744904280432,
+        11.938749004068109
+      ],
+      "throughput_sensitivity": 0.0025129590058763983,
+      "pingpong_range": [
+        0,
+        0
+      ],
+      "continuity_range": [
+        0.85,
+        0.85
+      ],
+      "optimal_value": 256,
+      "optimal_score": 0.955
+    },
+    "hysteresis": {
+      "handover_range": [
+        9,
+        11
+      ],
+      "handover_sensitivity": 0.181801654395055,
+      "throughput_range": [
+        11.89705304826757,
+        11.922011056614918
+      ],
+      "throughput_sensitivity": 0.002093263876787443,
+      "pingpong_range": [
+        0,
+        0
+      ],
+      "continuity_range": [
+        0.85,
+        0.85
+      ],
+      "optimal_value": 1,
+      "optimal_score": 0.955
+    },
+    "uav_speed": {
+      "handover_range": [
+        5,
+        24
+      ],
+      "handover_sensitivity": 0.7916336819299196,
+      "throughput_range": [
+        11.84989244742453,
+        12.093344406918227
+      ],
+      "throughput_sensitivity": 0.020129405224679847,
+      "pingpong_range": [
+        0,
+        7
+      ],
+      "continuity_range": [
+        0.80625,
+        0.85
+      ],
+      "optimal_value": 20,
+      "optimal_score": 0.9531083891621362
+    }
+  }
+}

@@ -1,0 +1,6 @@
+Algorithm,Avg_PRB,Throughput_Mbps,PRB_Energy_J,Tx_Energy_J,eNB_Energy_J,Efficiency_Mbits_per_J,Battery_Usage_Pct,Flight_Extension_Pct
+Baseline (Fixed),10.00,7.85,385.00,15.3635,4620.00,1.51,3.2554,0.00
+xApp (Adaptive),8.78,5.97,338.00,15.3635,4526.00,1.30,3.2554,0.00
+Greedy,13.39,11.24,515.50,15.3635,4881.00,1.63,3.2554,0.00
+Conservative,8.62,6.52,332.00,15.3635,4514.00,1.44,3.2554,0.00
+Energy-Optimal,6.29,4.43,242.00,15.3635,4334.00,1.32,3.2554,0.00

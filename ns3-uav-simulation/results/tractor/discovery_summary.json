@@ -1,0 +1,57 @@
+{
+  "discovery_time": "2025-11-21T23:31:36.692120",
+  "extracted_data": {
+    "kpm_dir": "/home/thc1006/dev/tractor-data/kpm",
+    "logs_dir": "/home/thc1006/dev/tractor-data/logs",
+    "clusters": [
+      "cluster_1"
+    ],
+    "reservations": [
+      "RESERVATION-142634"
+    ],
+    "ue_metrics_files": [
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/ue_001010123456002/ue_metrics.csv"
+    ],
+    "bs_metrics_files": [
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456004_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456006_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456009_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456005_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456008_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456003_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456002_metrics.csv",
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/1010123456007_metrics.csv"
+    ],
+    "enb_metrics_files": [
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/bs/enb_metrics.csv"
+    ],
+    "mgen_files": [
+      "/home/thc1006/dev/tractor-data/kpm/dataset-kpm/cluster_1/slicing_1/scheduling_0/RESERVATION-142634/ue_001010123456002/mgen.csv"
+    ],
+    "total_csv_files": 11,
+    "total_size_mb": 19.87
+  },
+  "zip_archives": {
+    "zip_files": [
+      {
+        "name": "neu_ms35v131q.zip",
+        "path": "/home/thc1006/dev/dataset/neu_ms35v131q.zip",
+        "size_gb": 23.28
+      },
+      {
+        "name": "neu_ms35v1320.zip",
+        "path": "/home/thc1006/dev/dataset/neu_ms35v1320.zip",
+        "size_gb": 9.67
+      }
+    ],
+    "total_size_gb": 32.95
+  },
+  "data_availability": {
+    "has_extracted_kpm": true,
+    "has_extracted_logs": true,
+    "has_zip_archives": true,
+    "ue_metrics_count": 1,
+    "bs_metrics_count": 8,
+    "mgen_flow_count": 1
+  }
+}

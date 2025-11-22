@@ -1,0 +1,3377 @@
+{
+  "scenario_name": "5uav_dense",
+  "description": "5 UAV Dense Deployment - Resource competition, congestion testing",
+  "num_uavs": 5,
+  "total_samples": 655,
+  "simulation_duration": 75.0,
+  "timestamp": "2025-11-21T23:33:46.361752",
+  "total_prb_utilization": 13232,
+  "avg_prb_utilization": 0.8762913907284768,
+  "peak_prb_utilization": 0.99,
+  "total_interference_events": 0,
+  "avg_system_throughput_mbps": 13.840241169697977,
+  "uav_metrics": [
+    {
+      "uav_id": "uav-alpha",
+      "total_samples": 151,
+      "avg_rsrp": -110.58258278145695,
+      "min_rsrp": -120.23,
+      "max_rsrp": -102.78,
+      "std_rsrp": 5.214431955458,
+      "avg_sinr": 12.655894039735099,
+      "avg_throughput_mbps": 14.922606544496249,
+      "avg_prb_allocated": 20.370860927152318,
+      "handover_count": 2,
+      "maintain_count": 149,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.48344370860927155,
+      "samples_below_threshold": 78,
+      "avg_interference": 0.0786555736690321
+    },
+    {
+      "uav_id": "uav-beta",
+      "total_samples": 141,
+      "avg_rsrp": -112.98375886524823,
+      "min_rsrp": -122.23,
+      "max_rsrp": -104.78,
+      "std_rsrp": 5.164491337006011,
+      "avg_sinr": 11.25468085106383,
+      "avg_throughput_mbps": 14.013403808898154,
+      "avg_prb_allocated": 21.156028368794328,
+      "handover_count": 2,
+      "maintain_count": 139,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.8936170212765957,
+      "samples_below_threshold": 93,
+      "avg_interference": 0.0842339831491053
+    },
+    {
+      "uav_id": "uav-gamma",
+      "total_samples": 131,
+      "avg_rsrp": -113.16984732824427,
+      "min_rsrp": -122.23,
+      "max_rsrp": -104.78,
+      "std_rsrp": 5.289278849308553,
+      "avg_sinr": 11.068473282442747,
+      "avg_throughput_mbps": 13.47150978273187,
+      "avg_prb_allocated": 20.412213740458014,
+      "handover_count": 2,
+      "maintain_count": 129,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.8854961832061069,
+      "samples_below_threshold": 87,
+      "avg_interference": 0.013081707677823896
+    },
+    {
+      "uav_id": "uav-delta",
+      "total_samples": 121,
+      "avg_rsrp": -112.66472215059487,
+      "min_rsrp": -122.01885438199983,
+      "max_rsrp": -104.56885438199983,
+      "std_rsrp": 5.3799438766312875,
+      "avg_sinr": 11.46788685858686,
+      "avg_throughput_mbps": 13.201471847048156,
+      "avg_prb_allocated": 19.702479338842974,
+      "handover_count": 2,
+      "maintain_count": 119,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.8842975206611571,
+      "samples_below_threshold": 76,
+      "avg_interference": 0.0
+    },
+    {
+      "uav_id": "uav-epsilon",
+      "total_samples": 111,
+      "avg_rsrp": -111.95407960722505,
+      "min_rsrp": -122.01885438199983,
+      "max_rsrp": -104.56885438199983,
+      "std_rsrp": 5.034851599663155,
+      "avg_sinr": 12.178455691882967,
+      "avg_throughput_mbps": 13.279356449080183,
+      "avg_prb_allocated": 19.054054054054053,
+      "handover_count": 1,
+      "maintain_count": 110,
+      "error_count": 0,
+      "qos_satisfaction_rate": 0.9369369369369369,
+      "samples_below_threshold": 66,
+      "avg_interference": 0.015438772124278652
+    }
+  ],
+  "prb_utilization_timeline": [
+    {
+      "time": 0.0,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 0.5,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 1.0,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 1.5,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 2.0,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 2.5,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 3.0,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 3.5,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 4.0,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 4.5,
+      "total_prb_used": 25,
+      "utilization": 0.25,
+      "per_uav": {
+        "uav-alpha": 25
+      }
+    },
+    {
+      "time": 5.0,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 5.5,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 6.0,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 6.5,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 7.0,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 7.5,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 8.0,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 8.5,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 9.0,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 9.5,
+      "total_prb_used": 50,
+      "utilization": 0.5,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25
+      }
+    },
+    {
+      "time": 10.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 10.5,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 11.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 11.5,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 12.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 12.5,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 13.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 13.5,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 14.0,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 14.5,
+      "total_prb_used": 75,
+      "utilization": 0.75,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 25
+      }
+    },
+    {
+      "time": 15.0,
+      "total_prb_used": 91,
+      "utilization": 0.91,
+      "per_uav": {
+        "uav-alpha": 22,
+        "uav-beta": 22,
+        "uav-gamma": 22,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 15.5,
+      "total_prb_used": 91,
+      "utilization": 0.91,
+      "per_uav": {
+        "uav-alpha": 22,
+        "uav-beta": 22,
+        "uav-gamma": 22,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 16.0,
+      "total_prb_used": 91,
+      "utilization": 0.91,
+      "per_uav": {
+        "uav-alpha": 22,
+        "uav-beta": 22,
+        "uav-gamma": 22,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 16.5,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 17.0,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 17.5,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 18.0,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 18.5,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 19.0,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 19.5,
+      "total_prb_used": 90,
+      "utilization": 0.9,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25
+      }
+    },
+    {
+      "time": 20.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 20.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 21.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 21.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 22.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 22.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 23.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 23.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 24.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 24.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 25.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 16
+      }
+    },
+    {
+      "time": 25.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 26.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 26.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 27.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 27.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 28.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 28.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 25,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 29.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 25,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 29.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 25,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 30.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 25,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 30.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 31.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 31.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 32.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 32.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 33.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 33.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 34.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 25,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 34.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 25,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 35.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 25,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 35.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 36.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 36.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 37.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 37.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 38.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 38.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 39.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 39.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 40.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 40.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 41.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 41.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 42.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 23,
+        "uav-delta": 23,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 42.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 23,
+        "uav-delta": 23,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 43.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 23,
+        "uav-delta": 23,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 43.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 44.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 44.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 45.0,
+      "total_prb_used": 93,
+      "utilization": 0.93,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 15,
+        "uav-delta": 23,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 45.5,
+      "total_prb_used": 93,
+      "utilization": 0.93,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 15,
+        "uav-delta": 23,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 46.0,
+      "total_prb_used": 93,
+      "utilization": 0.93,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 15,
+        "uav-delta": 23,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 46.5,
+      "total_prb_used": 93,
+      "utilization": 0.93,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 15,
+        "uav-delta": 23,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 47.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 16,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 25,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 47.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 16,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 25,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 48.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 16,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 25,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 48.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 16,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 25,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 49.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 16,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 25,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 49.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 15,
+        "uav-gamma": 15,
+        "uav-delta": 23,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 50.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 50.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 51.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 16,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 25
+      }
+    },
+    {
+      "time": 51.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 52.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 52.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 53.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 53.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 54.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 54.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 15,
+        "uav-delta": 15,
+        "uav-epsilon": 23
+      }
+    },
+    {
+      "time": 55.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 16
+      }
+    },
+    {
+      "time": 55.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 16
+      }
+    },
+    {
+      "time": 56.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 25,
+        "uav-gamma": 16,
+        "uav-delta": 16,
+        "uav-epsilon": 16
+      }
+    },
+    {
+      "time": 56.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 57.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 57.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 58.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 25,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 58.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 59.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 59.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 60.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 60.5,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 23,
+        "uav-beta": 23,
+        "uav-gamma": 23,
+        "uav-delta": 15,
+        "uav-epsilon": 15
+      }
+    },
+    {
+      "time": 61.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 25,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 61.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 25,
+        "uav-gamma": 21,
+        "uav-delta": 14,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 62.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 62.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 63.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 63.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 64.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 64.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 25,
+        "uav-gamma": 20,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 65.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 65.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 21,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 14
+      }
+    },
+    {
+      "time": 66.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 66.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 20,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 13
+      }
+    },
+    {
+      "time": 67.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 67.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 68.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 68.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 69.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 69.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 25,
+        "uav-delta": 20,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 70.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 70.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 71.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 21,
+        "uav-gamma": 21,
+        "uav-delta": 21,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 71.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 72.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 72.5,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 73.0,
+      "total_prb_used": 98,
+      "utilization": 0.98,
+      "per_uav": {
+        "uav-alpha": 13,
+        "uav-beta": 20,
+        "uav-gamma": 20,
+        "uav-delta": 25,
+        "uav-epsilon": 20
+      }
+    },
+    {
+      "time": 73.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 74.0,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 74.5,
+      "total_prb_used": 95,
+      "utilization": 0.95,
+      "per_uav": {
+        "uav-alpha": 14,
+        "uav-beta": 14,
+        "uav-gamma": 21,
+        "uav-delta": 25,
+        "uav-epsilon": 21
+      }
+    },
+    {
+      "time": 75.0,
+      "total_prb_used": 99,
+      "utilization": 0.99,
+      "per_uav": {
+        "uav-alpha": 15,
+        "uav-beta": 15,
+        "uav-gamma": 23,
+        "uav-delta": 23,
+        "uav-epsilon": 23
+      }
+    }
+  ],
+  "interference_timeline": [
+    {
+      "time": 0.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 0.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 1.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 1.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 2.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 2.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 3.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 3.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 4.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 4.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0
+      }
+    },
+    {
+      "time": 5.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 5.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 6.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 6.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 7.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 7.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 8.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 8.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 9.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 9.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002
+      }
+    },
+    {
+      "time": 10.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 10.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 11.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 11.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 12.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 12.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 13.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 13.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 14.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 14.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0
+      }
+    },
+    {
+      "time": 15.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 15.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 16.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 16.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 17.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 17.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 18.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 18.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 19.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 19.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0
+      }
+    },
+    {
+      "time": 20.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 20.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 21.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 21.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 22.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 22.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 23.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 23.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 24.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 24.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 25.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 25.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 26.0,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 26.5,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 27.0,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 27.5,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 28.0,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 28.5,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 29.0,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 29.5,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 30.0,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 30.5,
+      "total_interference": 0.195,
+      "per_uav": {
+        "uav-alpha": 0.0975,
+        "uav-beta": 0.0975,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 31.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 31.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 32.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 32.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 33.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 33.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 34.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 34.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 35.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 35.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 36.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 36.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 37.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 37.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 38.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 38.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 39.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 39.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 40.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 40.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 41.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 41.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 42.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 42.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 43.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 43.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 44.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 44.5,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 45.0,
+      "total_interference": 0.29250000000000004,
+      "per_uav": {
+        "uav-alpha": 0.14625000000000002,
+        "uav-beta": 0.14625000000000002,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 45.5,
+      "total_interference": 0.270312771739336,
+      "per_uav": {
+        "uav-alpha": 0.135156385869668,
+        "uav-beta": 0.135156385869668,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 46.0,
+      "total_interference": 0.23720608561333323,
+      "per_uav": {
+        "uav-alpha": 0.11860304280666661,
+        "uav-beta": 0.11860304280666661,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 46.5,
+      "total_interference": 0.19743812639275896,
+      "per_uav": {
+        "uav-alpha": 0.09871906319637948,
+        "uav-beta": 0.09871906319637948,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 47.0,
+      "total_interference": 0.15367880602292397,
+      "per_uav": {
+        "uav-alpha": 0.07683940301146198,
+        "uav-beta": 0.07683940301146198,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 47.5,
+      "total_interference": 0.10745438259992271,
+      "per_uav": {
+        "uav-alpha": 0.053727191299961355,
+        "uav-beta": 0.053727191299961355,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 48.0,
+      "total_interference": 0.059639589609806844,
+      "per_uav": {
+        "uav-alpha": 0.029819794804903422,
+        "uav-beta": 0.029819794804903422,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 48.5,
+      "total_interference": 0.010753486069610263,
+      "per_uav": {
+        "uav-alpha": 0.005376743034805132,
+        "uav-beta": 0.005376743034805132,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 49.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 49.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 50.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 50.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 51.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 51.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 52.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 52.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 53.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 53.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 54.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 54.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 55.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 55.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 56.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 56.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 57.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 57.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 58.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 58.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 59.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 59.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 60.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 60.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 61.0,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 61.5,
+      "total_interference": 0.0,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0
+      }
+    },
+    {
+      "time": 62.0,
+      "total_interference": 0.01133013552330696,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.00566506776165348,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.00566506776165348
+      }
+    },
+    {
+      "time": 62.5,
+      "total_interference": 0.051298984199939626,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.025649492099969813,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.025649492099969813
+      }
+    },
+    {
+      "time": 63.0,
+      "total_interference": 0.08805214463959046,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.04402607231979523,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.04402607231979523
+      }
+    },
+    {
+      "time": 63.5,
+      "total_interference": 0.12051176045266801,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.060255880226334005,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.060255880226334005
+      }
+    },
+    {
+      "time": 64.0,
+      "total_interference": 0.1472934589408415,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.07364672947042075,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.07364672947042075
+      }
+    },
+    {
+      "time": 64.5,
+      "total_interference": 0.16678188617251186,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08339094308625593,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08339094308625593
+      }
+    },
+    {
+      "time": 65.0,
+      "total_interference": 0.17740827231920625,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960313,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960313
+      }
+    },
+    {
+      "time": 65.5,
+      "total_interference": 0.17740827231920628,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960314,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960314
+      }
+    },
+    {
+      "time": 66.0,
+      "total_interference": 0.17740827231920625,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960313,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960313
+      }
+    },
+    {
+      "time": 66.5,
+      "total_interference": 0.17740827231920628,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960314,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960314
+      }
+    },
+    {
+      "time": 67.0,
+      "total_interference": 0.17740827231920628,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960314,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960314
+      }
+    },
+    {
+      "time": 67.5,
+      "total_interference": 0.17740827231920625,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960313,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960313
+      }
+    },
+    {
+      "time": 68.0,
+      "total_interference": 0.17740827231920628,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.08870413615960314,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.08870413615960314
+      }
+    },
+    {
+      "time": 68.5,
+      "total_interference": 0.1182721815461375,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.05913609077306875,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.05913609077306875
+      }
+    },
+    {
+      "time": 69.0,
+      "total_interference": 0.1182721815461375,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.05913609077306875,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.05913609077306875
+      }
+    },
+    {
+      "time": 69.5,
+      "total_interference": 0.11827218154613753,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.059136090773068764,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.059136090773068764
+      }
+    },
+    {
+      "time": 70.0,
+      "total_interference": 0.11827218154613753,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.059136090773068764,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.059136090773068764
+      }
+    },
+    {
+      "time": 70.5,
+      "total_interference": 0.1176541747118953,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.05882708735594765,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.05882708735594765
+      }
+    },
+    {
+      "time": 71.0,
+      "total_interference": 0.11690166576399445,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.058450832881997226,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.058450832881997226
+      }
+    },
+    {
+      "time": 71.5,
+      "total_interference": 0.11601630507025901,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.058008152535129504,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.058008152535129504
+      }
+    },
+    {
+      "time": 72.0,
+      "total_interference": 0.11499999999999999,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.057499999999999996,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.057499999999999996
+      }
+    },
+    {
+      "time": 72.5,
+      "total_interference": 0.11385489531013714,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.05692744765506857,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.05692744765506857
+      }
+    },
+    {
+      "time": 73.0,
+      "total_interference": 0.11258335186008687,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.05629167593004344,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.05629167593004344
+      }
+    },
+    {
+      "time": 73.5,
+      "total_interference": 0.11118792411500797,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.055593962057503984,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.055593962057503984
+      }
+    },
+    {
+      "time": 74.0,
+      "total_interference": 0.10967133689325717,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.054835668446628585,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.054835668446628585
+      }
+    },
+    {
+      "time": 74.5,
+      "total_interference": 0.1080364617954754,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.0540182308977377,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.0540182308977377
+      }
+    },
+    {
+      "time": 75.0,
+      "total_interference": 0.10628629372189487,
+      "per_uav": {
+        "uav-alpha": 0.0,
+        "uav-beta": 0.0,
+        "uav-gamma": 0.053143146860947434,
+        "uav-delta": 0.0,
+        "uav-epsilon": 0.053143146860947434
+      }
+    }
+  ]
+}

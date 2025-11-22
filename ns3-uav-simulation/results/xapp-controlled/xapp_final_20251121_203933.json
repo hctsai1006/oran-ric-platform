@@ -1,0 +1,16 @@
+{
+  "config": {
+    "sim_time": 75.0,
+    "xapp_url": "http://localhost:5000"
+  },
+  "results": {
+    "simulation_time": 75.0,
+    "elapsed_time": 0.1623520851135254,
+    "total_handovers": 0,
+    "avg_rsrp_dbm": -51.87015282580274,
+    "avg_throughput_mbps": 129.5122989904598,
+    "samples_collected": 151,
+    "xapp_controlled": true
+  },
+  "timestamp": "20251121_203933"
+}

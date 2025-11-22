@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+setup.py
+src/uav_policy/__init__.py
+src/uav_policy/__init___1.py
+src/uav_policy/main.py
+src/uav_policy/main_1.py
+src/uav_policy/policy_engine.py
+src/uav_policy/policy_engine_1.py
+src/uav_policy/server.py
+src/uav_policy.egg-info/PKG-INFO
+src/uav_policy.egg-info/SOURCES.txt
+src/uav_policy.egg-info/dependency_links.txt
+src/uav_policy.egg-info/entry_points.txt
+src/uav_policy.egg-info/requires.txt
+src/uav_policy.egg-info/top_level.txt

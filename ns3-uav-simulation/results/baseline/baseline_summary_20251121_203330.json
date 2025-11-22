@@ -1,0 +1,15 @@
+{
+  "simulation_config": {
+    "sim_time": 20.0,
+    "time_step": 0.5,
+    "xapp_url": null,
+    "enb_count": 3
+  },
+  "results": {
+    "total_handovers": 0,
+    "avg_rsrp_dbm": -45.448046698669636,
+    "avg_throughput_mbps": 146.78681820655765,
+    "samples": 41
+  },
+  "timestamp": "20251121_203330"
+}

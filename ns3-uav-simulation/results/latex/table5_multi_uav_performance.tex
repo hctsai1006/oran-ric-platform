@@ -1,0 +1,20 @@
+% Table 5: Multi-UAV Scenario Performance
+\begin{table}[htbp]
+\centering
+\caption{Multi-UAV Scenario Performance Comparison}
+\label{tab:multi_uav_performance}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Scenario} & \textbf{UAVs} & \textbf{Samples} & \textbf{PRB Util.} & \textbf{Peak PRB} & \textbf{Throughput} & \textbf{QoS} \\
+ & & & (\%) & (\%) & (Mbps) & (\%) \\
+\midrule
+2-UAV Coordination & 2 & 142 & 46.7 & 50.0 & 17.88 & 64.4 \\
+3-UAV Formation & 3 & 228 & 75.0 & 75.0 & 18.41 & 78.1 \\
+5-UAV Dense & 5 & 655 & 87.6 & 99.0 & 13.84 & 81.7 \\
+\midrule
+\multicolumn{7}{l}{\textit{Scalability Analysis}} \\
+\multicolumn{7}{l}{PRB utilization increase (2$\rightarrow$5 UAVs): +87.6\%} \\
+\multicolumn{7}{l}{Per-UAV throughput degradation: -22.6\%} \\
+\bottomrule
+\end{tabular}
+\end{table}

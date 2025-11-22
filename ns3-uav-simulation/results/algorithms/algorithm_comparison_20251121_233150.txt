@@ -1,0 +1,98 @@
+====================================================================================================
+ALGORITHM COMPARISON RESULTS
+====================================================================================================
+
+Metric                             Rule-based (xApRandom Baseline         Greedy   Conservative
+----------------------------------------------------------------------------------------------------
+
+[ Throughput Performance ]
+Avg Throughput (Mbps)                         6.97           7.94          11.24           6.52
+Min Throughput (Mbps)                         4.89           1.44           2.59           3.45
+Max Throughput (Mbps)                         8.58          16.91          20.83           9.80
+Std Dev (Mbps)                                0.95           3.89           5.81           2.00
+5th Percentile (Mbps)                         5.14           2.42           3.07           3.84
+95th Percentile (Mbps)                        8.46          15.35          20.54           9.66
+
+[ Resource Efficiency ]
+Avg PRB Allocation                             9.9           10.1           13.4            8.6
+Total PRB Used                                 766            780           1031            664
+PRB Efficiency (Mbps/PRB)                    0.700          0.784          0.839          0.756
+
+[ Handover Performance ]
+Handover Count                                  11              4             42              4
+Ping-Pong Handovers                              3              0             23              0
+Total HO Delay (ms)                            550            200           2100            200
+
+[ Signal Quality ]
+Avg RSRP (dBm)                             -110.52        -110.52        -110.52        -110.52
+Avg SINR (dB)                                12.72          12.72          12.72          12.72
+Samples Below -110 dBm                          38             38             38             38
+Samples Critical (<-120 dBm)                     1              1              1              1
+
+[ QoS Metrics ]
+Service Continuity (%)                        98.7           98.7           98.7           98.7
+Fairness Index                              0.9819         0.8082         0.7912         0.9149
+
+====================================================================================================
+PERFORMANCE RANKING SUMMARY
+================================================================================
+
+Throughput:
+----------------------------------------
+  Avg Throughput Mbps: Greedy(11.24) > Random Baseline(7.94) > Rule-based (xApp)(6.97) > Conservative(6.52)
+  Min Throughput Mbps: Rule-based (xApp)(4.89) > Conservative(3.45) > Greedy(2.59) > Random Baseline(1.44)
+  Throughput 5Th Percentile: Rule-based (xApp)(5.14) > Conservative(3.84) > Greedy(3.07) > Random Baseline(2.42)
+
+Resource Efficiency:
+----------------------------------------
+  Prb Efficiency: Greedy(0.84) > Random Baseline(0.78) > Conservative(0.76) > Rule-based (xApp)(0.70)
+  Avg Prb: Conservative(8.62) > Rule-based (xApp)(9.95) > Random Baseline(10.13) > Greedy(13.39)
+
+Handover Performance:
+----------------------------------------
+  Handover Count: Random Baseline(4.00) > Conservative(4.00) > Rule-based (xApp)(11.00) > Greedy(42.00)
+  Ping Pong Count: Random Baseline(0.00) > Conservative(0.00) > Rule-based (xApp)(3.00) > Greedy(23.00)
+
+QoS:
+----------------------------------------
+  Service Continuity: Rule-based (xApp)(98.70) > Random Baseline(98.70) > Greedy(98.70) > Conservative(98.70)
+  Fairness Index: Rule-based (xApp)(0.98) > Conservative(0.91) > Random Baseline(0.81) > Greedy(0.79)
+
+OVERALL RANKING (by category wins):
+----------------------------------------
+  1. Rule-based (xApp): 4 metric wins
+  2. Greedy: 2 metric wins
+  3. Random Baseline: 2 metric wins
+  4. Conservative: 1 metric wins
+
+================================================================================
+IMPROVEMENT ANALYSIS (vs Random Baseline)
+================================================================================
+
+Rule-based (xApp) vs Random Baseline:
+--------------------------------------------------
+  Avg Throughput: -12.2% degradation
+  Min Throughput: +240.0% improvement
+  PRB Efficiency: -10.6% degradation
+  Handover Count: -175.0% degradation
+  Service Continuity: +0.0 percentage points (worse)
+
+Greedy vs Random Baseline:
+--------------------------------------------------
+  Avg Throughput: +41.6% improvement
+  Min Throughput: +80.0% improvement
+  PRB Efficiency: +7.1% improvement
+  Handover Count: -950.0% degradation
+  Service Continuity: +0.0 percentage points (worse)
+
+Conservative vs Random Baseline:
+--------------------------------------------------
+  Avg Throughput: -17.9% degradation
+  Min Throughput: +140.0% improvement
+  PRB Efficiency: -3.6% degradation
+  Handover Count: +0.0% degradation
+  Service Continuity: +0.0 percentage points (worse)
+
+================================================================================
+
+Generated: 2025-11-21T23:31:50.566825

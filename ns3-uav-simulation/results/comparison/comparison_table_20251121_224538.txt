@@ -1,0 +1,42 @@
+==========================================================================================
+BASELINE vs xApp COMPARISON ANALYSIS
+==========================================================================================
+
+Metric                                   Baseline             xApp                 Improvement
+------------------------------------------------------------------------------------------
+
+[ Signal Quality ]
+Average RSRP (dBm)                       -110.52              -110.52              +0.00%
+Min RSRP (dBm)                           -120.17              -120.17              -
+Max RSRP (dBm)                           -102.78              -102.78              -
+RSRP Std Dev                             5.22                 5.22                 -
+Average SINR (dB)                        12.72                12.72                +0.00%
+
+[ Throughput Performance ]
+Average Throughput (Mbps)                7.85                 3.92                 -50.00%
+Min Throughput (Mbps)                    2.88                 1.44                 -
+Max Throughput (Mbps)                    12.25                6.13                 -
+
+[ Resource Efficiency ]
+Average PRB Allocation                   10.0                 5.0                  +50.00%
+PRB Utilization (%)                      10.0                 5.0                  +50.00%
+Resource Efficiency (Mbps/PRB)           0.785                0.785                +0.00%
+
+[ Handover Performance ]
+Handover Count                           2                    2                    -
+Total Handover Delay (ms)                100                  60                   +40.00%
+
+[ Coverage Quality ]
+Samples Below -110 dBm                   38                   38                   -
+Samples Below -120 dBm (Critical)        1                    1                    -
+
+==========================================================================================
+
+SUMMARY OF IMPROVEMENTS:
+--------------------------------------------------
+  - Resource Efficiency: 0.0% no change (Mbps/PRB)
+  - PRB Savings: 50.0% improvement (fewer PRBs)
+  - Handover Delay Reduction: 40.0% improvement (ms)
+
+==========================================================================================
+Generated: 2025-11-21T22:45:38.530349
